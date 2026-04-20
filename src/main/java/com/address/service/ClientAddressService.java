@@ -120,15 +120,6 @@ public class ClientAddressService {
         return null;
     }
 
-    private CifAddress findBySeqNo(String seqNo, List<CifAddress> addresses) {
-        for (CifAddress addr : addresses) {
-            if (Objects.equals(addr.getSeqNo(), seqNo)) {
-                return addr;
-            }
-        }
-        return null;
-    }
-
     private String generateId() {
         return UUID.randomUUID().toString().replace("-", "").substring(0, 16);
     }
