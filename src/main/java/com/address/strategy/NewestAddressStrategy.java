@@ -5,5 +5,5 @@ import java.util.List;
 import java.util.Map;
 
 public interface NewestAddressStrategy {
-    Map<String, CifAddress> selectByType(List<CifAddress> addresses);
+    Map<String, CifAddress> selectByType(List<CifAddress> mergedIncoming, List<CifAddress> mergedStock);
 }

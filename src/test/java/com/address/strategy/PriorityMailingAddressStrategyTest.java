@@ -34,7 +34,7 @@ class PriorityMailingAddressStrategyTest {
         addr2.setLastChangeDate(new Date(2000));
         addresses.add(addr2);
 
-        CifAddress result = strategy.select(addresses);
+        CifAddress result = strategy.select(addresses, new java.util.ArrayList<>());
         assertEquals("A001", result.getSeqNo());
     }
 
@@ -58,7 +58,7 @@ class PriorityMailingAddressStrategyTest {
         addr2.setLastChangeDate(new Date(1000));
         addresses.add(addr2);
 
-        CifAddress result = strategy.select(addresses);
+        CifAddress result = strategy.select(addresses, new java.util.ArrayList<>());
         assertEquals("A001", result.getSeqNo());
     }
 }

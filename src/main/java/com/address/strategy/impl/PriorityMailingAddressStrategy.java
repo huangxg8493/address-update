@@ -10,8 +10,10 @@ import java.util.Optional;
 public class PriorityMailingAddressStrategy implements MailingAddressStrategy {
 
     @Override
-    public CifAddress select(List<CifAddress> addresses) {
-        Optional<CifAddress> mailingAddr = addresses.stream()
+    public CifAddress select(List<CifAddress> mergedIncoming, List<CifAddress> mergedStock) {
+        java.util.List<CifAddress> allActive = new java.util.ArrayList<>(mergedIncoming);
+        allActive.addAll(mergedStock);
+        Optional<CifAddress> mailingAddr = allActive.stream()
                 .filter(a -> "Y".equals(a.getIsMailingAddress()))
                 .filter(a -> !"Y".equals(a.getDelFlag()))
                 .max(Comparator.comparing(a -> a.getLastChangeDate() != null ? a.getLastChangeDate().getTime() : Long.MIN_VALUE));
@@ -21,7 +23,7 @@ public class PriorityMailingAddressStrategy implements MailingAddressStrategy {
         }
 
         for (AddressType type : AddressType.values()) {
-            Optional<CifAddress> latest = addresses.stream()
+            Optional<CifAddress> latest = allActive.stream()
                     .filter(a -> type.getCode().equals(a.getAddressType()))
                     .filter(a -> !"Y".equals(a.getDelFlag()))
                     .max(Comparator.comparing(a -> a.getLastChangeDate() != null ? a.getLastChangeDate().getTime() : Long.MIN_VALUE));

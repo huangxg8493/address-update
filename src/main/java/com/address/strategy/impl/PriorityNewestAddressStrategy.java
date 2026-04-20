@@ -11,10 +11,12 @@ import java.util.stream.Collectors;
 public class PriorityNewestAddressStrategy implements NewestAddressStrategy {
 
     @Override
-    public Map<String, CifAddress> selectByType(List<CifAddress> addresses) {
+    public Map<String, CifAddress> selectByType(List<CifAddress> mergedIncoming, List<CifAddress> mergedStock) {
+        java.util.List<CifAddress> allActive = new java.util.ArrayList<>(mergedIncoming);
+        allActive.addAll(mergedStock);
         Map<String, CifAddress> result = new HashMap<>();
 
-        Map<String, List<CifAddress>> byType = addresses.stream()
+        Map<String, List<CifAddress>> byType = allActive.stream()
                 .filter(a -> !"Y".equals(a.getDelFlag()))
                 .collect(Collectors.groupingBy(CifAddress::getAddressType));
 

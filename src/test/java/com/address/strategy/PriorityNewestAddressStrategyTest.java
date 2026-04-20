@@ -41,7 +41,7 @@ class PriorityNewestAddressStrategyTest {
         addr3.setLastChangeDate(new Date(3000));
         addresses.add(addr3);
 
-        Map<String, CifAddress> result = strategy.selectByType(addresses);
+        Map<String, CifAddress> result = strategy.selectByType(addresses, new java.util.ArrayList<>());
         assertEquals(2, result.size());
         assertEquals("A002", result.get("02").getSeqNo());
         assertEquals("A003", result.get("03").getSeqNo());
