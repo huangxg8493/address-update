@@ -5,9 +5,8 @@ import com.address.repository.ClientAddressRepository;
 import com.address.strategy.MailingAddressStrategy;
 import com.address.strategy.NewestAddressStrategy;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -30,28 +29,25 @@ public class ClientAddressService {
         // Step 1: 获取存量数组
         List<CifAddress> stock = repository.findByClientNo(clientNo);
 
-        // Step 2: 合并两个数组
-        // 2.1 合并上送地址（去重）
+        // Step 2: 合并上送地址（去重）
         List<CifAddress> mergedIncoming = merger.mergeIncoming(incoming);
-        // 2.2 找出待删除地址（存量中有但上送中无的），标记 del_flag=Y
-        List<CifAddress> mergedStock = markDeletedAddresses(stock, mergedIncoming);
 
-        // Step 3: 应用更新/新增规则（设置seqNo）
-        Map<String, String> seqNoMap = buildSeqNoMap(mergedStock, mergedIncoming);
+        // Step 3: 标记存量删除项（del_flag=Y）
+        List<CifAddress> mergedStock = merger.mergeStock(stock, mergedIncoming);
+
+        // Step 4: 遍历上送地址找匹配存量
         List<CifAddress> insertList = new ArrayList<>();
-
         for (CifAddress addr : mergedIncoming) {
-            String key = addr.getAddressType() + "_" + addr.getAddressDetail();
-            String seqNo = seqNoMap.get(key);
-            if (seqNo == null) {
-                addr.setSeqNo(null);  // 新增
-                insertList.add(addr);
+            CifAddress matched = findMatchedStock(addr, mergedStock);
+            if (matched != null) {
+                addr.setSeqNo(matched.getSeqNo());
             } else {
-                addr.setSeqNo(seqNo);  // 更新
+                addr.setSeqNo(null);
+                insertList.add(addr);
             }
         }
 
-        // Step 4: 从两个数组（del_flag≠Y）中应用规则，仅收集结果
+        // Step 5: 收集两个数组有效地址
         List<CifAddress> allActive = new ArrayList<>();
         for (CifAddress addr : mergedStock) {
             if (!"Y".equals(addr.getDelFlag())) {
@@ -60,10 +56,11 @@ public class ClientAddressService {
         }
         allActive.addAll(mergedIncoming);
 
+        // Step 6: 挑选 mailing 和 newestByType（仅收集，不设置标识）
         CifAddress mailing = mailingStrategy.select(allActive);
-        Map<String, CifAddress> newestByType = newestStrategy.selectByType(allActive);
+        java.util.Map<String, CifAddress> newestByType = newestStrategy.selectByType(allActive);
 
-        // Step 5: 将两个数组中的标识都设置为 N
+        // Step 7: 重置两个数组所有标识为 N
         for (CifAddress addr : mergedStock) {
             addr.setIsMailingAddress("N");
             addr.setIsNewest("N");
@@ -73,66 +70,64 @@ public class ClientAddressService {
             addr.setIsNewest("N");
         }
 
-        // Step 6: 将挑选出的通讯地址的标识设置为 Y
+        // Step 8: 设置 mailing 标识为 Y
         if (mailing != null) {
             mailing.setIsMailingAddress("Y");
             mailing.setIsNewest("Y");
         }
 
-        // Step 7: 将挑选出的最新地址的标识设置为 Y
-        for (Map.Entry<String, CifAddress> entry : newestByType.entrySet()) {
+        // Step 9: 设置 newest 标识为 Y
+        for (java.util.Map.Entry<String, CifAddress> entry : newestByType.entrySet()) {
             CifAddress newestAddr = entry.getValue();
-            if (mailing == null || !Objects.equals(mailing.getSeqNo(), newestAddr.getSeqNo())) {
+            if (!Objects.equals(mailing, newestAddr)) {
                 newestAddr.setIsNewest("Y");
             }
         }
 
-        // Step 8: 批量 insert
+        // Step 10: 批量 insert
+        for (CifAddress addr : insertList) {
+            addr.setSeqNo(generateId());
+        }
         if (!insertList.isEmpty()) {
-            for (CifAddress addr : insertList) {
-                addr.setSeqNo(generateId());
-            }
             repository.saveAll(insertList);
         }
 
-        // Step 9: 批量 update（更新 mergedStock 中 seqNo 不为空的地址）
-        for (CifAddress addr : mergedStock) {
-            if (!"Y".equals(addr.getDelFlag()) && addr.getSeqNo() != null) {
-                repository.update(addr);
+        // Step 11: 遍历存量地址，用匹配来源覆盖更新
+        for (CifAddress stockAddr : mergedStock) {
+            if (stockAddr.getSeqNo() != null) {
+                CifAddress source = findBySeqNo(stockAddr.getSeqNo(), mergedIncoming);
+                if (source != null) {
+                    stockAddr.setAddressType(source.getAddressType());
+                    stockAddr.setAddressDetail(source.getAddressDetail());
+                    stockAddr.setLastChangeDate(new Date());
+                    stockAddr.setIsMailingAddress(source.getIsMailingAddress());
+                    stockAddr.setIsNewest(source.getIsNewest());
+                }
+                repository.update(stockAddr);
             }
         }
 
         return repository.findByClientNo(clientNo);
     }
 
-    private Map<String, String> buildSeqNoMap(List<CifAddress> stock, List<CifAddress> incoming) {
-        Map<String, String> map = new HashMap<>();
-        for (CifAddress addr : stock) {
-            if (!"Y".equals(addr.getDelFlag())) {
-                String key = addr.getAddressType() + "_" + addr.getAddressDetail();
-                if (!map.containsKey(key)) {
-                    map.put(key, addr.getSeqNo());
-                }
+    private CifAddress findMatchedStock(CifAddress addr, List<CifAddress> stock) {
+        for (CifAddress s : stock) {
+            if (!"Y".equals(s.getDelFlag()) &&
+                Objects.equals(s.getAddressType(), addr.getAddressType()) &&
+                Objects.equals(s.getAddressDetail(), addr.getAddressDetail())) {
+                return s;
             }
         }
-        return map;
+        return null;
     }
 
-    private List<CifAddress> markDeletedAddresses(List<CifAddress> stock, List<CifAddress> incoming) {
-        for (CifAddress s : stock) {
-            boolean found = false;
-            for (CifAddress i : incoming) {
-                if (s.getAddressType().equals(i.getAddressType()) &&
-                    s.getAddressDetail().equals(i.getAddressDetail())) {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-                s.setDelFlag("Y");
+    private CifAddress findBySeqNo(String seqNo, List<CifAddress> addresses) {
+        for (CifAddress addr : addresses) {
+            if (Objects.equals(addr.getSeqNo(), seqNo)) {
+                return addr;
             }
         }
-        return stock;
+        return null;
     }
 
     private String generateId() {
