@@ -10,7 +10,9 @@
       "Bash(git push:*)",
       "Bash(git pull:*)",
       "Bash(mvn test *)",
-      "Bash(mvn clean *)"
+      "Bash(mvn clean *)",
+      "Bash(mvn compile *)",
+      "Bash(MAVEN_OPTS=\"-Xmx512m\" mvn test -Dtest=AddressMergerTest -DskipTests=false)"
     ],
     "deny": [
       "Bash(git reset --hard:*)",
