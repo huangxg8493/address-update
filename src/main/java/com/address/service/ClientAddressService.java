@@ -86,7 +86,6 @@ public class ClientAddressService {
         }
 
         // Step 10: 对上送数组中seqNo不为空的地址，根据其seqNo，更新存量地址中对应的数据，然后批量update
-        List<CifAddress> toUpdate = new ArrayList<>();
         for (CifAddress incomingAddr : mergedIncoming) {
             if (incomingAddr.getSeqNo() != null) {
                 for (CifAddress stockAddr : mergedStock) {
@@ -96,15 +95,12 @@ public class ClientAddressService {
                         stockAddr.setLastChangeDate(new Date());
                         stockAddr.setIsMailingAddress(incomingAddr.getIsMailingAddress());
                         stockAddr.setIsNewest(incomingAddr.getIsNewest());
-                        toUpdate.add(stockAddr);
                         break;
                     }
                 }
             }
         }
-        if (!toUpdate.isEmpty()) {
-            repository.updateAll(toUpdate);
-        }
+        repository.updateAll(mergedStock);
 
         return repository.findByClientNo(clientNo);
     }
