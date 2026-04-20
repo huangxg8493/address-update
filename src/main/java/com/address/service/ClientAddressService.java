@@ -32,24 +32,22 @@ public class ClientAddressService {
         // Step 2: 合并上送地址（去重）
         List<CifAddress> mergedIncoming = merger.mergeIncoming(incoming);
 
-        // Step 3: 标记存量删除项（del_flag=Y）
-        List<CifAddress> mergedStock = merger.mergeStock(stock, mergedIncoming);
+                // Step 3: 标记存量删除项（del_flag=Y）
+        merger.mergeStock(stock, mergedIncoming);
 
-        // Step 4: 遍历上送地址找匹配存量
-        List<CifAddress> insertList = new ArrayList<>();
+        // Step 4: 遍历上送地址找匹配存量，确定是新增还是更新
         for (CifAddress addr : mergedIncoming) {
-            CifAddress matched = findMatchedStock(addr, mergedStock);
+            CifAddress matched = findMatchedStock(addr, stock);
             if (matched != null) {
                 addr.setSeqNo(matched.getSeqNo());
             } else {
                 addr.setSeqNo(null);
-                insertList.add(addr);
             }
         }
 
         // Step 5: 收集两个数组有效地址
         List<CifAddress> allActive = new ArrayList<>();
-        for (CifAddress addr : mergedStock) {
+        for (CifAddress addr : stock) {
             if (!"Y".equals(addr.getDelFlag())) {
                 allActive.add(addr);
             }
@@ -61,7 +59,7 @@ public class ClientAddressService {
         java.util.Map<String, CifAddress> newestByType = newestStrategy.selectByType(allActive);
 
         // Step 7: 重置两个数组所有标识为 N
-        for (CifAddress addr : mergedStock) {
+        for (CifAddress addr : stock) {
             addr.setIsMailingAddress("N");
             addr.setIsNewest("N");
         }
@@ -84,27 +82,37 @@ public class ClientAddressService {
             }
         }
 
-        // Step 10: 批量 insert
-        for (CifAddress addr : insertList) {
-            addr.setSeqNo(generateId());
+        // Step 10: 对上送数组中seqNo为空的地址，生成id，然后批量insert
+        List<CifAddress> toInsert = new ArrayList<>();
+        for (CifAddress addr : mergedIncoming) {
+            if (addr.getSeqNo() == null) {
+                addr.setSeqNo(generateId());
+                toInsert.add(addr);
+            }
         }
-        if (!insertList.isEmpty()) {
-            repository.saveAll(insertList);
+        if (!toInsert.isEmpty()) {
+            repository.saveAll(toInsert);
         }
 
-        // Step 11: 遍历存量地址，用匹配来源覆盖更新
-        for (CifAddress stockAddr : mergedStock) {
-            if (stockAddr.getSeqNo() != null) {
-                CifAddress source = findBySeqNo(stockAddr.getSeqNo(), mergedIncoming);
-                if (source != null) {
-                    stockAddr.setAddressType(source.getAddressType());
-                    stockAddr.setAddressDetail(source.getAddressDetail());
-                    stockAddr.setLastChangeDate(new Date());
-                    stockAddr.setIsMailingAddress(source.getIsMailingAddress());
-                    stockAddr.setIsNewest(source.getIsNewest());
+        // Step 11: 对上送数组中seqNo不为空的地址，根据其seqNo，更新存量地址中对应的数据，然后批量update
+        List<CifAddress> toUpdate = new ArrayList<>();
+        for (CifAddress incomingAddr : mergedIncoming) {
+            if (incomingAddr.getSeqNo() != null) {
+                for (CifAddress stockAddr : stock) {
+                    if (Objects.equals(stockAddr.getSeqNo(), incomingAddr.getSeqNo())) {
+                        stockAddr.setAddressType(incomingAddr.getAddressType());
+                        stockAddr.setAddressDetail(incomingAddr.getAddressDetail());
+                        stockAddr.setLastChangeDate(new Date());
+                        stockAddr.setIsMailingAddress(incomingAddr.getIsMailingAddress());
+                        stockAddr.setIsNewest(incomingAddr.getIsNewest());
+                        toUpdate.add(stockAddr);
+                        break;
+                    }
                 }
-                repository.update(stockAddr);
             }
+        }
+        if (!toUpdate.isEmpty()) {
+            repository.updateAll(toUpdate);
         }
 
         return repository.findByClientNo(clientNo);
