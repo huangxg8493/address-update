@@ -55,22 +55,6 @@ public class AddressMerger {
         return result;
     }
 
-    private CifAddress mergeTwoForStock(CifAddress a, CifAddress b) {
-        CifAddress result = new CifAddress();
-        result.setSeqNo(a.getSeqNo());
-        result.setClientNo(a.getClientNo());
-        result.setAddressType(a.getAddressType());
-        result.setAddressDetail(a.getAddressDetail());
-        result.setLastChangeDate(new Date());
-        result.setDelFlag("N");
-
-        String mailing = "Y".equals(a.getIsMailingAddress()) || "Y".equals(b.getIsMailingAddress()) ? "Y" : "N";
-        String newest = "Y".equals(a.getIsNewest()) || "Y".equals(b.getIsNewest()) ? "Y" : "N";
-        result.setIsMailingAddress(mailing);
-        result.setIsNewest(newest);
-        return result;
-    }
-
     private CifAddress mergeTwo(CifAddress a, CifAddress b) {
         CifAddress result = new CifAddress();
         result.setSeqNo(a.getSeqNo());
