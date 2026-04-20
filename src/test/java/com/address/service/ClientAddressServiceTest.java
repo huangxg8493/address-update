@@ -40,6 +40,7 @@ class ClientAddressServiceTest {
     @Test
     void testUpdateExistingAddress() {
         CifAddress existing = new CifAddress("C001", "02", "联系地址");
+        existing.setSeqNo("EXISTING001");
         repository.save(existing);
 
         List<CifAddress> incoming = new ArrayList<>();
