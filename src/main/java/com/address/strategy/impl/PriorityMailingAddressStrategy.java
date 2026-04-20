@@ -19,14 +19,17 @@ public class PriorityMailingAddressStrategy implements MailingAddressStrategy {
      */
     @Override
     public CifAddress select(List<CifAddress> mergedIncoming, List<CifAddress> mergedStock) {
-        // 第8条：从上送地址中找 isMailingAddress='Y' 的，按优先级顺序选
-        Optional<CifAddress> mailingFromIncoming = mergedIncoming.stream()
-                .filter(a -> "Y".equals(a.getIsMailingAddress()))
-                .filter(a -> !"Y".equals(a.getDelFlag()))
-                .findFirst();
+        // 第8条：按优先级遍历每种类型，选该类型中 isMailingAddress='Y' 的第一个
+        for (AddressType type : AddressType.values()) {
+            Optional<CifAddress> mailingOfType = mergedIncoming.stream()
+                    .filter(a -> "Y".equals(a.getIsMailingAddress()))
+                    .filter(a -> type.getCode().equals(a.getAddressType()))
+                    .filter(a -> !"Y".equals(a.getDelFlag()))
+                    .findFirst();
 
-        if (mailingFromIncoming.isPresent()) {
-            return mailingFromIncoming.get();
+            if (mailingOfType.isPresent()) {
+                return mailingOfType.get();
+            }
         }
 
         // 第9条：上送中没有Y标记的，从存量中找 isMailingAddress='Y' 且修改时间最大的
