@@ -14,11 +14,17 @@ class AddressMergerTest {
     void testMergeIncomingRemovesDuplicates() {
         List<CifAddress> incoming = new ArrayList<>();
 
-        CifAddress addr1 = new CifAddress("C001", "02", "联系地址");
+        CifAddress addr1 = new CifAddress();
+        addr1.setClientNo("C001");
+        addr1.setAddressType("02");
+        addr1.setAddressDetail("联系地址");
         addr1.setSeqNo("A001");
         incoming.add(addr1);
 
-        CifAddress addr2 = new CifAddress("C001", "02", "联系地址");
+        CifAddress addr2 = new CifAddress();
+        addr2.setClientNo("C001");
+        addr2.setAddressType("02");
+        addr2.setAddressDetail("联系地址");
         addr2.setSeqNo("A002");
         addr2.setIsMailingAddress("Y");
         incoming.add(addr2);
@@ -32,11 +38,17 @@ class AddressMergerTest {
     void testMergeIncomingKeepsDifferentAddresses() {
         List<CifAddress> incoming = new ArrayList<>();
 
-        CifAddress addr1 = new CifAddress("C001", "02", "联系地址1");
+        CifAddress addr1 = new CifAddress();
+        addr1.setClientNo("C001");
+        addr1.setAddressType("02");
+        addr1.setAddressDetail("联系地址1");
         addr1.setSeqNo("A001");
         incoming.add(addr1);
 
-        CifAddress addr2 = new CifAddress("C001", "03", "居住地址");
+        CifAddress addr2 = new CifAddress();
+        addr2.setClientNo("C001");
+        addr2.setAddressType("03");
+        addr2.setAddressDetail("居住地址");
         addr2.setSeqNo("A002");
         incoming.add(addr2);
 

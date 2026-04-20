@@ -15,15 +15,6 @@ public class CifAddress {
     public CifAddress() {
     }
 
-    public CifAddress(String clientNo, String addressType, String addressDetail) {
-        this.clientNo = clientNo;
-        this.addressType = addressType;
-        this.addressDetail = addressDetail;
-        this.isMailingAddress = "N";
-        this.isNewest = "N";
-        this.delFlag = "N";
-    }
-
     public String getSeqNo() { return seqNo; }
     public void setSeqNo(String seqNo) { this.seqNo = seqNo; }
     public String getClientNo() { return clientNo; }

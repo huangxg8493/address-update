@@ -6,17 +6,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class CifAddressTest {
 
     @Test
-    void testConstructor() {
-        CifAddress address = new CifAddress("C001", "01", "北京市朝阳区");
-        assertEquals("C001", address.getClientNo());
-        assertEquals("01", address.getAddressType());
-        assertEquals("北京市朝阳区", address.getAddressDetail());
-        assertEquals("N", address.getIsMailingAddress());
-        assertEquals("N", address.getIsNewest());
-        assertEquals("N", address.getDelFlag());
-    }
-
-    @Test
     void testSettersAndGetters() {
         CifAddress address = new CifAddress();
         address.setSeqNo("A001");

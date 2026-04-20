@@ -28,7 +28,10 @@ class ClientAddressServiceTest {
     @Test
     void testFirstTimeAddAddress() {
         List<CifAddress> incoming = new ArrayList<>();
-        CifAddress addr = new CifAddress("C001", "02", "联系地址");
+        CifAddress addr = new CifAddress();
+        addr.setClientNo("C001");
+        addr.setAddressType("02");
+        addr.setAddressDetail("联系地址");
         incoming.add(addr);
 
         List<CifAddress> result = service.updateAddresses("C001", incoming);
@@ -39,12 +42,18 @@ class ClientAddressServiceTest {
 
     @Test
     void testUpdateExistingAddress() {
-        CifAddress existing = new CifAddress("C001", "02", "联系地址");
+        CifAddress existing = new CifAddress();
+        existing.setClientNo("C001");
+        existing.setAddressType("02");
+        existing.setAddressDetail("联系地址");
         existing.setSeqNo("EXISTING001");
         repository.save(existing);
 
         List<CifAddress> incoming = new ArrayList<>();
-        CifAddress addr = new CifAddress("C001", "02", "联系地址");
+        CifAddress addr = new CifAddress();
+        addr.setClientNo("C001");
+        addr.setAddressType("02");
+        addr.setAddressDetail("联系地址");
         incoming.add(addr);
 
         List<CifAddress> result = service.updateAddresses("C001", incoming);

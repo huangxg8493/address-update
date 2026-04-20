@@ -17,7 +17,10 @@ class MemoryClientAddressRepositoryTest {
 
     @Test
     void testSaveAndFind() {
-        CifAddress addr = new CifAddress("C001", "01", "北京市");
+        CifAddress addr = new CifAddress();
+        addr.setClientNo("C001");
+        addr.setAddressType("01");
+        addr.setAddressDetail("北京市");
         addr.setSeqNo("A001");
         repo.save(addr);
 
@@ -28,7 +31,10 @@ class MemoryClientAddressRepositoryTest {
 
     @Test
     void testFindByClientNoExcludesDeleted() {
-        CifAddress addr = new CifAddress("C001", "01", "北京市");
+        CifAddress addr = new CifAddress();
+        addr.setClientNo("C001");
+        addr.setAddressType("01");
+        addr.setAddressDetail("北京市");
         addr.setSeqNo("A001");
         repo.save(addr);
         repo.delete("A001");
@@ -39,7 +45,10 @@ class MemoryClientAddressRepositoryTest {
 
     @Test
     void testUpdate() {
-        CifAddress addr = new CifAddress("C001", "01", "北京市");
+        CifAddress addr = new CifAddress();
+        addr.setClientNo("C001");
+        addr.setAddressType("01");
+        addr.setAddressDetail("北京市");
         addr.setSeqNo("A001");
         repo.save(addr);
 
