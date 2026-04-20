@@ -31,10 +31,10 @@ public class ClientAddressService {
         List<CifAddress> stock = repository.findByClientNo(clientNo);
 
         // Step 2: 合并两个数组
-        // 2.1 找出待删除地址（存量中有但上送中无的），标记 del_flag=Y
-        List<CifAddress> mergedStock = markDeletedAddresses(stock, incoming);
-        // 2.2 合并上送地址（去重）
+        // 2.1 合并上送地址（去重）
         List<CifAddress> mergedIncoming = merger.mergeIncoming(incoming);
+        // 2.2 找出待删除地址（存量中有但上送中无的），标记 del_flag=Y
+        List<CifAddress> mergedStock = markDeletedAddresses(stock, mergedIncoming);
 
         // Step 3: 应用更新/新增规则（设置seqNo）
         Map<String, String> seqNoMap = buildSeqNoMap(mergedStock, mergedIncoming);
