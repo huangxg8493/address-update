@@ -43,7 +43,11 @@ public class AddressMerger {
                 String newest = "Y".equals(existing.getIsNewest()) || "Y".equals(addr.getIsNewest()) ? "Y" : "N";
                 existing.setIsMailingAddress(mailing);
                 existing.setIsNewest(newest);
-                existing.setLastChangeDate(new Date());
+                Date maxDate = existing.getLastChangeDate();
+                if (addr.getLastChangeDate() != null && (maxDate == null || addr.getLastChangeDate().after(maxDate))) {
+                    maxDate = addr.getLastChangeDate();
+                }
+                existing.setLastChangeDate(maxDate);
                 addr.setDelFlag("Y");
                 result.add(addr);
             }
