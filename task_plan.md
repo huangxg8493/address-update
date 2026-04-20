@@ -83,9 +83,33 @@
 
 ---
 
+## 重构阶段
+
+### Task 9: 修改 AddressMerger#mergeStock 支持标记删除
+
+- [ ] Step 1: 读取当前 AddressMerger 实现
+- [ ] Step 2: 修改 mergeStock 返回所有地址，将待删除地址 del_flag 设为 Y
+- [ ] Step 3: 运行测试验证
+
+### Task 10: 重构 ClientAddressService#updateAddresses
+
+- [ ] Step 1: 编写新版本 updateAddresses（按参考算法9步流程）
+- [ ] Step 2: 确保 findDeletedAddresses 方法存在且正确
+- [ ] Step 3: 确保 buildSeqNoMap 方法正确构建
+- [ ] Step 4: 确保 generateId 方法存在
+- [ ] Step 5: 运行测试验证
+
+### Task 11: 验证和测试
+
+- [ ] Step 1: 运行 Maven 测试
+- [ ] Step 2: 检查所有测试是否通过
+- [ ] Step 3: 提交变更
+
+---
+
 ## 当前阶段
 
-所有任务已完成
+重构阶段 - Task 9 开始执行
 
 ---
 

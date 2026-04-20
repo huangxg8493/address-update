@@ -48,6 +48,29 @@
 
 ---
 
+## 重构发现
+
+### 参考算法 vs 当前实现差异
+
+| 步骤 | 参考算法 | 当前实现 |
+|------|---------|----------|
+| 1 | 使用两个数组 | 只有一个上送数组 |
+| 2 | 合并两个数组 | 只合并上送 |
+| 3 | 应用更新/新增规则 | 应用了，但顺序不对 |
+| 4 | 应用通讯地址和最新地址规则 | 只从上送数组选 |
+| 5 | 将两个数组标识设置为N | 在规则应用之前就重置了 |
+| 6 | 将通讯地址标识设置为Y | 正确 |
+| 7 | 将最新地址标识设置为Y | 正确 |
+| 8 | 批量insert | 正确 |
+| 9 | 批量update | 正确 |
+
+### 关键问题
+1. **规则应用范围**：当前只从上送地址中挑选 mailing 和 newest，应该是两个数组都参与
+2. **标识重置时机**：当前在规则应用前重置，但参考算法要求在规则应用后
+3. **批量update对象**：当前是对上送数组，应该是合并后的存量数组
+
+---
+
 ## 文件结构
 
 ```
@@ -65,10 +88,9 @@ src/main/java/com/address/
   │       ├─ PriorityMailingAddressStrategy.java
   │       └─ PriorityNewestAddressStrategy.java
   ├─ service/
-  │   ├─ ClientAddressService.java
-  │   └─ AddressMerger.java
-  └─ exception/
-        └─ AddressBusinessException.java
+  │   ├─ ClientAddressService.java  # 重构核心
+  │   └─ AddressMerger.java        # 修改mergeStock
+  └─ exception/  # 已删除 AddressBusinessException
 
 src/test/java/com/address/
   ├─ model/
