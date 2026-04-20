@@ -27,8 +27,7 @@ public class AddressMerger {
         return new ArrayList<>(merged.values());
     }
 
-    public List<CifAddress> mergeStock(List<CifAddress> stock, List<CifAddress> toDelete) {
-        // Step 1: 存量自身去重合并（与 mergeIncoming 对称）
+    public List<CifAddress> mergeStock(List<CifAddress> stock) {
         Map<String, CifAddress> merged = new HashMap<>();
         for (CifAddress addr : stock) {
             String key = addr.getAddressType() + "_" + addr.getAddressDetail();
@@ -40,20 +39,20 @@ public class AddressMerger {
                 merged.put(key, mergedAddr);
             }
         }
+        return new ArrayList<>(merged.values());
+    }
 
-        // Step 2: 标记需要删除的地址（在上送中出现的）
-        List<CifAddress> mergedList = new ArrayList<>(merged.values());
-        for (CifAddress addr : mergedList) {
+    public void markDeleted(List<CifAddress> stock, List<CifAddress> incoming) {
+        for (CifAddress addr : stock) {
             String key = addr.getAddressType() + "_" + addr.getAddressDetail();
-            for (CifAddress td : toDelete) {
-                String tdKey = td.getAddressType() + "_" + td.getAddressDetail();
-                if (key.equals(tdKey)) {
+            for (CifAddress inc : incoming) {
+                String incKey = inc.getAddressType() + "_" + inc.getAddressDetail();
+                if (key.equals(incKey)) {
                     addr.setDelFlag("Y");
                     break;
                 }
             }
         }
-        return mergedList;
     }
 
     private CifAddress mergeTwoForStock(CifAddress a, CifAddress b) {
