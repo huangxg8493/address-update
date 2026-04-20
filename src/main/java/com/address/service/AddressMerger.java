@@ -28,18 +28,27 @@ public class AddressMerger {
     }
 
     public List<CifAddress> mergeStock(List<CifAddress> stock) {
-        Map<String, CifAddress> merged = new HashMap<>();
+        Map<String, CifAddress> firstSeen = new HashMap<>();
+        List<CifAddress> result = new ArrayList<>();
+
         for (CifAddress addr : stock) {
             String key = addr.getAddressType() + "_" + addr.getAddressDetail();
-            CifAddress existing = merged.get(key);
+            CifAddress existing = firstSeen.get(key);
             if (existing == null) {
-                merged.put(key, addr);
+                firstSeen.put(key, addr);
+                addr.setDelFlag("N");
+                result.add(addr);
             } else {
-                CifAddress mergedAddr = mergeTwoForStock(existing, addr);
-                merged.put(key, mergedAddr);
+                String mailing = "Y".equals(existing.getIsMailingAddress()) || "Y".equals(addr.getIsMailingAddress()) ? "Y" : "N";
+                String newest = "Y".equals(existing.getIsNewest()) || "Y".equals(addr.getIsNewest()) ? "Y" : "N";
+                existing.setIsMailingAddress(mailing);
+                existing.setIsNewest(newest);
+                existing.setLastChangeDate(new Date());
+                addr.setDelFlag("Y");
+                result.add(addr);
             }
         }
-        return new ArrayList<>(merged.values());
+        return result;
     }
 
     private CifAddress mergeTwoForStock(CifAddress a, CifAddress b) {
