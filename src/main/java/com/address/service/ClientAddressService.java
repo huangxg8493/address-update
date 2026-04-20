@@ -45,9 +45,11 @@ public class ClientAddressService {
             }
         }
 
-        // Step 5: 对两个数组应用通讯地址和最新地址规则，挑选结果不设置标识
-        CifAddress mailing = mailingStrategy.select(mergedIncoming);
-        java.util.Map<String, CifAddress> newestByType = newestStrategy.selectByType(mergedIncoming);
+        // Step 5: 对两个数组合并后应用通讯地址和最新地址规则，挑选结果不设置标识
+        List<CifAddress> allActive = new ArrayList<>(mergedIncoming);
+        allActive.addAll(mergedStock);
+        CifAddress mailing = mailingStrategy.select(allActive);
+        java.util.Map<String, CifAddress> newestByType = newestStrategy.selectByType(allActive);
 
         // Step 6: 重置两个数组所有标识为 N
         for (CifAddress addr : mergedStock) {
