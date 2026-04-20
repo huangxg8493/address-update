@@ -32,9 +32,8 @@ public class ClientAddressService {
         // Step 2: 合并上送地址（去重）
         List<CifAddress> mergedIncoming = merger.mergeIncoming(incoming);
 
-                // Step 3: 存量自身去重合并 + 标记需要删除的地址
+        // Step 3: 存量自身去重合并
         List<CifAddress> mergedStock = merger.mergeStock(stock);
-        merger.markDeleted(mergedStock, mergedIncoming);
 
         // Step 4: 遍历上送地址找匹配存量，确定是新增还是更新
         for (CifAddress addr : mergedIncoming) {

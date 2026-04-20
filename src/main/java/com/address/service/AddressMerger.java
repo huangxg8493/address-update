@@ -42,19 +42,6 @@ public class AddressMerger {
         return new ArrayList<>(merged.values());
     }
 
-    public void markDeleted(List<CifAddress> stock, List<CifAddress> incoming) {
-        for (CifAddress addr : stock) {
-            String key = addr.getAddressType() + "_" + addr.getAddressDetail();
-            for (CifAddress inc : incoming) {
-                String incKey = inc.getAddressType() + "_" + inc.getAddressDetail();
-                if (key.equals(incKey)) {
-                    addr.setDelFlag("Y");
-                    break;
-                }
-            }
-        }
-    }
-
     private CifAddress mergeTwoForStock(CifAddress a, CifAddress b) {
         CifAddress result = new CifAddress();
         result.setSeqNo(a.getSeqNo());
