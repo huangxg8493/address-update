@@ -31,17 +31,14 @@ public class ClientAddressService {
         List<CifAddress> stock = repository.findByClientNo(clientNo);
 
         // Step 2: 合并两个数组
-        // 2.1 找出待删除地址（存量中有但上送中无的）
-        List<CifAddress> toDelete = findDeletedAddresses(stock, incoming);
-        // 2.2 合并存量地址（标记删除项 del_flag=Y）
-        List<CifAddress> mergedStock = merger.mergeStock(stock, toDelete);
-        // 2.3 合并上送地址（去重）
+        // 2.1 找出待删除地址（存量中有但上送中无的），标记 del_flag=Y
+        List<CifAddress> mergedStock = markDeletedAddresses(stock, incoming);
+        // 2.2 合并上送地址（去重）
         List<CifAddress> mergedIncoming = merger.mergeIncoming(incoming);
 
         // Step 3: 应用更新/新增规则（设置seqNo）
         Map<String, String> seqNoMap = buildSeqNoMap(mergedStock, mergedIncoming);
         List<CifAddress> insertList = new ArrayList<>();
-        List<CifAddress> updateList = new ArrayList<>();
 
         for (CifAddress addr : mergedIncoming) {
             String key = addr.getAddressType() + "_" + addr.getAddressDetail();
@@ -51,7 +48,6 @@ public class ClientAddressService {
                 insertList.add(addr);
             } else {
                 addr.setSeqNo(seqNo);  // 更新
-                updateList.add(addr);
             }
         }
 
@@ -91,20 +87,19 @@ public class ClientAddressService {
             }
         }
 
-        // Step 8-9: 批量入库
+        // Step 8: 批量 insert
         if (!insertList.isEmpty()) {
             for (CifAddress addr : insertList) {
                 addr.setSeqNo(generateId());
             }
             repository.saveAll(insertList);
         }
-        if (!updateList.isEmpty()) {
-            repository.updateAll(updateList);
-        }
 
-        // 删除已标记的地址
-        for (CifAddress addr : toDelete) {
-            repository.delete(addr.getSeqNo());
+        // Step 9: 批量 update（更新 mergedStock 中 seqNo 不为空的地址）
+        for (CifAddress addr : mergedStock) {
+            if (!"Y".equals(addr.getDelFlag()) && addr.getSeqNo() != null) {
+                repository.update(addr);
+            }
         }
 
         return repository.findByClientNo(clientNo);
@@ -123,8 +118,7 @@ public class ClientAddressService {
         return map;
     }
 
-    private List<CifAddress> findDeletedAddresses(List<CifAddress> stock, List<CifAddress> incoming) {
-        List<CifAddress> deleted = new ArrayList<>();
+    private List<CifAddress> markDeletedAddresses(List<CifAddress> stock, List<CifAddress> incoming) {
         for (CifAddress s : stock) {
             boolean found = false;
             for (CifAddress i : incoming) {
@@ -135,10 +129,10 @@ public class ClientAddressService {
                 }
             }
             if (!found) {
-                deleted.add(s);
+                s.setDelFlag("Y");
             }
         }
-        return deleted;
+        return stock;
     }
 
     private String generateId() {
