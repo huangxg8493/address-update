@@ -45,20 +45,11 @@ public class ClientAddressService {
             }
         }
 
-        // Step 5: 收集两个数组有效地址
-        List<CifAddress> allActive = new ArrayList<>();
-        for (CifAddress addr : mergedStock) {
-            if (!"Y".equals(addr.getDelFlag())) {
-                allActive.add(addr);
-            }
-        }
-        allActive.addAll(mergedIncoming);
+        // Step 5: 对两个数组应用通讯地址和最新地址规则，挑选结果不设置标识
+        CifAddress mailing = mailingStrategy.select(mergedIncoming);
+        java.util.Map<String, CifAddress> newestByType = newestStrategy.selectByType(mergedIncoming);
 
-        // Step 6: 挑选 mailing 和 newestByType（仅收集，不设置标识）
-        CifAddress mailing = mailingStrategy.select(allActive);
-        java.util.Map<String, CifAddress> newestByType = newestStrategy.selectByType(allActive);
-
-        // Step 7: 重置两个数组所有标识为 N
+        // Step 6: 重置两个数组所有标识为 N
         for (CifAddress addr : mergedStock) {
             addr.setIsMailingAddress("N");
             addr.setIsNewest("N");
@@ -68,13 +59,13 @@ public class ClientAddressService {
             addr.setIsNewest("N");
         }
 
-        // Step 8: 设置 mailing 标识为 Y
+        // Step 7: 设置通讯地址标识为 Y
         if (mailing != null) {
             mailing.setIsMailingAddress("Y");
             mailing.setIsNewest("Y");
         }
 
-        // Step 9: 设置 newest 标识为 Y
+        // Step 8: 设置最新地址标识为 Y
         for (java.util.Map.Entry<String, CifAddress> entry : newestByType.entrySet()) {
             CifAddress newestAddr = entry.getValue();
             if (!Objects.equals(mailing, newestAddr)) {
@@ -82,7 +73,7 @@ public class ClientAddressService {
             }
         }
 
-        // Step 10: 对上送数组中seqNo为空的地址，生成id，然后批量insert
+        // Step 9: 对上送数组中seqNo为空的地址，生成id，然后批量insert
         List<CifAddress> toInsert = new ArrayList<>();
         for (CifAddress addr : mergedIncoming) {
             if (addr.getSeqNo() == null) {
@@ -94,7 +85,7 @@ public class ClientAddressService {
             repository.saveAll(toInsert);
         }
 
-        // Step 11: 对上送数组中seqNo不为空的地址，根据其seqNo，更新存量地址中对应的数据，然后批量update
+        // Step 10: 对上送数组中seqNo不为空的地址，根据其seqNo，更新存量地址中对应的数据，然后批量update
         List<CifAddress> toUpdate = new ArrayList<>();
         for (CifAddress incomingAddr : mergedIncoming) {
             if (incomingAddr.getSeqNo() != null) {
