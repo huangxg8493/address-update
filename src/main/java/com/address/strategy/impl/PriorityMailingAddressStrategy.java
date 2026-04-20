@@ -4,7 +4,9 @@ import com.address.model.AddressType;
 import com.address.model.CifAddress;
 import com.address.strategy.MailingAddressStrategy;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 public class PriorityMailingAddressStrategy implements MailingAddressStrategy {
 
@@ -17,78 +19,59 @@ public class PriorityMailingAddressStrategy implements MailingAddressStrategy {
      */
     @Override
     public CifAddress select(List<CifAddress> mergedIncoming, List<CifAddress> mergedStock) {
-        // 第8条：按优先级遍历每种类型，选该类型中 isMailingAddress='Y' 的第一个
-        for (AddressType type : AddressType.values()) {
-            CifAddress found = findMailing(mergedIncoming, type.getCode());
-            if (found != null) {
-                return found;
-            }
+        // 第8条：上送中有Y标记的，按优先级选第一个（先按类型优先级排序，再取第一个）
+        CifAddress mailingFromIncoming = mergedIncoming.stream()
+                .filter(a -> "Y".equals(a.getIsMailingAddress()))
+                .filter(a -> !"Y".equals(a.getDelFlag()))
+                .min(Comparator.comparing(a -> {
+                    AddressType type = AddressType.fromCode(a.getAddressType());
+                    return type.ordinal();
+                }))
+                .orElse(null);
+
+        if (mailingFromIncoming != null) {
+            return mailingFromIncoming;
         }
 
-        // 第9条：上送中没有Y标记的，从存量中找 isMailingAddress='Y' 且修改时间最大的
-        CifAddress mailingFromStock = findMaxLastChangeWithCond(mergedStock, a -> "Y".equals(a.getIsMailingAddress()));
+        // 第9条：上送没有Y标记的，从存量中选Y标记且修改时间最大的
+        CifAddress mailingFromStock = mergedStock.stream()
+                .filter(a -> "Y".equals(a.getIsMailingAddress()))
+                .filter(a -> !"Y".equals(a.getDelFlag()))
+                .max(Comparator.comparing(a ->
+                        a.getLastChangeDate() != null ? a.getLastChangeDate().getTime() : Long.MIN_VALUE))
+                .orElse(null);
+
         if (mailingFromStock != null) {
             return mailingFromStock;
         }
 
-        // 第10条：按优先级从所有地址中选每种类型修改时间最大的（先上送后存量）
+        // 第10条：都没有Y标记的，按优先级选每种类型修改时间最大的（先上送后存量）
         for (AddressType type : AddressType.values()) {
-            CifAddress latest = findMaxLastChange(mergedIncoming, type.getCode());
-            if (latest == null) {
-                latest = findMaxLastChange(mergedStock, type.getCode());
+            String typeCode = type.getCode();
+
+            CifAddress fromIncoming = mergedIncoming.stream()
+                    .filter(a -> typeCode.equals(a.getAddressType()))
+                    .filter(a -> !"Y".equals(a.getDelFlag()))
+                    .max(Comparator.comparing(a ->
+                            a.getLastChangeDate() != null ? a.getLastChangeDate().getTime() : Long.MIN_VALUE))
+                    .orElse(null);
+
+            if (fromIncoming != null) {
+                return fromIncoming;
             }
-            if (latest != null) {
-                return latest;
+
+            CifAddress fromStock = mergedStock.stream()
+                    .filter(a -> typeCode.equals(a.getAddressType()))
+                    .filter(a -> !"Y".equals(a.getDelFlag()))
+                    .max(Comparator.comparing(a ->
+                            a.getLastChangeDate() != null ? a.getLastChangeDate().getTime() : Long.MIN_VALUE))
+                    .orElse(null);
+
+            if (fromStock != null) {
+                return fromStock;
             }
         }
 
         return null;
-    }
-
-    /**
-     * 从地址列表中找 isMailingAddress='Y' 且属于指定类型的第一个地址
-     */
-    private CifAddress findMailing(List<CifAddress> addresses, String addressType) {
-        for (CifAddress a : addresses) {
-            if (!"Y".equals(a.getDelFlag()) && "Y".equals(a.getIsMailingAddress()) && addressType.equals(a.getAddressType())) {
-                return a;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * 从地址列表中找指定类型中 lastChangeDate 最大的地址（不考虑其他条件）
-     */
-    private CifAddress findMaxLastChange(List<CifAddress> addresses, String addressType) {
-        CifAddress result = null;
-        for (CifAddress a : addresses) {
-            if (!"Y".equals(a.getDelFlag()) && addressType.equals(a.getAddressType())) {
-                if (result == null || (a.getLastChangeDate() != null && a.getLastChangeDate().after(result.getLastChangeDate()))) {
-                    result = a;
-                }
-            }
-        }
-        return result;
-    }
-
-    /**
-     * 从地址列表中找符合条件且 lastChangeDate 最大的地址
-     */
-    private CifAddress findMaxLastChangeWithCond(List<CifAddress> addresses, CifAddressPredicate cond) {
-        CifAddress result = null;
-        for (CifAddress a : addresses) {
-            if (!"Y".equals(a.getDelFlag()) && cond.test(a)) {
-                if (result == null || (a.getLastChangeDate() != null && a.getLastChangeDate().after(result.getLastChangeDate()))) {
-                    result = a;
-                }
-            }
-        }
-        return result;
-    }
-
-    @FunctionalInterface
-    interface CifAddressPredicate {
-        boolean test(CifAddress a);
     }
 }
