@@ -28,18 +28,18 @@ public class AddressMerger {
     }
 
     public List<CifAddress> mergeStock(List<CifAddress> stock, List<CifAddress> toDelete) {
-        Map<String, CifAddress> stockMap = new HashMap<>();
+        // 将待删除地址 del_flag 设为 Y，返回所有地址（包括标记删除的）
         for (CifAddress addr : stock) {
             String key = addr.getAddressType() + "_" + addr.getAddressDetail();
-            stockMap.put(key, addr);
+            for (CifAddress td : toDelete) {
+                String tdKey = td.getAddressType() + "_" + td.getAddressDetail();
+                if (key.equals(tdKey)) {
+                    addr.setDelFlag("Y");
+                    break;
+                }
+            }
         }
-
-        for (CifAddress addr : toDelete) {
-            String key = addr.getAddressType() + "_" + addr.getAddressDetail();
-            stockMap.remove(key);
-        }
-
-        return new ArrayList<>(stockMap.values());
+        return stock;
     }
 
     private CifAddress mergeTwo(CifAddress a, CifAddress b) {
