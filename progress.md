@@ -62,10 +62,10 @@
 - 生成 jar：target/client-address-service-1.0.0.jar
 - 测试结果：16 tests, 0 failures
 
-### Task 9: 修改 AddressMerger#mergeStock 支持标记删除
+### Task 9: 删除并重写 ClientAddressService
 - 状态：待开始
 
-### Task 10: 重构 ClientAddressService#updateAddresses
+### Task 10: 修改 AddressMerger 支持标记删除
 - 状态：待开始
 
 ### Task 11: 验证和测试

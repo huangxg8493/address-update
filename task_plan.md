@@ -85,19 +85,14 @@
 
 ## 重构阶段
 
-### Task 9: 修改 AddressMerger#mergeStock 支持标记删除
+### Task 9: 删除并重写 ClientAddressService
 
-- [ ] Step 1: 读取当前 AddressMerger 实现
-- [ ] Step 2: 修改 mergeStock 返回所有地址，将待删除地址 del_flag 设为 Y
-- [ ] Step 3: 运行测试验证
+- [ ] Step 1: 删除现有 ClientAddressService.java
+- [ ] Step 2: 按设计 11 步流程重写
 
-### Task 10: 重构 ClientAddressService#updateAddresses
+### Task 10: 修改 AddressMerger 支持标记删除
 
-- [ ] Step 1: 编写新版本 updateAddresses（按参考算法9步流程）
-- [ ] Step 2: 确保 findDeletedAddresses 方法存在且正确
-- [ ] Step 3: 确保 buildSeqNoMap 方法正确构建
-- [ ] Step 4: 确保 generateId 方法存在
-- [ ] Step 5: 运行测试验证
+- [ ] Step 1: 确保 mergeStock 支持 del_flag 标记删除
 
 ### Task 11: 验证和测试
 
@@ -109,7 +104,7 @@
 
 ## 当前阶段
 
-重构阶段 - Task 9 开始执行
+重构阶段 - Task 9 待开始
 
 ---
 
