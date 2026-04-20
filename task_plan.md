@@ -87,24 +87,24 @@
 
 ### Task 9: 删除并重写 ClientAddressService
 
-- [ ] Step 1: 删除现有 ClientAddressService.java
-- [ ] Step 2: 按设计 11 步流程重写
+- [x] Step 1: 删除现有 ClientAddressService.java
+- [x] Step 2: 按设计 11 步流程重写
 
 ### Task 10: 修改 AddressMerger 支持标记删除
 
-- [ ] Step 1: 确保 mergeStock 支持 del_flag 标记删除
+- [x] Step 1: 确保 mergeStock 支持 del_flag 标记删除
 
 ### Task 11: 验证和测试
 
-- [ ] Step 1: 运行 Maven 测试
-- [ ] Step 2: 检查所有测试是否通过
-- [ ] Step 3: 提交变更
+- [x] Step 1: 运行 Maven 测试
+- [x] Step 2: 检查所有测试是否通过
+- [x] Step 3: 提交变更
 
 ---
 
 ## 当前阶段
 
-重构阶段 - Task 9 待开始
+所有任务已完成 ✅
 
 ---
 

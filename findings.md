@@ -107,3 +107,21 @@ src/test/java/com/address/
   └─ integration/
         └─ ClientAddressServiceIntegrationTest.java
 ```
+
+---
+
+## 提交记录
+
+- 1c4df40: chore: 添加 CLAUDE.md 代码库指南
+- 55148b4: refactor: PriorityNewestAddressStrategy.selectByType 改为空实现
+- ec07053: refactor: 简化 PriorityMailingAddressStrategy.select 实现
+- 0c5decf: refactor: 简化 PriorityMailingAddressStrategy，移除 for 循环中的 StreamAPI
+- bb76ed4: fix: 第8条优先级实现修正
+- f514a5e: feat: 实现 PriorityMailingAddressStrategy.select 通讯地址选择逻辑
+- c44850b: feat: 实现 PriorityNewestAddressStrategy.selectByType 最新地址选择逻辑
+
+---
+
+## 重构完成
+
+所有 Task 9-11 已完成，系统重构完毕。

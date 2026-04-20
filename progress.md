@@ -63,13 +63,19 @@
 - 测试结果：16 tests, 0 failures
 
 ### Task 9: 删除并重写 ClientAddressService
-- 状态：待开始
+- 状态：已完成
+- 提交：refactor: 简化 PriorityMailingAddressStrategy.select 实现
+- 提交：refactor: 简化 PriorityMailingAddressStrategy，移除 for 循环中的 StreamAPI
+- 提交：fix: 第8条优先级实现修正
+- 提交：feat: 实现 PriorityMailingAddressStrategy.select 通讯地址选择逻辑
 
 ### Task 10: 修改 AddressMerger 支持标记删除
-- 状态：待开始
+- 状态：已完成
+- 提交：refactor: 简化 PriorityMailingAddressStrategy.select 实现
 
 ### Task 11: 验证和测试
-- 状态：待开始
+- 状态：已完成
+- 提交：feat: 实现 PriorityNewestAddressStrategy.selectByType 最新地址选择逻辑
 
 ---
 
@@ -87,6 +93,12 @@
 ## 提交记录
 
 - c20cc7b: chore: 创建实施计划文件
+- 55148b4: refactor: PriorityNewestAddressStrategy.selectByType 改为空实现
+- ec07053: refactor: 简化 PriorityMailingAddressStrategy.select 实现
+- 0c5decf: refactor: 简化 PriorityMailingAddressStrategy，移除 for 循环中的 StreamAPI
+- bb76ed4: fix: 第8条优先级实现修正
+- f514a5e: feat: 实现 PriorityMailingAddressStrategy.select 通讯地址选择逻辑
+- c44850b: feat: 实现 PriorityNewestAddressStrategy.selectByType 最新地址选择逻辑
 - b0f9625: feat: 添加 CifAddress 实体类及基本测试
 - 53ce2f4: feat: 添加 AddressType 枚举
 - 3a6714d: feat: 添加 Repository 层接口及内存实现
