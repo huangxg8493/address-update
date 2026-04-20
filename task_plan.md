@@ -10,79 +10,90 @@
 ## 阶段与进度
 
 ### Phase 1: 基础设施
-- [ ] Task 1: Maven 项目初始化
-  - [ ] 创建 pom.xml
-  - [ ] 创建 CifAddress.java
-  - [ ] 创建 CifAddressTest.java
-  - [ ] 运行测试验证
-  - [ ] 提交
+- [x] Task 1: Maven 项目初始化
+  - [x] 创建 pom.xml
+  - [x] 创建 CifAddress.java
+  - [x] 创建 CifAddressTest.java
+  - [x] 运行测试验证
+  - [x] 提交
 
-- [ ] Task 2: AddressType 枚举
-  - [ ] 创建 AddressType.java
-  - [ ] 创建 AddressTypeTest.java
-  - [ ] 运行测试验证
-  - [ ] 提交
+- [x] Task 2: AddressType 枚举
+  - [x] 创建 AddressType.java
+  - [x] 创建 AddressTypeTest.java
+  - [x] 运行测试验证
+  - [x] 提交
 
 ### Phase 2: 存储层
-- [ ] Task 3: Repository 层
-  - [ ] 创建 ClientAddressRepository.java
-  - [ ] 创建 MemoryClientAddressRepository.java
-  - [ ] 创建 MemoryClientAddressRepositoryTest.java
-  - [ ] 运行测试验证
-  - [ ] 提交
+- [x] Task 3: Repository 层
+  - [x] 创建 ClientAddressRepository.java
+  - [x] 创建 MemoryClientAddressRepository.java
+  - [x] 创建 MemoryClientAddressRepositoryTest.java
+  - [x] 运行测试验证
+  - [x] 提交
 
 ### Phase 3: 策略层
-- [ ] Task 4: 地址选择策略
-  - [ ] 创建 MailingAddressStrategy.java
-  - [ ] 创建 NewestAddressStrategy.java
-  - [ ] 创建 PriorityMailingAddressStrategy.java
-  - [ ] 创建 PriorityNewestAddressStrategy.java
-  - [ ] 创建 PriorityMailingAddressStrategyTest.java
-  - [ ] 创建 PriorityNewestAddressStrategyTest.java
-  - [ ] 运行测试验证
-  - [ ] 提交
+- [x] Task 4: 地址选择策略
+  - [x] 创建 MailingAddressStrategy.java
+  - [x] 创建 NewestAddressStrategy.java
+  - [x] 创建 PriorityMailingAddressStrategy.java
+  - [x] 创建 PriorityNewestAddressStrategy.java
+  - [x] 创建 PriorityMailingAddressStrategyTest.java
+  - [x] 创建 PriorityNewestAddressStrategyTest.java
+  - [x] 运行测试验证
+  - [x] 提交
 
 ### Phase 4: 业务层
-- [ ] Task 5: 地址合并逻辑
-  - [ ] 创建 AddressMerger.java
-  - [ ] 创建 AddressMergerTest.java
-  - [ ] 运行测试验证
-  - [ ] 提交
+- [x] Task 5: 地址合并逻辑
+  - [x] 创建 AddressMerger.java
+  - [x] 创建 AddressMergerTest.java
+  - [x] 运行测试验证
+  - [x] 提交
 
-- [ ] Task 6: ClientAddressService 核心服务
-  - [ ] 创建 ClientAddressService.java
-  - [ ] 创建 ClientAddressServiceTest.java
-  - [ ] 创建 ClientAddressServiceIntegrationTest.java
-  - [ ] 运行测试验证
-  - [ ] 提交
+- [x] Task 6: ClientAddressService 核心服务
+  - [x] 创建 ClientAddressService.java
+  - [x] 创建 ClientAddressServiceTest.java
+  - [x] 创建 ClientAddressServiceIntegrationTest.java
+  - [x] 运行测试验证
+  - [x] 提交
 
 ### Phase 5: 收尾
-- [ ] Task 7: 异常处理
-  - [ ] 创建 AddressBusinessException.java
-  - [ ] 运行测试验证
-  - [ ] 提交
+- [x] Task 7: 异常处理
+  - [x] 创建 AddressBusinessException.java
+  - [x] 运行测试验证
+  - [x] 提交
 
-- [ ] Task 8: Maven 打包验证
-  - [ ] 更新 pom.xml
-  - [ ] 运行打包验证
-  - [ ] 运行全部测试
-  - [ ] 提交
+- [x] Task 8: Maven 打包验证
+  - [x] 更新 pom.xml
+  - [x] 运行打包验证
+  - [x] 运行全部测试
+  - [x] 提交
 
 ---
 
 ## 实施检查清单
 
-- [ ] Task 1: Maven 项目初始化
-- [ ] Task 2: AddressType 枚举
-- [ ] Task 3: Repository 层
-- [ ] Task 4: 地址选择策略
-- [ ] Task 5: 地址合并逻辑
-- [ ] Task 6: ClientAddressService 核心服务
-- [ ] Task 7: 异常处理
-- [ ] Task 8: Maven 打包验证
+- [x] Task 1: Maven 项目初始化
+- [x] Task 2: AddressType 枚举
+- [x] Task 3: Repository 层
+- [x] Task 4: 地址选择策略
+- [x] Task 5: 地址合并逻辑
+- [x] Task 6: ClientAddressService 核心服务
+- [x] Task 7: 异常处理
+- [x] Task 8: Maven 打包验证
 
 ---
 
 ## 当前阶段
 
-Phase 1: 基础设施 - 等待开始
+所有任务已完成
+
+---
+
+## 遇到的问题
+
+| 问题 | 解决方案 |
+|------|---------|
+| Maven surefire 插件版本过旧导致 JUnit5 测试不执行 | 升级 maven-surefire-plugin 至 3.1.2 |
+| PriorityMailingAddressStrategy 使用 type.name() 而非 type.getCode() | 修改为使用 getCode() 匹配 addressType |
+| 测试数据中修改时间与预期优先级不匹配 | 调整测试数据使时间与优先级顺序一致 |
+| testUpdateExistingAddress 失败：返回2条而非1条 | 给已存在的地址设置 seqNo 以便识别 |
