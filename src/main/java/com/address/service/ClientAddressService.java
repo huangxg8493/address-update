@@ -5,12 +5,12 @@ import com.address.model.CifAddress;
 import com.address.repository.ClientAddressRepository;
 import com.address.strategy.MailingAddressStrategy;
 import com.address.strategy.NewestAddressStrategy;
+import com.address.utils.SnowflakeIdGenerator;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 
 public class ClientAddressService {
     private final ClientAddressRepository repository;
@@ -119,6 +119,6 @@ public class ClientAddressService {
     }
 
     private String generateId() {
-        return UUID.randomUUID().toString().replace("-", "").substring(0, Constants.UUID_LENGTH);
+        return SnowflakeIdGenerator.getInstance().nextIdAsString();
     }
 }
