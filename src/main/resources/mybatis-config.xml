@@ -13,4 +13,8 @@
     <typeAliases>
         <typeAlias type="com.address.model.CifAddress" alias="CifAddress"/>
     </typeAliases>
+
+    <mappers>
+        <mapper resource="mapper/CifAddressMapper.xml"/>
+    </mappers>
 </configuration>
