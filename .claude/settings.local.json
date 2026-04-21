@@ -13,7 +13,11 @@
       "Bash(mvn clean *)",
       "Bash(mvn compile *)",
       "Bash(MAVEN_OPTS=\"-Xmx512m\" mvn test -Dtest=AddressMergerTest -DskipTests=false)",
-      "Bash(xargs wc *)"
+      "Bash(xargs wc *)",
+      "Bash(git -C *)",
+      "Bash(mvn dependency:resolve *)",
+      "Bash(mvn test-compile *)",
+      "Bash(mvn *)"
     ],
     "deny": [
       "Bash(git reset --hard:*)",

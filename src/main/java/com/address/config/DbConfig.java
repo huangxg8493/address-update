@@ -66,15 +66,15 @@ public class DbConfig {
     }
 
     public static long getConnectionTimeout() {
-        return (Long) getHikari().getOrDefault("connectionTimeout", 30000L);
+        return ((Number) getHikari().getOrDefault("connectionTimeout", 30000L)).longValue();
     }
 
     public static long getIdleTimeout() {
-        return (Long) getHikari().getOrDefault("idleTimeout", 600000L);
+        return ((Number) getHikari().getOrDefault("idleTimeout", 600000L)).longValue();
     }
 
     public static long getMaxLifetime() {
-        return (Long) getHikari().getOrDefault("maxLifetime", 1800000L);
+        return ((Number) getHikari().getOrDefault("maxLifetime", 1800000L)).longValue();
     }
 
     public static DataSource getDataSource() {
