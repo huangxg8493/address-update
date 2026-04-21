@@ -79,6 +79,20 @@
 
 ---
 
+## 2026-04-21
+
+### seqNo 雪花算法实现
+
+#### Task 12: 创建 SnowflakeIdGenerator 工具类
+- 状态：已完成
+- 提交：feat: 新增 SnowflakeIdGenerator 雪花算法 ID 生成器
+
+#### Task 13: 修改 ClientAddressService 使用 SnowflakeIdGenerator
+- 状态：已完成
+- 提交：refactor: seqNo 生成改用 Snowflake 算法
+
+---
+
 ## 遇到的问题
 
 | 问题 | 解决方案 |
@@ -92,13 +106,19 @@
 
 ## 提交记录
 
-- c20cc7b: chore: 创建实施计划文件
+- a4c4feb: refactor: seqNo 生成改用 Snowflake 算法
+- b766de1: feat: 新增 SnowflakeIdGenerator 雪花算法 ID 生成器
+- c42081c: docs: 添加 seqNo 雪花算法实现计划
+- 41bb7ab: docs: 添加 seqNo 雪花算法设计方案
+- 0466a46: refactor: 抽取魔法值为 Constants 接口统一管理
+- 8495a27: docs: 同步规划文件，标记所有任务完成
+- c44850b: feat: 实现 PriorityNewestAddressStrategy.selectByType 最新地址选择逻辑
 - 55148b4: refactor: PriorityNewestAddressStrategy.selectByType 改为空实现
 - ec07053: refactor: 简化 PriorityMailingAddressStrategy.select 实现
 - 0c5decf: refactor: 简化 PriorityMailingAddressStrategy，移除 for 循环中的 StreamAPI
 - bb76ed4: fix: 第8条优先级实现修正
 - f514a5e: feat: 实现 PriorityMailingAddressStrategy.select 通讯地址选择逻辑
-- c44850b: feat: 实现 PriorityNewestAddressStrategy.selectByType 最新地址选择逻辑
+- c20cc7b: chore: 创建实施计划文件
 - b0f9625: feat: 添加 CifAddress 实体类及基本测试
 - 53ce2f4: feat: 添加 AddressType 枚举
 - 3a6714d: feat: 添加 Repository 层接口及内存实现

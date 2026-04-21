@@ -104,6 +104,25 @@
 
 ## 当前阶段
 
+### Phase 6: seqNo 雪花算法实现
+
+#### Task 12: 创建 SnowflakeIdGenerator 工具类
+
+- [x] Step 1: 编写测试用例
+- [x] Step 2: 运行测试确认失败
+- [x] Step 3: 实现 SnowflakeIdGenerator
+- [x] Step 4: 运行测试确认通过
+- [x] Step 5: 提交
+
+#### Task 13: 修改 ClientAddressService 使用 SnowflakeIdGenerator
+
+- [x] Step 1: 添加 import
+- [x] Step 2: 修改 generateId 方法
+- [x] Step 3: 运行所有测试确认通过
+- [x] Step 4: 提交
+
+---
+
 所有任务已完成 ✅
 
 ---

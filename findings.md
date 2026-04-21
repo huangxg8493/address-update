@@ -90,7 +90,10 @@ src/main/java/com/address/
   ├─ service/
   │   ├─ ClientAddressService.java  # 重构核心
   │   └─ AddressMerger.java        # 修改mergeStock
-  └─ exception/  # 已删除 AddressBusinessException
+  ├─ constants/
+  │   └─ Constants.java           # 魔法值常量
+  └─ utils/
+      └─ SnowflakeIdGenerator.java # 雪花算法 ID 生成器
 
 src/test/java/com/address/
   ├─ model/
@@ -104,8 +107,10 @@ src/test/java/com/address/
   ├─ service/
   │   ├─ AddressMergerTest.java
   │   └─ ClientAddressServiceTest.java
-  └─ integration/
-        └─ ClientAddressServiceIntegrationTest.java
+  ├─ integration/
+  │   └─ ClientAddressServiceIntegrationTest.java
+  └─ utils/
+      └─ SnowflakeIdGeneratorTest.java
 ```
 
 ---
@@ -125,3 +130,32 @@ src/test/java/com/address/
 ## 重构完成
 
 所有 Task 9-11 已完成，系统重构完毕。
+
+---
+
+## seqNo 雪花算法实现
+
+### 背景
+CifAddress 的 seqNo 字段用于唯一标识地址记录。当前使用 UUID 截取 16 位生成，存在极低碰撞概率。为保证全局唯一性，改为 Snowflake 算法。
+
+### 设计决策
+- **保持 String 类型** - Snowflake ID 转为字符串存储
+- **固定 workerId/datacenterId** - workerId=1, datacenterId=1
+- **手动实现** - 不依赖外部库，纯 Java 实现
+- **时钟回拨处理** - 阻塞等待时钟追上
+
+### 雪花算法结构
+```
+1 bit  | 41 bits          | 5 bits      | 5 bits       | 12 bits
+------|------------------|-------------|--------------|--------------
+0     | 时间戳（毫秒）      | workerId=1  | datacenterId=1 | 序列号
+```
+
+### 生成示例
+```
+694252380621615873  (String 类型)
+```
+
+### 相关文件
+- `src/main/java/com/address/utils/SnowflakeIdGenerator.java` (新增)
+- `src/test/java/com/address/utils/SnowflakeIdGeneratorTest.java` (新增)
