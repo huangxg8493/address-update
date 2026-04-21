@@ -7,6 +7,8 @@ import com.address.repository.JdbcClientAddressRepository;
 import com.address.strategy.MailingAddressStrategy;
 import com.address.strategy.NewestAddressStrategy;
 import com.address.utils.SnowflakeIdGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class ClientAddressService {
-    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ClientAddressService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ClientAddressService.class);
 
     private final ClientAddressRepository repository;
     private final MailingAddressStrategy mailingStrategy;

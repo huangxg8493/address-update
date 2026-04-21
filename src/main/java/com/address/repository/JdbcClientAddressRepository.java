@@ -3,13 +3,16 @@ package com.address.repository;
 import com.address.config.DbConfig;
 import com.address.constants.Constants;
 import com.address.model.CifAddress;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcClientAddressRepository implements ClientAddressRepository {
 
-    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(JdbcClientAddressRepository.class);
+    private static final Logger logger = LoggerFactory.getLogger(JdbcClientAddressRepository.class);
 
     static {
         createTableIfNotExists();
