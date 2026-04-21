@@ -1,11 +1,15 @@
 package com.address.config;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.yaml.snakeyaml.Yaml;
+import javax.sql.DataSource;
 import java.io.InputStream;
 import java.util.Map;
 
 public class DbConfig {
     private static final Map<String, Object> config;
+    private static final DataSource dataSource;
 
     static {
         Yaml yaml = new Yaml();
@@ -14,11 +18,27 @@ public class DbConfig {
         } catch (Exception e) {
             throw new RuntimeException("加载 config.yaml 失败", e);
         }
+
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setJdbcUrl(getUrl());
+        hikariConfig.setUsername(getUsername());
+        hikariConfig.setPassword(getPassword());
+        hikariConfig.setMaximumPoolSize(getMaximumPoolSize());
+        hikariConfig.setMinimumIdle(getMinimumIdle());
+        hikariConfig.setConnectionTimeout(getConnectionTimeout());
+        hikariConfig.setIdleTimeout(getIdleTimeout());
+        hikariConfig.setMaxLifetime(getMaxLifetime());
+        dataSource = new HikariDataSource(hikariConfig);
     }
 
     @SuppressWarnings("unchecked")
     public static Map<String, Object> getDatabase() {
         return (Map<String, Object>) config.get("database");
+    }
+
+    @SuppressWarnings("unchecked")
+    private static Map<String, Object> getHikari() {
+        return (Map<String, Object>) config.get("hikari");
     }
 
     public static String getDriver() {
@@ -35,5 +55,29 @@ public class DbConfig {
 
     public static String getPassword() {
         return (String) getDatabase().get("password");
+    }
+
+    public static int getMaximumPoolSize() {
+        return (Integer) getHikari().getOrDefault("maximumPoolSize", 10);
+    }
+
+    public static int getMinimumIdle() {
+        return (Integer) getHikari().getOrDefault("minimumIdle", 2);
+    }
+
+    public static long getConnectionTimeout() {
+        return (Long) getHikari().getOrDefault("connectionTimeout", 30000L);
+    }
+
+    public static long getIdleTimeout() {
+        return (Long) getHikari().getOrDefault("idleTimeout", 600000L);
+    }
+
+    public static long getMaxLifetime() {
+        return (Long) getHikari().getOrDefault("maxLifetime", 1800000L);
+    }
+
+    public static DataSource getDataSource() {
+        return dataSource;
     }
 }
