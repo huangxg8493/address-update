@@ -10,10 +10,12 @@ import java.util.List;
 
 public class MyBatisClientAddressRepository implements ClientAddressRepository {
 
-    private static final SqlSessionFactory SQL_SESSION_FACTORY = MyBatisConfig.getSqlSessionFactory();
+    private static SqlSessionFactory getSqlSessionFactory() {
+        return MyBatisConfig.getSqlSessionFactory();
+    }
 
     private SqlSession getSqlSession() {
-        return SQL_SESSION_FACTORY.openSession();
+        return getSqlSessionFactory().openSession();
     }
 
     private <T> T execute(SqlSessionCallback<T> callback) {
