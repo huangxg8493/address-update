@@ -35,42 +35,65 @@
             IS_NEWEST,
             DEL_FLAG
         FROM CIF_ADDRESS
-        WHERE CLIENT_NO = #{clientNo,jdbcType=VARCHAR}
-          AND DEL_FLAG = #{delFlag,jdbcType=CHAR}
+        <where>
+            <if test="clientNo != null and clientNo != ''">
+                AND CLIENT_NO = #{clientNo,jdbcType=VARCHAR}
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                AND DEL_FLAG = #{delFlag,jdbcType=CHAR}
+            </if>
+        </where>
     </select>
 
-    <!-- 插入：单条记录 -->
+    <!-- 插入：单条记录（使用 trim 去除多余逗号） -->
     <insert id="save" parameterType="CifAddress">
-        INSERT INTO CIF_ADDRESS (
-            SEQ_NO,
-            CLIENT_NO,
-            ADDRESS_TYPE,
-            ADDRESS_DETAIL,
-            LAST_CHANGE_DATE,
-            IS_MAILING_ADDRESS,
-            IS_NEWEST,
-            DEL_FLAG
-        ) VALUES (
-            #{seqNo,jdbcType=VARCHAR},
-            #{clientNo,jdbcType=VARCHAR},
-            #{addressType,jdbcType=VARCHAR},
-            #{addressDetail,jdbcType=VARCHAR},
-            #{lastChangeDate,jdbcType=TIMESTAMP},
-            #{isMailingAddress,jdbcType=CHAR},
-            #{isNewest,jdbcType=CHAR},
-            #{delFlag,jdbcType=CHAR}
-        )
+        INSERT INTO CIF_ADDRESS
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="seqNo != null and seqNo != ''">SEQ_NO,</if>
+            <if test="clientNo != null and clientNo != ''">CLIENT_NO,</if>
+            <if test="addressType != null and addressType != ''">ADDRESS_TYPE,</if>
+            <if test="addressDetail != null and addressDetail != ''">ADDRESS_DETAIL,</if>
+            <if test="lastChangeDate != null">LAST_CHANGE_DATE,</if>
+            <if test="isMailingAddress != null and isMailingAddress != ''">IS_MAILING_ADDRESS,</if>
+            <if test="isNewest != null and isNewest != ''">IS_NEWEST,</if>
+            <if test="delFlag != null and delFlag != ''">DEL_FLAG,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="seqNo != null and seqNo != ''">#{seqNo,jdbcType=VARCHAR},</if>
+            <if test="clientNo != null and clientNo != ''">#{clientNo,jdbcType=VARCHAR},</if>
+            <if test="addressType != null and addressType != ''">#{addressType,jdbcType=VARCHAR},</if>
+            <if test="addressDetail != null and addressDetail != ''">#{addressDetail,jdbcType=VARCHAR},</if>
+            <if test="lastChangeDate != null">#{lastChangeDate,jdbcType=TIMESTAMP},</if>
+            <if test="isMailingAddress != null and isMailingAddress != ''">#{isMailingAddress,jdbcType=CHAR},</if>
+            <if test="isNewest != null and isNewest != ''">#{isNewest,jdbcType=CHAR},</if>
+            <if test="delFlag != null and delFlag != ''">#{delFlag,jdbcType=CHAR},</if>
+        </trim>
     </insert>
 
-    <!-- 更新：单条记录 -->
+    <!-- 更新：单条记录（使用 set 标签自动去除末尾逗号） -->
     <update id="update" parameterType="CifAddress">
         UPDATE CIF_ADDRESS
-        SET ADDRESS_TYPE       = #{addressType,jdbcType=VARCHAR},
-            ADDRESS_DETAIL     = #{addressDetail,jdbcType=VARCHAR},
-            LAST_CHANGE_DATE   = #{lastChangeDate,jdbcType=TIMESTAMP},
-            IS_MAILING_ADDRESS = #{isMailingAddress,jdbcType=CHAR},
-            IS_NEWEST          = #{isNewest,jdbcType=CHAR},
-            DEL_FLAG           = #{delFlag,jdbcType=CHAR}
+        <set>
+            <if test="addressType != null and addressType != ''">
+                ADDRESS_TYPE = #{addressType,jdbcType=VARCHAR},
+            </if>
+            <if test="addressDetail != null and addressDetail != ''">
+                ADDRESS_DETAIL = #{addressDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="lastChangeDate != null">
+                LAST_CHANGE_DATE = #{lastChangeDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isMailingAddress != null and isMailingAddress != ''">
+                IS_MAILING_ADDRESS = #{isMailingAddress,jdbcType=CHAR},
+            </if>
+            <if test="isNewest != null and isNewest != ''">
+                IS_NEWEST = #{isNewest,jdbcType=CHAR},
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                DEL_FLAG = #{delFlag,jdbcType=CHAR},
+            </if>
+        </set>
         WHERE SEQ_NO = #{seqNo,jdbcType=VARCHAR}
     </update>
 
@@ -104,12 +127,26 @@
     <update id="updateAll" parameterType="java.util.List">
         <foreach collection="list" item="addr">
             UPDATE CIF_ADDRESS
-            SET ADDRESS_TYPE       = #{addr.addressType,jdbcType=VARCHAR},
-                ADDRESS_DETAIL     = #{addr.addressDetail,jdbcType=VARCHAR},
-                LAST_CHANGE_DATE   = #{addr.lastChangeDate,jdbcType=TIMESTAMP},
-                IS_MAILING_ADDRESS = #{addr.isMailingAddress,jdbcType=CHAR},
-                IS_NEWEST          = #{addr.isNewest,jdbcType=CHAR},
-                DEL_FLAG           = #{addr.delFlag,jdbcType=CHAR}
+            <set>
+                <if test="addr.addressType != null and addr.addressType != ''">
+                    ADDRESS_TYPE = #{addr.addressType,jdbcType=VARCHAR},
+                </if>
+                <if test="addr.addressDetail != null and addr.addressDetail != ''">
+                    ADDRESS_DETAIL = #{addr.addressDetail,jdbcType=VARCHAR},
+                </if>
+                <if test="addr.lastChangeDate != null">
+                    LAST_CHANGE_DATE = #{addr.lastChangeDate,jdbcType=TIMESTAMP},
+                </if>
+                <if test="addr.isMailingAddress != null and addr.isMailingAddress != ''">
+                    IS_MAILING_ADDRESS = #{addr.isMailingAddress,jdbcType=CHAR},
+                </if>
+                <if test="addr.isNewest != null and addr.isNewest != ''">
+                    IS_NEWEST = #{addr.isNewest,jdbcType=CHAR},
+                </if>
+                <if test="addr.delFlag != null and addr.delFlag != ''">
+                    DEL_FLAG = #{addr.delFlag,jdbcType=CHAR},
+                </if>
+            </set>
             WHERE SEQ_NO = #{addr.seqNo,jdbcType=VARCHAR};
         </foreach>
     </update>
