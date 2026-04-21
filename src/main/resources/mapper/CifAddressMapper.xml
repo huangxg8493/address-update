@@ -4,69 +4,113 @@
 
 <mapper namespace="com.address.repository.CifAddressMapper">
 
+    <!-- 缓存配置（可选，根据需要启用） -->
+    <!-- <cache eviction="LRU" size="128" flushInterval="60000" readOnly="true"/> -->
+
+    <!-- 结果映射：Java属性与数据库列的映射关系 -->
     <resultMap id="CifAddressResultMap" type="CifAddress">
-        <id property="seqNo" column="SEQ_NO"/>
-        <result property="clientNo" column="CLIENT_NO"/>
-        <result property="addressType" column="ADDRESS_TYPE"/>
-        <result property="addressDetail" column="ADDRESS_DETAIL"/>
-        <result property="lastChangeDate" column="LAST_CHANGE_DATE"/>
-        <result property="isMailingAddress" column="IS_MAILING_ADDRESS"/>
-        <result property="isNewest" column="IS_NEWEST"/>
-        <result property="delFlag" column="DEL_FLAG"/>
+        <!-- 主键字段 -->
+        <id property="seqNo" column="SEQ_NO" jdbcType="VARCHAR"/>
+        <!-- 普通字段 -->
+        <result property="clientNo" column="CLIENT_NO" jdbcType="VARCHAR"/>
+        <result property="addressType" column="ADDRESS_TYPE" jdbcType="VARCHAR"/>
+        <result property="addressDetail" column="ADDRESS_DETAIL" jdbcType="VARCHAR"/>
+        <!-- 日期字段：允许为null，必须指定jdbcType -->
+        <result property="lastChangeDate" column="LAST_CHANGE_DATE" jdbcType="TIMESTAMP"/>
+        <!-- CHAR(1) 字段统一指定jdbcType避免类型转换问题 -->
+        <result property="isMailingAddress" column="IS_MAILING_ADDRESS" jdbcType="CHAR"/>
+        <result property="isNewest" column="IS_NEWEST" jdbcType="CHAR"/>
+        <result property="delFlag" column="DEL_FLAG" jdbcType="CHAR"/>
     </resultMap>
 
+    <!-- 查询：按客户号查询地址列表 -->
     <select id="findByClientNo" resultMap="CifAddressResultMap">
-        SELECT SEQ_NO, CLIENT_NO, ADDRESS_TYPE, ADDRESS_DETAIL,
-               LAST_CHANGE_DATE, IS_MAILING_ADDRESS, IS_NEWEST, DEL_FLAG
+        SELECT
+            SEQ_NO,
+            CLIENT_NO,
+            ADDRESS_TYPE,
+            ADDRESS_DETAIL,
+            LAST_CHANGE_DATE,
+            IS_MAILING_ADDRESS,
+            IS_NEWEST,
+            DEL_FLAG
         FROM CIF_ADDRESS
-        WHERE CLIENT_NO = #{clientNo} AND DEL_FLAG = #{delFlag}
+        WHERE CLIENT_NO = #{clientNo,jdbcType=VARCHAR}
+          AND DEL_FLAG = #{delFlag,jdbcType=CHAR}
     </select>
 
+    <!-- 插入：单条记录 -->
     <insert id="save" parameterType="CifAddress">
         INSERT INTO CIF_ADDRESS (
-            SEQ_NO, CLIENT_NO, ADDRESS_TYPE, ADDRESS_DETAIL,
-            LAST_CHANGE_DATE, IS_MAILING_ADDRESS, IS_NEWEST, DEL_FLAG
+            SEQ_NO,
+            CLIENT_NO,
+            ADDRESS_TYPE,
+            ADDRESS_DETAIL,
+            LAST_CHANGE_DATE,
+            IS_MAILING_ADDRESS,
+            IS_NEWEST,
+            DEL_FLAG
         ) VALUES (
-            #{seqNo}, #{clientNo}, #{addressType}, #{addressDetail},
-            #{lastChangeDate}, #{isMailingAddress}, #{isNewest}, #{delFlag}
+            #{seqNo,jdbcType=VARCHAR},
+            #{clientNo,jdbcType=VARCHAR},
+            #{addressType,jdbcType=VARCHAR},
+            #{addressDetail,jdbcType=VARCHAR},
+            #{lastChangeDate,jdbcType=TIMESTAMP},
+            #{isMailingAddress,jdbcType=CHAR},
+            #{isNewest,jdbcType=CHAR},
+            #{delFlag,jdbcType=CHAR}
         )
     </insert>
 
+    <!-- 更新：单条记录 -->
     <update id="update" parameterType="CifAddress">
         UPDATE CIF_ADDRESS
-        SET ADDRESS_TYPE = #{addressType},
-            ADDRESS_DETAIL = #{addressDetail},
-            LAST_CHANGE_DATE = #{lastChangeDate},
-            IS_MAILING_ADDRESS = #{isMailingAddress},
-            IS_NEWEST = #{isNewest},
-            DEL_FLAG = #{delFlag}
-        WHERE SEQ_NO = #{seqNo}
+        SET ADDRESS_TYPE       = #{addressType,jdbcType=VARCHAR},
+            ADDRESS_DETAIL     = #{addressDetail,jdbcType=VARCHAR},
+            LAST_CHANGE_DATE   = #{lastChangeDate,jdbcType=TIMESTAMP},
+            IS_MAILING_ADDRESS = #{isMailingAddress,jdbcType=CHAR},
+            IS_NEWEST          = #{isNewest,jdbcType=CHAR},
+            DEL_FLAG           = #{delFlag,jdbcType=CHAR}
+        WHERE SEQ_NO = #{seqNo,jdbcType=VARCHAR}
     </update>
 
+    <!-- 批量插入：使用 foreach -->
     <insert id="saveAll" parameterType="java.util.List">
         INSERT INTO CIF_ADDRESS (
-            SEQ_NO, CLIENT_NO, ADDRESS_TYPE, ADDRESS_DETAIL,
-            LAST_CHANGE_DATE, IS_MAILING_ADDRESS, IS_NEWEST, DEL_FLAG
+            SEQ_NO,
+            CLIENT_NO,
+            ADDRESS_TYPE,
+            ADDRESS_DETAIL,
+            LAST_CHANGE_DATE,
+            IS_MAILING_ADDRESS,
+            IS_NEWEST,
+            DEL_FLAG
         ) VALUES
         <foreach collection="list" item="addr" separator=",">
             (
-                #{addr.seqNo}, #{addr.clientNo}, #{addr.addressType}, #{addr.addressDetail},
-                #{addr.lastChangeDate}, #{addr.isMailingAddress},
-                #{addr.isNewest}, #{addr.delFlag}
+                #{addr.seqNo,jdbcType=VARCHAR},
+                #{addr.clientNo,jdbcType=VARCHAR},
+                #{addr.addressType,jdbcType=VARCHAR},
+                #{addr.addressDetail,jdbcType=VARCHAR},
+                #{addr.lastChangeDate,jdbcType=TIMESTAMP},
+                #{addr.isMailingAddress,jdbcType=CHAR},
+                #{addr.isNewest,jdbcType=CHAR},
+                #{addr.delFlag,jdbcType=CHAR}
             )
         </foreach>
     </insert>
 
+    <!-- 批量更新：使用 foreach（需要数据库支持 multiStatements） -->
     <update id="updateAll" parameterType="java.util.List">
         <foreach collection="list" item="addr">
             UPDATE CIF_ADDRESS
-            SET ADDRESS_TYPE = #{addr.addressType},
-                ADDRESS_DETAIL = #{addr.addressDetail},
-                LAST_CHANGE_DATE = #{addr.lastChangeDate},
-                IS_MAILING_ADDRESS = #{addr.isMailingAddress},
-                IS_NEWEST = #{addr.isNewest},
-                DEL_FLAG = #{addr.delFlag}
-            WHERE SEQ_NO = #{addr.seqNo};
+            SET ADDRESS_TYPE       = #{addr.addressType,jdbcType=VARCHAR},
+                ADDRESS_DETAIL     = #{addr.addressDetail,jdbcType=VARCHAR},
+                LAST_CHANGE_DATE   = #{addr.lastChangeDate,jdbcType=TIMESTAMP},
+                IS_MAILING_ADDRESS = #{addr.isMailingAddress,jdbcType=CHAR},
+                IS_NEWEST          = #{addr.isNewest,jdbcType=CHAR},
+                DEL_FLAG           = #{addr.delFlag,jdbcType=CHAR}
+            WHERE SEQ_NO = #{addr.seqNo,jdbcType=VARCHAR};
         </foreach>
     </update>
 
