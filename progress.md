@@ -203,6 +203,31 @@
 
 ---
 
+## Phase 11: Spring Boot 集成实现
+
+### Task 1: pom.xml 添加 Spring Boot 依赖
+- 状态：待开始
+
+### Task 2: 创建 Spring Boot 启动类
+- 状态：待开始
+
+### Task 3: 创建 application.yml 配置
+- 状态：待开始
+
+### Task 4: 创建 JdbcTemplateClientAddressRepository
+- 状态：待开始
+
+### Task 5: 创建 JdbcClientClientAddressRepository
+- 状态：待开始
+
+### Task 6: 配置 @Primary 并更新 ClientAddressService
+- 状态：待开始
+
+### Task 7: 验证测试
+- 状态：待开始
+
+---
+
 ## 提交记录
 
 - 67b23da: refactor: 完善 CifAddressMapper.xml 使用标准 MyBatis 规范

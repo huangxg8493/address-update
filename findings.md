@@ -275,6 +275,37 @@ src/main/java/com/address/
 
 ---
 
+## Spring Boot 集成实现
+
+### 背景
+当前项目手工管理 DataSource 和 MyBatis SqlSessionFactory。为引入依赖注入和 Spring 生态，引入 Spring Boot 容器。
+
+### 设计决策
+- **Spring Boot 2.7.18** - 要求 Java 8，与当前项目兼容
+- **mybatis-spring-boot-starter 3.0.3** - 官方 Starter，自动配置
+- **spring-boot-starter-jdbc** - 包含 JdbcTemplate 和 HikariCP 自动配置
+- **JdbcClient** - Spring JDBC 5.x 新增，链式 API
+
+### 架构决策
+- **保留 DbConfig.java 和 MyBatisConfig.java** - 不修改，不使用
+- **四种 Repository 实现并存** - JdbcTemplate、JdbcClient、MyBatis、Memory
+- **@Primary 标记默认实现** - JdbcTemplateClientAddressRepository 为默认
+
+### 约束
+- 不修改 DbConfig.java
+- 不修改 MyBatisConfig.java
+- 不使用 DbConfig.getDataSource()
+
+### 相关文件
+- `pom.xml` (修改)
+- `src/main/java/com/address/Application.java` (新增)
+- `src/main/resources/application.yml` (新增)
+- `src/main/java/com/address/repository/JdbcTemplateClientAddressRepository.java` (新增)
+- `src/main/java/com/address/repository/JdbcClientClientAddressRepository.java` (新增)
+- `src/main/java/com/address/service/ClientAddressService.java` (修改)
+
+---
+
 ## 日志记录功能实现
 
 ### 背景

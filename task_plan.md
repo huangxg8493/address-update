@@ -287,6 +287,52 @@
 
 ---
 
+## Phase 11: Spring Boot 集成实现
+
+### Task 1: pom.xml 添加 Spring Boot 依赖
+
+- [ ] Step 1: 修改 pom.xml，添加 Spring Boot 2.7.18 parent 和依赖
+- [ ] Step 2: mvn compile 验证编译
+- [ ] Step 3: git commit
+
+### Task 2: 创建 Spring Boot 启动类
+
+- [ ] Step 1: 创建 Application.java（@SpringBootApplication, @MapperScan）
+- [ ] Step 2: mvn compile 验证编译
+- [ ] Step 3: git commit
+
+### Task 3: 创建 application.yml 配置
+
+- [ ] Step 1: 创建 application.yml（DataSource + MyBatis 配置）
+- [ ] Step 2: mvn compile 验证编译
+- [ ] Step 3: git commit
+
+### Task 4: 创建 JdbcTemplateClientAddressRepository
+
+- [ ] Step 1: 创建 JdbcTemplateClientAddressRepository.java
+- [ ] Step 2: mvn compile 验证编译
+- [ ] Step 3: git commit
+
+### Task 5: 创建 JdbcClientClientAddressRepository
+
+- [ ] Step 1: 创建 JdbcClientClientAddressRepository.java
+- [ ] Step 2: mvn compile 验证编译
+- [ ] Step 3: git commit
+
+### Task 6: 配置 @Primary 并更新 ClientAddressService
+
+- [ ] Step 1: 在 JdbcTemplateClientAddressRepository 添加 @Primary
+- [ ] Step 2: 更新 ClientAddressService 使用 @Autowired 注入
+- [ ] Step 3: mvn compile 验证编译
+- [ ] Step 4: git commit
+
+### Task 7: 验证测试
+
+- [ ] Step 1: mvn test 运行所有测试
+- [ ] Step 2: git commit
+
+---
+
 ## 遇到的问题
 
 | 问题 | 解决方案 |
