@@ -3,7 +3,7 @@ package com.address.config;
 import com.address.model.CifAddress;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
 import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.mapping.Configuration;
+import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
