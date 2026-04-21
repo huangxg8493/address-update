@@ -291,45 +291,45 @@
 
 ### Task 1: pom.xml 添加 Spring Boot 依赖
 
-- [ ] Step 1: 修改 pom.xml，添加 Spring Boot 2.7.18 parent 和依赖
-- [ ] Step 2: mvn compile 验证编译
-- [ ] Step 3: git commit
+- [x] Step 1: 修改 pom.xml，添加 Spring Boot 2.7.18 parent 和依赖
+- [x] Step 2: mvn compile 验证编译
+- [x] Step 3: git commit
 
 ### Task 2: 创建 Spring Boot 启动类
 
-- [ ] Step 1: 创建 Application.java（@SpringBootApplication, @MapperScan）
-- [ ] Step 2: mvn compile 验证编译
-- [ ] Step 3: git commit
+- [x] Step 1: 创建 Application.java（@SpringBootApplication, @MapperScan）
+- [x] Step 2: mvn compile 验证编译
+- [x] Step 3: git commit
 
 ### Task 3: 创建 application.yml 配置
 
-- [ ] Step 1: 创建 application.yml（DataSource + MyBatis 配置）
-- [ ] Step 2: mvn compile 验证编译
-- [ ] Step 3: git commit
+- [x] Step 1: 创建 application.yml（DataSource + MyBatis 配置）
+- [x] Step 2: mvn compile 验证编译
+- [x] Step 3: git commit
 
 ### Task 4: 创建 JdbcTemplateClientAddressRepository
 
-- [ ] Step 1: 创建 JdbcTemplateClientAddressRepository.java
-- [ ] Step 2: mvn compile 验证编译
-- [ ] Step 3: git commit
+- [x] Step 1: 创建 JdbcTemplateClientAddressRepository.java
+- [x] Step 2: mvn compile 验证编译
+- [x] Step 3: git commit
 
 ### Task 5: 创建 JdbcClientClientAddressRepository
 
-- [ ] Step 1: 创建 JdbcClientClientAddressRepository.java
-- [ ] Step 2: mvn compile 验证编译
-- [ ] Step 3: git commit
+- [x] Step 1: 创建 JdbcClientClientAddressRepository.java（跳过 - JdbcClient 需要 Spring Boot 3.x + Java 17）
+- [x] Step 2: mvn compile 验证编译
+- [x] Step 3: git commit
 
 ### Task 6: 配置 @Primary 并更新 ClientAddressService
 
-- [ ] Step 1: 在 JdbcTemplateClientAddressRepository 添加 @Primary
-- [ ] Step 2: 更新 ClientAddressService 使用 @Autowired 注入
-- [ ] Step 3: mvn compile 验证编译
-- [ ] Step 4: git commit
+- [x] Step 1: 在 JdbcTemplateClientAddressRepository 添加 @Primary
+- [x] Step 2: 更新 ClientAddressService 使用 @Autowired 注入
+- [x] Step 3: mvn compile 验证编译
+- [x] Step 4: git commit
 
 ### Task 7: 验证测试
 
-- [ ] Step 1: mvn test 运行所有测试
-- [ ] Step 2: git commit
+- [x] Step 1: mvn test 运行所有测试
+- [x] Step 2: git commit
 
 ---
 
@@ -341,3 +341,5 @@
 | PriorityMailingAddressStrategy 使用 type.name() 而非 type.getCode() | 修改为使用 getCode() 匹配 addressType |
 | 测试数据中修改时间与预期优先级不匹配 | 调整测试数据使时间与优先级顺序一致 |
 | testUpdateExistingAddress 失败：返回2条而非1条 | 给已存在的地址设置 seqNo 以便识别 |
+| logback 1.4.11 与 Spring Boot 2.7.18 冲突 | 移除显式版本，使用 Spring Boot 管理的版本 |
+| JdbcClient API 仅在 Spring Boot 3.x 支持 | 跳过 JdbcClient 实现 |

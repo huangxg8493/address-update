@@ -206,29 +206,36 @@
 ## Phase 11: Spring Boot 集成实现
 
 ### Task 1: pom.xml 添加 Spring Boot 依赖
-- 状态：待开始
+- 状态：已完成
 
 ### Task 2: 创建 Spring Boot 启动类
-- 状态：待开始
+- 状态：已完成
 
 ### Task 3: 创建 application.yml 配置
-- 状态：待开始
+- 状态：已完成
 
 ### Task 4: 创建 JdbcTemplateClientAddressRepository
-- 状态：待开始
+- 状态：已完成
 
 ### Task 5: 创建 JdbcClientClientAddressRepository
-- 状态：待开始
+- 状态：跳过（JdbcClient 需要 Spring Boot 3.x + Java 17）
 
 ### Task 6: 配置 @Primary 并更新 ClientAddressService
-- 状态：待开始
+- 状态：已完成
 
 ### Task 7: 验证测试
-- 状态：待开始
+- 状态：已完成（26 tests, 0 failures）
 
 ---
 
 ## 提交记录
+
+- 00cfa12: test: 验证 Spring Boot 集成测试通过
+- 974e274: feat: 配置 @Primary 并更新 ClientAddressService 注入
+- 2428d2d: feat: 新增 JdbcTemplateClientAddressRepository
+- 4b99888: feat: 添加 Spring Boot 配置文件 application.yml
+- 39141d4: feat: 创建 Spring Boot 启动类 Application
+- 69c2f5f: feat: 引入 Spring Boot 2.7.18 依赖
 
 - 67b23da: refactor: 完善 CifAddressMapper.xml 使用标准 MyBatis 规范
 - 3e39750: docs: 更新 task_plan.md Phase 9 完成状态
