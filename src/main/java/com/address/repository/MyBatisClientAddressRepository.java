@@ -10,6 +10,8 @@ import java.util.List;
 
 public class MyBatisClientAddressRepository implements ClientAddressRepository {
 
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(MyBatisClientAddressRepository.class);
+
     private static SqlSessionFactory getSqlSessionFactory() {
         return MyBatisConfig.getSqlSessionFactory();
     }
@@ -41,6 +43,7 @@ public class MyBatisClientAddressRepository implements ClientAddressRepository {
 
     @Override
     public void save(CifAddress address) {
+        logger.info("保存地址 clientNo={}", address.getClientNo());
         execute(session -> {
             session.getMapper(CifAddressMapper.class).save(address);
             return null;
@@ -49,6 +52,7 @@ public class MyBatisClientAddressRepository implements ClientAddressRepository {
 
     @Override
     public void update(CifAddress address) {
+        logger.info("更新地址 seqNo={}", address.getSeqNo());
         execute(session -> {
             session.getMapper(CifAddressMapper.class).update(address);
             return null;
@@ -57,6 +61,7 @@ public class MyBatisClientAddressRepository implements ClientAddressRepository {
 
     @Override
     public void saveAll(List<CifAddress> addresses) {
+        logger.info("批量保存地址 clientNo={}, 数量={}", addresses.get(0).getClientNo(), addresses.size());
         execute(session -> {
             session.getMapper(CifAddressMapper.class).saveAll(addresses);
             return null;
@@ -65,6 +70,7 @@ public class MyBatisClientAddressRepository implements ClientAddressRepository {
 
     @Override
     public void updateAll(List<CifAddress> addresses) {
+        logger.info("批量更新地址 clientNo={}, 数量={}", addresses.get(0).getClientNo(), addresses.size());
         execute(session -> {
             session.getMapper(CifAddressMapper.class).updateAll(addresses);
             return null;
@@ -73,6 +79,7 @@ public class MyBatisClientAddressRepository implements ClientAddressRepository {
 
     @Override
     public void delete(String seqNo) {
+        logger.info("删除地址 seqNo={}", seqNo);
         execute(session -> {
             session.getMapper(CifAddressMapper.class).delete(seqNo);
             return null;
