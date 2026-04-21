@@ -1,25 +1,30 @@
 package com.address.repository;
 
-import com.address.config.MyBatisConfig;
 import com.address.constants.Constants;
 import com.address.model.CifAddress;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class MyBatisClientAddressRepository implements ClientAddressRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(MyBatisClientAddressRepository.class);
 
-    private static SqlSessionFactory getSqlSessionFactory() {
-        return MyBatisConfig.getSqlSessionFactory();
+    private final SqlSessionFactory sqlSessionFactory;
+
+    @Autowired
+    public MyBatisClientAddressRepository(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
     }
 
     private SqlSession getSqlSession() {
-        return getSqlSessionFactory().openSession();
+        return sqlSessionFactory.openSession();
     }
 
     private <T> T execute(SqlSessionCallback<T> callback) {
