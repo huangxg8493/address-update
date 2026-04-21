@@ -3,6 +3,7 @@ package com.address.service;
 import com.address.constants.Constants;
 import com.address.model.CifAddress;
 import com.address.repository.ClientAddressRepository;
+import com.address.repository.JdbcClientAddressRepository;
 import com.address.strategy.MailingAddressStrategy;
 import com.address.strategy.NewestAddressStrategy;
 import com.address.utils.SnowflakeIdGenerator;
@@ -25,6 +26,12 @@ public class ClientAddressService {
         this.mailingStrategy = mailingStrategy;
         this.newestStrategy = newestStrategy;
         this.merger = new AddressMerger();
+    }
+
+    // 便捷构造方法，使用 JdbcClientAddressRepository
+    public ClientAddressService(MailingAddressStrategy mailingStrategy,
+                                NewestAddressStrategy newestStrategy) {
+        this(new JdbcClientAddressRepository(), mailingStrategy, newestStrategy);
     }
 
     public List<CifAddress> updateAddresses(String clientNo, List<CifAddress> incoming) {
