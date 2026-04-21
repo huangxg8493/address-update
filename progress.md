@@ -91,6 +91,26 @@
 - 状态：已完成
 - 提交：refactor: seqNo 生成改用 Snowflake 算法
 
+### MySQL 持久层实现
+
+#### Task 14: 添加 Maven 依赖
+- 状态：pending
+
+#### Task 15: 创建配置文件和加载工具
+- 状态：pending
+
+#### Task 16: 创建 JdbcClientAddressRepository
+- 状态：pending
+
+#### Task 17: 添加自动建表逻辑
+- 状态：pending
+
+#### Task 18: 修改 ClientAddressService 使用 JdbcClientAddressRepository
+- 状态：pending
+
+#### Task 19: 创建 JdbcClientAddressRepositoryTest
+- 状态：pending
+
 ---
 
 ## 遇到的问题

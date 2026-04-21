@@ -123,6 +123,49 @@
 
 ---
 
+---
+
+## Phase 7: MySQL 持久层实现
+
+#### Task 14: 添加 Maven 依赖
+
+- [ ] Step 1: 添加 MySQL 和 YAML 依赖
+- [ ] Step 2: 验证依赖下载
+- [ ] Step 3: 提交
+
+#### Task 15: 创建配置文件和加载工具
+
+- [ ] Step 1: 创建 config.yaml
+- [ ] Step 2: 创建 DbConfig.java
+- [ ] Step 3: 验证配置加载
+- [ ] Step 4: 提交
+
+#### Task 16: 创建 JdbcClientAddressRepository
+
+- [ ] Step 1: 实现 JdbcClientAddressRepository
+- [ ] Step 2: 验证编译
+- [ ] Step 3: 提交
+
+#### Task 17: 添加自动建表逻辑
+
+- [ ] Step 1: 在 JdbcClientAddressRepository 中添加建表逻辑
+- [ ] Step 2: 验证编译
+- [ ] Step 3: 提交
+
+#### Task 18: 修改 ClientAddressService 使用 JdbcClientAddressRepository
+
+- [ ] Step 1: 修改构造函数注入
+- [ ] Step 2: 验证编译
+- [ ] Step 3: 提交
+
+#### Task 19: 创建 JdbcClientAddressRepositoryTest
+
+- [ ] Step 1: 编写测试用例
+- [ ] Step 2: 运行测试
+- [ ] Step 3: 提交
+
+---
+
 所有任务已完成 ✅
 
 ---
