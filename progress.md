@@ -147,6 +147,42 @@
 
 ---
 
+## Phase 9: MyBatis 迁移实现
+
+### Task 1: 添加 MyBatis Maven 依赖
+- 状态：待开始
+- 目标：pom.xml 添加 mybatis 3.5.13 和 mybatis-spring 2.1.1
+
+### Task 2: 创建 mybatis-config.xml
+- 状态：待开始
+- 目标：创建 MyBatis 核心配置文件
+
+### Task 3: 创建 CifAddressMapper.xml
+- 状态：待开始
+- 目标：创建 Mapper XML 文件，包含 findByClientNo, save, update, saveAll, updateAll 的 SQL
+
+### Task 4: 创建 CifAddressMapper.java
+- 状态：待开始
+- 目标：创建 Mapper 接口，delete 方法使用 @Update 注解
+
+### Task 5: 创建 MyBatisConfig.java
+- 状态：待开始
+- 目标：初始化 SqlSessionFactory，复用 HikariCP DataSource
+
+### Task 6: 创建 MyBatisClientAddressRepository.java
+- 状态：待开始
+- 目标：实现 ClientAddressRepository 接口
+
+### Task 7: 创建 MyBatisClientAddressRepositoryTest
+- 状态：待开始
+- 目标：覆盖 CRUD 所有操作的单元测试
+
+### Task 8: 完整测试验证
+- 状态：待开始
+- 目标：运行所有测试确保功能正常
+
+---
+
 ## 提交记录
 
 - a4c4feb: refactor: seqNo 生成改用 Snowflake 算法

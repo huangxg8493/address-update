@@ -230,3 +230,45 @@ hikari:
 - `config.yaml` (修改)
 - `DbConfig.java` (修改)
 - `JdbcClientAddressRepository.java` (修改)
+
+---
+
+## MyBatis 迁移实现
+
+### 背景
+现有 JdbcClientAddressRepository 使用原生 JDBC 实现，存在样板代码多、SQL 分散等问题。为提升可维护性，引入 MyBatis 持久层框架。
+
+### 设计决策
+- **迁移策略** - 保留 JDBC 实现，新建 MyBatis 实现
+- **SQL 管理** - 简单 SQL 用注解（delete），复杂 SQL 用 XML
+- **事务管理** - 手动管理，Service 层控制
+- **DataSource 复用** - 复用 DbConfig 中的 HikariCP DataSource
+
+### MyBatis 配置
+- mybatis 3.5.13 + mybatis-spring 2.1.1
+- mapUnderscoreToCamelCase: true（下划线转驼峰）
+- CifAddress 类型别名
+
+### 文件结构
+```
+src/main/resources/
+  ├─ mybatis-config.xml
+  └─ mapper/
+      └─ CifAddressMapper.xml
+
+src/main/java/com/address/
+  ├─ config/
+  │   └─ MyBatisConfig.java
+  └─ repository/
+      ├─ CifAddressMapper.java
+      └─ MyBatisClientAddressRepository.java
+```
+
+### 相关文件
+- `pom.xml` (修改)
+- `src/main/resources/mybatis-config.xml` (新增)
+- `src/main/resources/mapper/CifAddressMapper.xml` (新增)
+- `src/main/java/com/address/config/MyBatisConfig.java` (新增)
+- `src/main/java/com/address/repository/CifAddressMapper.java` (新增)
+- `src/main/java/com/address/repository/MyBatisClientAddressRepository.java` (新增)
+- `src/test/java/com/address/repository/MyBatisClientAddressRepositoryTest.java` (新增)
