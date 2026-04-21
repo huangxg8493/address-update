@@ -6,23 +6,25 @@ import com.address.strategy.impl.PriorityMailingAddressStrategy;
 import com.address.strategy.impl.PriorityNewestAddressStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ClientAddressServiceTest {
 
     private ClientAddressService service;
     private MemoryClientAddressRepository repository;
+    private PriorityMailingAddressStrategy mailingStrategy;
+    private PriorityNewestAddressStrategy newestStrategy;
 
     @BeforeEach
     void setUp() {
         repository = new MemoryClientAddressRepository();
-        service = new ClientAddressService(
-                repository,
-                new PriorityMailingAddressStrategy(),
-                new PriorityNewestAddressStrategy()
-        );
+        mailingStrategy = new PriorityMailingAddressStrategy();
+        newestStrategy = new PriorityNewestAddressStrategy();
+        service = new ClientAddressService(repository, mailingStrategy, newestStrategy);
     }
 
     @Test
