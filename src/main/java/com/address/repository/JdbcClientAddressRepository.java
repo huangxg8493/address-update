@@ -20,7 +20,7 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
     @Override
     public List<CifAddress> findByClientNo(String clientNo) {
         List<CifAddress> result = new ArrayList<>();
-        String sql = "SELECT * FROM CIF_ADDRESS WHERE CLIENT_NO = ? AND DEL_FLAG = ?";
+        String sql = "SELECT SEQ_NO, CLIENT_NO, ADDRESS_TYPE, ADDRESS_DETAIL, LAST_CHANGE_DATE, IS_MAILING_ADDRESS, IS_NEWEST, DEL_FLAG FROM CIF_ADDRESS WHERE CLIENT_NO = ? AND DEL_FLAG = ?";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, clientNo);
