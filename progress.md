@@ -94,22 +94,27 @@
 ### MySQL 持久层实现
 
 #### Task 14: 添加 Maven 依赖
-- 状态：pending
+- 状态：已完成
+- 提交：deps: 添加 MySQL 和 SnakeYAML 依赖
 
 #### Task 15: 创建配置文件和加载工具
-- 状态：pending
+- 状态：已完成
+- 提交：feat: 添加数据库配置和加载工具
 
 #### Task 16: 创建 JdbcClientAddressRepository
-- 状态：pending
+- 状态：已完成
+- 提交：feat: 添加 JdbcClientAddressRepository MySQL 实现
 
 #### Task 17: 添加自动建表逻辑
-- 状态：pending
+- 状态：已完成（合并在 Task 16 中）
 
 #### Task 18: 修改 ClientAddressService 使用 JdbcClientAddressRepository
-- 状态：pending
+- 状态：已完成
+- 提交：refactor: ClientAddressService 支持便捷构造方法使用 JdbcClientAddressRepository
 
 #### Task 19: 创建 JdbcClientAddressRepositoryTest
-- 状态：pending
+- 状态：已完成
+- 提交：test: 添加 JdbcClientAddressRepository 测试
 
 ---
 
