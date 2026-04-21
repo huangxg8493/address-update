@@ -113,7 +113,9 @@ public class ClientAddressService {
             }
         }
         if (!toInsert.isEmpty()) {
-            repository.saveAll(toInsert);
+            for (CifAddress addr : toInsert) {
+                repository.save(addr);
+            }
             logger.info("Step 9 完成: 新增数量={}", toInsert.size());
         } else {
             logger.info("Step 9 完成: 无新增地址");
@@ -135,7 +137,9 @@ public class ClientAddressService {
                 }
             }
         }
-        repository.updateAll(mergedStock);
+        if (!mergedStock.isEmpty()) {
+            repository.updateAll(mergedStock);
+        }
         logger.info("Step 10 完成");
 
         logger.info("updateAddresses 完成 clientNo={}", clientNo);

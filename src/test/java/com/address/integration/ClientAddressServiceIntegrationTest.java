@@ -1,29 +1,34 @@
 package com.address.integration;
 
 import com.address.model.CifAddress;
-import com.address.repository.MemoryClientAddressRepository;
-import com.address.strategy.impl.PriorityMailingAddressStrategy;
-import com.address.strategy.impl.PriorityNewestAddressStrategy;
+import com.address.repository.ClientAddressRepository;
 import com.address.service.ClientAddressService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class ClientAddressServiceIntegrationTest {
 
+    @Autowired
     private ClientAddressService service;
-    private MemoryClientAddressRepository repository;
+
+    @Autowired
+    private ClientAddressRepository repository;
 
     @BeforeEach
     void setUp() {
-        repository = new MemoryClientAddressRepository();
-        service = new ClientAddressService(
-                repository,
-                new PriorityMailingAddressStrategy(),
-                new PriorityNewestAddressStrategy()
-        );
+        // 清理测试数据
+        List<CifAddress> existing = repository.findByClientNo("C001");
+        for (CifAddress addr : existing) {
+            repository.delete(addr.getSeqNo());
+        }
     }
 
     @Test

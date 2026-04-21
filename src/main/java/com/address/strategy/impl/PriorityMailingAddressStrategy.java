@@ -5,10 +5,13 @@ import com.address.model.AddressType;
 import com.address.model.CifAddress;
 import com.address.strategy.MailingAddressStrategy;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class PriorityMailingAddressStrategy implements MailingAddressStrategy {
 
     /**
