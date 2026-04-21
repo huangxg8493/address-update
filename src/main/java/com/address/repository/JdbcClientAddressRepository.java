@@ -9,6 +9,8 @@ import java.util.List;
 
 public class JdbcClientAddressRepository implements ClientAddressRepository {
 
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(JdbcClientAddressRepository.class);
+
     static {
         createTableIfNotExists();
     }
@@ -38,6 +40,7 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
 
     @Override
     public void save(CifAddress address) {
+        logger.info("保存地址 clientNo={}", address.getClientNo());
         String sql = "INSERT INTO CIF_ADDRESS (SEQ_NO, CLIENT_NO, ADDRESS_TYPE, ADDRESS_DETAIL, " +
                      "LAST_CHANGE_DATE, IS_MAILING_ADDRESS, IS_NEWEST, DEL_FLAG) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -52,6 +55,7 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
 
     @Override
     public void update(CifAddress address) {
+        logger.info("更新地址 seqNo={}", address.getSeqNo());
         String sql = "UPDATE CIF_ADDRESS SET ADDRESS_TYPE = ?, ADDRESS_DETAIL = ?, " +
                      "LAST_CHANGE_DATE = ?, IS_MAILING_ADDRESS = ?, IS_NEWEST = ?, DEL_FLAG = ? " +
                      "WHERE SEQ_NO = ?";
@@ -73,6 +77,7 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
 
     @Override
     public void saveAll(List<CifAddress> addresses) {
+        logger.info("批量保存地址 clientNo={}, 数量={}", addresses.get(0).getClientNo(), addresses.size());
         String sql = "INSERT INTO CIF_ADDRESS (SEQ_NO, CLIENT_NO, ADDRESS_TYPE, ADDRESS_DETAIL, " +
                      "LAST_CHANGE_DATE, IS_MAILING_ADDRESS, IS_NEWEST, DEL_FLAG) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -90,6 +95,7 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
 
     @Override
     public void updateAll(List<CifAddress> addresses) {
+        logger.info("批量更新地址 clientNo={}, 数量={}", addresses.get(0).getClientNo(), addresses.size());
         for (CifAddress address : addresses) {
             update(address);
         }
@@ -97,6 +103,7 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
 
     @Override
     public void delete(String seqNo) {
+        logger.info("删除地址 seqNo={}", seqNo);
         String sql = "UPDATE CIF_ADDRESS SET DEL_FLAG = ? WHERE SEQ_NO = ?";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
