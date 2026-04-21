@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.address.repository.CifAddressMapper">
+
+    <resultMap id="CifAddressResultMap" type="CifAddress">
+        <id property="seqNo" column="SEQ_NO"/>
+        <result property="clientNo" column="CLIENT_NO"/>
+        <result property="addressType" column="ADDRESS_TYPE"/>
+        <result property="addressDetail" column="ADDRESS_DETAIL"/>
+        <result property="lastChangeDate" column="LAST_CHANGE_DATE"/>
+        <result property="isMailingAddress" column="IS_MAILING_ADDRESS"/>
+        <result property="isNewest" column="IS_NEWEST"/>
+        <result property="delFlag" column="DEL_FLAG"/>
+    </resultMap>
+
+    <select id="findByClientNo" resultMap="CifAddressResultMap">
+        SELECT SEQ_NO, CLIENT_NO, ADDRESS_TYPE, ADDRESS_DETAIL,
+               LAST_CHANGE_DATE, IS_MAILING_ADDRESS, IS_NEWEST, DEL_FLAG
+        FROM CIF_ADDRESS
+        WHERE CLIENT_NO = #{clientNo} AND DEL_FLAG = #{delFlag}
+    </select>
+
+    <insert id="save" parameterType="CifAddress">
+        INSERT INTO CIF_ADDRESS (
+            SEQ_NO, CLIENT_NO, ADDRESS_TYPE, ADDRESS_DETAIL,
+            LAST_CHANGE_DATE, IS_MAILING_ADDRESS, IS_NEWEST, DEL_FLAG
+        ) VALUES (
+            #{seqNo}, #{clientNo}, #{addressType}, #{addressDetail},
+            #{lastChangeDate}, #{isMailingAddress}, #{isNewest}, #{delFlag}
+        )
+    </insert>
+
+    <update id="update" parameterType="CifAddress">
+        UPDATE CIF_ADDRESS
+        SET ADDRESS_TYPE = #{addressType},
+            ADDRESS_DETAIL = #{addressDetail},
+            LAST_CHANGE_DATE = #{lastChangeDate},
+            IS_MAILING_ADDRESS = #{isMailingAddress},
+            IS_NEWEST = #{isNewest},
+            DEL_FLAG = #{delFlag}
+        WHERE SEQ_NO = #{seqNo}
+    </update>
+
+    <insert id="saveAll" parameterType="java.util.List">
+        INSERT INTO CIF_ADDRESS (
+            SEQ_NO, CLIENT_NO, ADDRESS_TYPE, ADDRESS_DETAIL,
+            LAST_CHANGE_DATE, IS_MAILING_ADDRESS, IS_NEWEST, DEL_FLAG
+        ) VALUES
+        <foreach collection="list" item="addr" separator=",">
+            (
+                #{addr.seqNo}, #{addr.clientNo}, #{addr.addressType}, #{addr.addressDetail},
+                #{addr.lastChangeDate}, #{addr.isMailingAddress},
+                #{addr.isNewest}, #{addr.delFlag}
+            )
+        </foreach>
+    </insert>
+
+    <update id="updateAll" parameterType="java.util.List">
+        <foreach collection="list" item="addr">
+            UPDATE CIF_ADDRESS
+            SET ADDRESS_TYPE = #{addr.addressType},
+                ADDRESS_DETAIL = #{addr.addressDetail},
+                LAST_CHANGE_DATE = #{addr.lastChangeDate},
+                IS_MAILING_ADDRESS = #{addr.isMailingAddress},
+                IS_NEWEST = #{addr.isNewest},
+                DEL_FLAG = #{addr.delFlag}
+            WHERE SEQ_NO = #{addr.seqNo};
+        </foreach>
+    </update>
+
+</mapper>
