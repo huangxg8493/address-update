@@ -1,8 +1,10 @@
 package com.address.repository;
 
+import com.address.config.DbConfig;
 import com.address.model.CifAddress;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.sql.*;
 import java.util.Date;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,7 +16,18 @@ public class JdbcClientAddressRepositoryTest {
     @BeforeEach
     public void setUp() {
         repository = new JdbcClientAddressRepository();
-        repository.clearTable();
+        clearTable();
+    }
+
+    private void clearTable() {
+        String sql = "DELETE FROM CIF_ADDRESS";
+        try (Connection conn = DriverManager.getConnection(
+                DbConfig.getUrl(), DbConfig.getUsername(), DbConfig.getPassword());
+             Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException("清空表失败", e);
+        }
     }
 
     @Test
