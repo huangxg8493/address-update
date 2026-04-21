@@ -202,3 +202,31 @@ CREATE TABLE IF NOT EXISTS cif_address (
 - `src/main/java/com/address/config/DbConfig.java` (新增)
 - `src/main/java/com/address/repository/JdbcClientAddressRepository.java` (新增)
 - `src/test/java/com/address/repository/JdbcClientAddressRepositoryTest.java` (新增)
+
+---
+
+## HikariCP 连接池实现
+
+### 背景
+当前 JdbcClientAddressRepository 每次数据库操作都通过 DriverManager.getConnection() 获取新连接，存在连接创建开销。为提升性能，引入 HikariCP 连接池。
+
+### 架构决策
+- **HikariCP** - 目前最流行的连接池，性能最高
+- **配置文件** - 在 config.yaml 中添加连接池配置项
+- **DataSource 单例** - DbConfig 初始化时创建 DataSource 单例
+
+### 连接池配置
+```yaml
+hikari:
+  maximumPoolSize: 10
+  minimumIdle: 2
+  connectionTimeout: 30000
+  idleTimeout: 600000
+  maxLifetime: 1800000
+```
+
+### 相关文件
+- `pom.xml` (修改)
+- `config.yaml` (修改)
+- `DbConfig.java` (修改)
+- `JdbcClientAddressRepository.java` (修改)
