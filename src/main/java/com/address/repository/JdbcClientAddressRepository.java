@@ -14,11 +14,7 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
     }
 
     private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(
-            DbConfig.getUrl(),
-            DbConfig.getUsername(),
-            DbConfig.getPassword()
-        );
+        return DbConfig.getDataSource().getConnection();
     }
 
     @Override
@@ -156,8 +152,7 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
                 "INDEX idx_client_type (CLIENT_NO, ADDRESS_TYPE)" +
                 ")";
 
-        try (Connection conn = DriverManager.getConnection(
-                DbConfig.getUrl(), DbConfig.getUsername(), DbConfig.getPassword())) {
+        try (Connection conn = DbConfig.getDataSource().getConnection()) {
 
             try (PreparedStatement ps = conn.prepareStatement(checkSql);
                  ResultSet rs = ps.executeQuery()) {
