@@ -4,7 +4,6 @@ import com.address.constants.Constants;
 import com.address.model.CifAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -16,7 +15,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-@Primary
 public class JdbcTemplateClientAddressRepository implements ClientAddressRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(JdbcTemplateClientAddressRepository.class);
