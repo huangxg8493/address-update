@@ -1,5 +1,6 @@
 package com.address.service;
 
+import com.address.constants.Constants;
 import com.address.model.CifAddress;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,7 +14,7 @@ public class AddressMerger {
         Map<String, CifAddress> merged = new HashMap<>();
 
         for (CifAddress addr : incoming) {
-            String key = addr.getAddressType() + "_" + addr.getAddressDetail();
+            String key = addr.getAddressType() + Constants.KEY_SEPARATOR + addr.getAddressDetail();
             CifAddress existing = merged.get(key);
 
             if (existing == null) {
@@ -32,15 +33,15 @@ public class AddressMerger {
         List<CifAddress> result = new ArrayList<>();
 
         for (CifAddress addr : stock) {
-            String key = addr.getAddressType() + "_" + addr.getAddressDetail();
+            String key = addr.getAddressType() + Constants.KEY_SEPARATOR + addr.getAddressDetail();
             CifAddress existing = firstSeen.get(key);
             if (existing == null) {
                 firstSeen.put(key, addr);
-                addr.setDelFlag("N");
+                addr.setDelFlag(Constants.NO);
                 result.add(addr);
             } else {
-                String mailing = "Y".equals(existing.getIsMailingAddress()) || "Y".equals(addr.getIsMailingAddress()) ? "Y" : "N";
-                String newest = "Y".equals(existing.getIsNewest()) || "Y".equals(addr.getIsNewest()) ? "Y" : "N";
+                String mailing = Constants.YES.equals(existing.getIsMailingAddress()) || Constants.YES.equals(addr.getIsMailingAddress()) ? Constants.YES : Constants.NO;
+                String newest = Constants.YES.equals(existing.getIsNewest()) || Constants.YES.equals(addr.getIsNewest()) ? Constants.YES : Constants.NO;
                 existing.setIsMailingAddress(mailing);
                 existing.setIsNewest(newest);
                 Date maxDate = existing.getLastChangeDate();
@@ -48,7 +49,7 @@ public class AddressMerger {
                     maxDate = addr.getLastChangeDate();
                 }
                 existing.setLastChangeDate(maxDate);
-                addr.setDelFlag("Y");
+                addr.setDelFlag(Constants.YES);
                 result.add(addr);
             }
         }
@@ -63,12 +64,12 @@ public class AddressMerger {
         result.setAddressDetail(a.getAddressDetail());
         result.setLastChangeDate(new Date());
 
-        String mailing = "Y".equals(a.getIsMailingAddress()) || "Y".equals(b.getIsMailingAddress()) ? "Y" : "N";
-        String newest = "Y".equals(a.getIsNewest()) || "Y".equals(b.getIsNewest()) ? "Y" : "N";
+        String mailing = Constants.YES.equals(a.getIsMailingAddress()) || Constants.YES.equals(b.getIsMailingAddress()) ? Constants.YES : Constants.NO;
+        String newest = Constants.YES.equals(a.getIsNewest()) || Constants.YES.equals(b.getIsNewest()) ? Constants.YES : Constants.NO;
 
         result.setIsMailingAddress(mailing);
         result.setIsNewest(newest);
-        result.setDelFlag("N");
+        result.setDelFlag(Constants.NO);
 
         return result;
     }

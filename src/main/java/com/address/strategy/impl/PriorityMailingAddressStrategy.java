@@ -1,5 +1,6 @@
 package com.address.strategy.impl;
 
+import com.address.constants.Constants;
 import com.address.model.AddressType;
 import com.address.model.CifAddress;
 import com.address.strategy.MailingAddressStrategy;
@@ -21,8 +22,8 @@ public class PriorityMailingAddressStrategy implements MailingAddressStrategy {
     public CifAddress select(List<CifAddress> mergedIncoming, List<CifAddress> mergedStock) {
         // 第8条：上送中有Y标记的，按优先级选第一个（先按类型优先级排序，再取第一个）
         CifAddress mailingFromIncoming = mergedIncoming.stream()
-                .filter(a -> "Y".equals(a.getIsMailingAddress()))
-                .filter(a -> !"Y".equals(a.getDelFlag()))
+                .filter(a -> Constants.YES.equals(a.getIsMailingAddress()))
+                .filter(a -> !Constants.YES.equals(a.getDelFlag()))
                 .min(Comparator.comparing(a -> {
                     AddressType type = AddressType.fromCode(a.getAddressType());
                     return type.ordinal();
@@ -35,8 +36,8 @@ public class PriorityMailingAddressStrategy implements MailingAddressStrategy {
 
         // 第9条：上送没有Y标记的，从存量中选Y标记且修改时间最大的
         CifAddress mailingFromStock = mergedStock.stream()
-                .filter(a -> "Y".equals(a.getIsMailingAddress()))
-                .filter(a -> !"Y".equals(a.getDelFlag()))
+                .filter(a -> Constants.YES.equals(a.getIsMailingAddress()))
+                .filter(a -> !Constants.YES.equals(a.getDelFlag()))
                 .max(Comparator.comparing(a ->
                         a.getLastChangeDate() != null ? a.getLastChangeDate().getTime() : Long.MIN_VALUE))
                 .orElse(null);
@@ -51,7 +52,7 @@ public class PriorityMailingAddressStrategy implements MailingAddressStrategy {
 
             CifAddress fromIncoming = mergedIncoming.stream()
                     .filter(a -> typeCode.equals(a.getAddressType()))
-                    .filter(a -> !"Y".equals(a.getDelFlag()))
+                    .filter(a -> !Constants.YES.equals(a.getDelFlag()))
                     .max(Comparator.comparing(a ->
                             a.getLastChangeDate() != null ? a.getLastChangeDate().getTime() : Long.MIN_VALUE))
                     .orElse(null);
@@ -62,7 +63,7 @@ public class PriorityMailingAddressStrategy implements MailingAddressStrategy {
 
             CifAddress fromStock = mergedStock.stream()
                     .filter(a -> typeCode.equals(a.getAddressType()))
-                    .filter(a -> !"Y".equals(a.getDelFlag()))
+                    .filter(a -> !Constants.YES.equals(a.getDelFlag()))
                     .max(Comparator.comparing(a ->
                             a.getLastChangeDate() != null ? a.getLastChangeDate().getTime() : Long.MIN_VALUE))
                     .orElse(null);

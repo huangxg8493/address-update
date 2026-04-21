@@ -1,5 +1,6 @@
 package com.address.service;
 
+import com.address.constants.Constants;
 import com.address.model.CifAddress;
 import com.address.repository.ClientAddressRepository;
 import com.address.strategy.MailingAddressStrategy;
@@ -7,6 +8,7 @@ import com.address.strategy.NewestAddressStrategy;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -47,26 +49,26 @@ public class ClientAddressService {
 
         // Step 5: 对两个数组应用通讯地址和最新地址规则，挑选结果不设置标识
         CifAddress mailing = mailingStrategy.select(mergedIncoming, mergedStock);
-        java.util.Map<String, CifAddress> newestByType = newestStrategy.selectByType(mergedIncoming, mergedStock);
+        Map<String, CifAddress> newestByType = newestStrategy.selectByType(mergedIncoming, mergedStock);
 
         // Step 6: 重置两个数组所有标识为 N
         for (CifAddress addr : mergedStock) {
-            addr.setIsMailingAddress("N");
-            addr.setIsNewest("N");
+            addr.setIsMailingAddress(Constants.NO);
+            addr.setIsNewest(Constants.NO);
         }
         for (CifAddress addr : mergedIncoming) {
-            addr.setIsMailingAddress("N");
-            addr.setIsNewest("N");
+            addr.setIsMailingAddress(Constants.NO);
+            addr.setIsNewest(Constants.NO);
         }
 
         // Step 7: 设置通讯地址标识为 Y
         if (mailing != null) {
-            mailing.setIsMailingAddress("Y");
-            mailing.setIsNewest("Y");
+            mailing.setIsMailingAddress(Constants.YES);
+            mailing.setIsNewest(Constants.YES);
         }
 
         // Step 8: 设置最新地址标识为 Y
-        for (java.util.Map.Entry<String, CifAddress> entry : newestByType.entrySet()) {
+        for (Map.Entry<String, CifAddress> entry : newestByType.entrySet()) {
             CifAddress newestAddr = entry.getValue();
             if (!Objects.equals(mailing, newestAddr)) {
                 newestAddr.setIsNewest("Y");
@@ -107,7 +109,7 @@ public class ClientAddressService {
 
     private CifAddress findMatchedStock(CifAddress addr, List<CifAddress> stock) {
         for (CifAddress s : stock) {
-            if (!"Y".equals(s.getDelFlag()) &&
+            if (!Constants.YES.equals(s.getDelFlag()) &&
                 Objects.equals(s.getAddressType(), addr.getAddressType()) &&
                 Objects.equals(s.getAddressDetail(), addr.getAddressDetail())) {
                 return s;
@@ -117,6 +119,6 @@ public class ClientAddressService {
     }
 
     private String generateId() {
-        return UUID.randomUUID().toString().replace("-", "").substring(0, 16);
+        return UUID.randomUUID().toString().replace("-", "").substring(0, Constants.UUID_LENGTH);
     }
 }

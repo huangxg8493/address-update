@@ -1,5 +1,6 @@
 package com.address.repository;
 
+import com.address.constants.Constants;
 import com.address.model.CifAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ public class MemoryClientAddressRepository implements ClientAddressRepository {
     public List<CifAddress> findByClientNo(String clientNo) {
         return allAddresses.stream()
                 .filter(a -> clientNo.equals(a.getClientNo()))
-                .filter(a -> !"Y".equals(a.getDelFlag()))
+                .filter(a -> !Constants.YES.equals(a.getDelFlag()))
                 .collect(Collectors.toList());
     }
 
@@ -47,7 +48,7 @@ public class MemoryClientAddressRepository implements ClientAddressRepository {
     public void delete(String seqNo) {
         for (int i = 0; i < allAddresses.size(); i++) {
             if (seqNo.equals(allAddresses.get(i).getSeqNo())) {
-                allAddresses.get(i).setDelFlag("Y");
+                allAddresses.get(i).setDelFlag(Constants.YES);
                 return;
             }
         }
