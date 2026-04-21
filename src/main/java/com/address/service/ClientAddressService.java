@@ -3,18 +3,21 @@ package com.address.service;
 import com.address.constants.Constants;
 import com.address.model.CifAddress;
 import com.address.repository.ClientAddressRepository;
-import com.address.repository.JdbcClientAddressRepository;
 import com.address.strategy.MailingAddressStrategy;
 import com.address.strategy.NewestAddressStrategy;
 import com.address.utils.SnowflakeIdGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+@Service
 public class ClientAddressService {
     private static final Logger logger = LoggerFactory.getLogger(ClientAddressService.class);
 
@@ -23,6 +26,7 @@ public class ClientAddressService {
     private final NewestAddressStrategy newestStrategy;
     private final AddressMerger merger;
 
+    @Autowired
     public ClientAddressService(ClientAddressRepository repository,
                                 MailingAddressStrategy mailingStrategy,
                                 NewestAddressStrategy newestStrategy) {
@@ -30,12 +34,6 @@ public class ClientAddressService {
         this.mailingStrategy = mailingStrategy;
         this.newestStrategy = newestStrategy;
         this.merger = new AddressMerger();
-    }
-
-    // 便捷构造方法，使用 JdbcClientAddressRepository
-    public ClientAddressService(MailingAddressStrategy mailingStrategy,
-                                NewestAddressStrategy newestStrategy) {
-        this(new JdbcClientAddressRepository(), mailingStrategy, newestStrategy);
     }
 
     public List<CifAddress> updateAddresses(String clientNo, List<CifAddress> incoming) {
