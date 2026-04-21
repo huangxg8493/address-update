@@ -1,11 +1,11 @@
 package com.address.repository;
 
-import com.address.config.DbConfig;
 import com.address.constants.Constants;
 import com.address.model.CifAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +14,15 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(JdbcClientAddressRepository.class);
 
-    static {
+    private final DataSource dataSource;
+
+    public JdbcClientAddressRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
         createTableIfNotExists();
     }
 
     private Connection getConnection() throws SQLException {
-        return DbConfig.getDataSource().getConnection();
+        return dataSource.getConnection();
     }
 
     @Override
@@ -146,7 +149,7 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
         return address;
     }
 
-    private static void createTableIfNotExists() {
+    private void createTableIfNotExists() {
         String checkSql = "SELECT COUNT(*) FROM information_schema.tables " +
                           "WHERE table_schema = DATABASE() AND table_name = 'CIF_ADDRESS'";
         String createSql = "CREATE TABLE IF NOT EXISTS CIF_ADDRESS (" +
@@ -162,7 +165,7 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
                 "INDEX idx_client_type (CLIENT_NO, ADDRESS_TYPE)" +
                 ")";
 
-        try (Connection conn = DbConfig.getDataSource().getConnection()) {
+        try (Connection conn = dataSource.getConnection()) {
 
             try (PreparedStatement ps = conn.prepareStatement(checkSql);
                  ResultSet rs = ps.executeQuery()) {

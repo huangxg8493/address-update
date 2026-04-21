@@ -18,7 +18,8 @@
       "Bash(mvn dependency:resolve *)",
       "Bash(mvn test-compile *)",
       "Bash(mvn *)",
-      "Bash(xmllint *)"
+      "Bash(xmllint *)",
+      "WebSearch"
     ],
     "deny": [
       "Bash(git reset --hard:*)",
