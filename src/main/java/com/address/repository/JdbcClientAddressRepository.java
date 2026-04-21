@@ -172,4 +172,14 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
             throw new RuntimeException("初始化数据库表失败", e);
         }
     }
+
+    public void clearTable() {
+        String sql = "DELETE FROM CIF_ADDRESS";
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException("清空表失败", e);
+        }
+    }
 }

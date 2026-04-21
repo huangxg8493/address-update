@@ -14,6 +14,7 @@ public class JdbcClientAddressRepositoryTest {
     @BeforeEach
     public void setUp() {
         repository = new JdbcClientAddressRepository();
+        repository.clearTable();
     }
 
     @Test
