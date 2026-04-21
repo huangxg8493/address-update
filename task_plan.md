@@ -172,28 +172,28 @@
 
 #### Task 20: 添加 HikariCP Maven 依赖
 
-- [ ] Step 1: 添加 HikariCP 依赖
-- [ ] Step 2: 验证依赖下载
-- [ ] Step 3: 提交
+- [x] Step 1: 添加 HikariCP 依赖
+- [x] Step 2: 验证依赖下载
+- [x] Step 3: 提交
 
 #### Task 21: 更新配置文件
 
-- [ ] Step 1: 添加 HikariCP 连接池配置
-- [ ] Step 2: 提交
+- [x] Step 1: 添加 HikariCP 连接池配置
+- [x] Step 2: 提交
 
 #### Task 22: 修改 DbConfig 添加 DataSource
 
-- [ ] Step 1: 添加 HikariCP import 和 DataSource
-- [ ] Step 2: 验证编译
-- [ ] Step 3: 提交
+- [x] Step 1: 添加 HikariCP import 和 DataSource
+- [x] Step 2: 验证编译
+- [x] Step 3: 提交
 
 #### Task 23: 修改 JdbcClientAddressRepository 使用 DataSource
 
-- [ ] Step 1: 修改 getConnection 方法
-- [ ] Step 2: 修改 createTableIfNotExists 中的连接获取
-- [ ] Step 3: 验证编译
-- [ ] Step 4: 运行测试
-- [ ] Step 5: 提交
+- [x] Step 1: 修改 getConnection 方法
+- [x] Step 2: 修改 createTableIfNotExists 中的连接获取
+- [x] Step 3: 验证编译
+- [x] Step 4: 运行测试
+- [x] Step 5: 提交
 
 ---
 

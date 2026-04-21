@@ -119,16 +119,20 @@
 ### HikariCP 连接池实现
 
 #### Task 20: 添加 HikariCP Maven 依赖
-- 状态：pending
+- 状态：已完成
+- 提交：deps: 添加 HikariCP 连接池依赖
 
 #### Task 21: 更新配置文件
-- 状态：pending
+- 状态：已完成
+- 提交：feat: 添加 HikariCP 连接池配置
 
 #### Task 22: 修改 DbConfig 添加 DataSource
-- 状态：pending
+- 状态：已完成
+- 提交：feat: DbConfig 添加 HikariCP DataSource
 
 #### Task 23: 修改 JdbcClientAddressRepository 使用 DataSource
-- 状态：pending
+- 状态：已完成
+- 提交：refactor: JdbcClientAddressRepository 使用 HikariCP DataSource
 
 ---
 
