@@ -24,7 +24,7 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
     @Override
     public List<CifAddress> findByClientNo(String clientNo) {
         List<CifAddress> result = new ArrayList<>();
-        String sql = "SELECT * FROM cif_address WHERE client_no = ? AND del_flag = ?";
+        String sql = "SELECT * FROM CIF_ADDRESS WHERE CLIENT_NO = ? AND DEL_FLAG = ?";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, clientNo);
@@ -42,8 +42,8 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
 
     @Override
     public void save(CifAddress address) {
-        String sql = "INSERT INTO cif_address (seq_no, client_no, address_type, address_detail, " +
-                     "last_change_date, is_mailing_address, is_newest, del_flag) " +
+        String sql = "INSERT INTO CIF_ADDRESS (SEQ_NO, CLIENT_NO, ADDRESS_TYPE, ADDRESS_DETAIL, " +
+                     "LAST_CHANGE_DATE, IS_MAILING_ADDRESS, IS_NEWEST, DEL_FLAG) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -56,9 +56,9 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
 
     @Override
     public void update(CifAddress address) {
-        String sql = "UPDATE cif_address SET address_type = ?, address_detail = ?, " +
-                     "last_change_date = ?, is_mailing_address = ?, is_newest = ?, del_flag = ? " +
-                     "WHERE seq_no = ?";
+        String sql = "UPDATE CIF_ADDRESS SET ADDRESS_TYPE = ?, ADDRESS_DETAIL = ?, " +
+                     "LAST_CHANGE_DATE = ?, IS_MAILING_ADDRESS = ?, IS_NEWEST = ?, DEL_FLAG = ? " +
+                     "WHERE SEQ_NO = ?";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, address.getAddressType());
@@ -77,8 +77,8 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
 
     @Override
     public void saveAll(List<CifAddress> addresses) {
-        String sql = "INSERT INTO cif_address (seq_no, client_no, address_type, address_detail, " +
-                     "last_change_date, is_mailing_address, is_newest, del_flag) " +
+        String sql = "INSERT INTO CIF_ADDRESS (SEQ_NO, CLIENT_NO, ADDRESS_TYPE, ADDRESS_DETAIL, " +
+                     "LAST_CHANGE_DATE, IS_MAILING_ADDRESS, IS_NEWEST, DEL_FLAG) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -101,7 +101,7 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
 
     @Override
     public void delete(String seqNo) {
-        String sql = "UPDATE cif_address SET del_flag = ? WHERE seq_no = ?";
+        String sql = "UPDATE CIF_ADDRESS SET DEL_FLAG = ? WHERE SEQ_NO = ?";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, Constants.YES);
@@ -126,34 +126,34 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
 
     private CifAddress mapRow(ResultSet rs) throws SQLException {
         CifAddress address = new CifAddress();
-        address.setSeqNo(rs.getString("seq_no"));
-        address.setClientNo(rs.getString("client_no"));
-        address.setAddressType(rs.getString("address_type"));
-        address.setAddressDetail(rs.getString("address_detail"));
-        Timestamp ts = rs.getTimestamp("last_change_date");
+        address.setSeqNo(rs.getString("SEQ_NO"));
+        address.setClientNo(rs.getString("CLIENT_NO"));
+        address.setAddressType(rs.getString("ADDRESS_TYPE"));
+        address.setAddressDetail(rs.getString("ADDRESS_DETAIL"));
+        Timestamp ts = rs.getTimestamp("LAST_CHANGE_DATE");
         if (ts != null) {
             address.setLastChangeDate(new Date(ts.getTime()));
         }
-        address.setIsMailingAddress(rs.getString("is_mailing_address"));
-        address.setIsNewest(rs.getString("is_newest"));
-        address.setDelFlag(rs.getString("del_flag"));
+        address.setIsMailingAddress(rs.getString("IS_MAILING_ADDRESS"));
+        address.setIsNewest(rs.getString("IS_NEWEST"));
+        address.setDelFlag(rs.getString("DEL_FLAG"));
         return address;
     }
 
     private static void createTableIfNotExists() {
         String checkSql = "SELECT COUNT(*) FROM information_schema.tables " +
-                          "WHERE table_schema = DATABASE() AND table_name = 'cif_address'";
-        String createSql = "CREATE TABLE IF NOT EXISTS cif_address (" +
-                "seq_no VARCHAR(64) PRIMARY KEY," +
-                "client_no VARCHAR(32) NOT NULL," +
-                "address_type VARCHAR(2) NOT NULL," +
-                "address_detail VARCHAR(256) NOT NULL," +
-                "last_change_date DATETIME," +
-                "is_mailing_address CHAR(1) DEFAULT 'N'," +
-                "is_newest CHAR(1) DEFAULT 'N'," +
-                "del_flag CHAR(1) DEFAULT 'N'," +
-                "INDEX idx_client_no (client_no)," +
-                "INDEX idx_client_type (client_no, address_type)" +
+                          "WHERE table_schema = DATABASE() AND table_name = 'CIF_ADDRESS'";
+        String createSql = "CREATE TABLE IF NOT EXISTS CIF_ADDRESS (" +
+                "SEQ_NO VARCHAR(64) PRIMARY KEY," +
+                "CLIENT_NO VARCHAR(32) NOT NULL," +
+                "ADDRESS_TYPE VARCHAR(2) NOT NULL," +
+                "ADDRESS_DETAIL VARCHAR(256) NOT NULL," +
+                "LAST_CHANGE_DATE DATETIME," +
+                "IS_MAILING_ADDRESS CHAR(1) DEFAULT 'N'," +
+                "IS_NEWEST CHAR(1) DEFAULT 'N'," +
+                "DEL_FLAG CHAR(1) DEFAULT 'N'," +
+                "INDEX idx_client_no (CLIENT_NO)," +
+                "INDEX idx_client_type (CLIENT_NO, ADDRESS_TYPE)" +
                 ")";
 
         try (Connection conn = DriverManager.getConnection(
