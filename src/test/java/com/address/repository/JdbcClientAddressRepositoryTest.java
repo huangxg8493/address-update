@@ -2,6 +2,7 @@ package com.address.repository;
 
 import com.address.config.DbConfig;
 import com.address.model.CifAddress;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.sql.*;
@@ -19,6 +20,7 @@ public class JdbcClientAddressRepositoryTest {
         clearTable();
     }
 
+    @AfterEach
     private void clearTable() {
         String sql = "DELETE FROM CIF_ADDRESS";
         try (Connection conn = DriverManager.getConnection(
