@@ -184,6 +184,25 @@
 
 ---
 
+## Phase 10: 日志记录功能实现
+
+### Task 1: 添加 Maven 依赖
+- 状态：进行中
+
+### Task 2: 创建 logback.xml
+- 状态：待开始
+
+### Task 3: 修改 MyBatisClientAddressRepository 添加日志
+- 状态：待开始
+
+### Task 4: 修改 JdbcClientAddressRepository 添加日志
+- 状态：待开始
+
+### Task 5: 验证日志输出
+- 状态：待开始
+
+---
+
 ## 提交记录
 
 - 67b23da: refactor: 完善 CifAddressMapper.xml 使用标准 MyBatis 规范

@@ -272,3 +272,40 @@ src/main/java/com/address/
 - `src/main/java/com/address/repository/CifAddressMapper.java` (新增)
 - `src/main/java/com/address/repository/MyBatisClientAddressRepository.java` (新增)
 - `src/test/java/com/address/repository/MyBatisClientAddressRepositoryTest.java` (新增)
+
+---
+
+## 日志记录功能实现
+
+### 背景
+为客户地址信息维护系统添加日志记录功能，记录关键业务操作，便于问题排查和系统监控。
+
+### 设计决策
+- **日志 API**：SLF4J 2.x（接口层，解耦实现）
+- **日志实现**：Logback 1.4（性能好，配置简洁）
+- **输出目标**：控制台 + 文件日志
+
+### 技术选型
+- SLF4J 2.0.9 (API)
+- Logback 1.4.11 (实现)
+
+### 日志配置
+- 路径：logs/app.log
+- 滚动策略：按日期（每天一个新文件）
+- 保留：7 天自动清理
+- 编码：UTF-8
+
+### 记录内容
+| 操作 | 级别 | 日志内容 |
+|------|------|----------|
+| save | INFO | 保存单条地址，clientNo |
+| saveAll | INFO | 批量保存地址，clientNo，数量 |
+| update | INFO | 更新单条地址，seqNo |
+| updateAll | INFO | 批量更新地址，clientNo，数量 |
+| delete | INFO | 删除地址，seqNo |
+
+### 相关文件
+- `pom.xml` (修改)
+- `src/main/resources/logback.xml` (新增)
+- `src/main/java/com/address/repository/MyBatisClientAddressRepository.java` (修改)
+- `src/main/java/com/address/repository/JdbcClientAddressRepository.java` (修改)
