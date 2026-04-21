@@ -205,52 +205,52 @@
 
 ### Task 1: 添加 MyBatis Maven 依赖
 
-- [ ] Step 1: 在 pom.xml 添加 mybatis 和 mybatis-spring 依赖
-- [ ] Step 2: 验证依赖添加成功
-- [ ] Step 3: 提交
+- [x] Step 1: 在 pom.xml 添加 mybatis 和 mybatis-spring 依赖
+- [x] Step 2: 验证依赖添加成功
+- [x] Step 3: 提交
 
 ### Task 2: 创建 mybatis-config.xml
 
-- [ ] Step 1: 创建 mybatis-config.xml
-- [ ] Step 2: 验证配置文件格式
-- [ ] Step 3: 提交
+- [x] Step 1: 创建 mybatis-config.xml
+- [x] Step 2: 验证配置文件格式
+- [x] Step 3: 提交
 
 ### Task 3: 创建 CifAddressMapper.xml
 
-- [ ] Step 1: 创建 mapper 目录
-- [ ] Step 2: 创建 CifAddressMapper.xml
-- [ ] Step 3: 验证 XML 格式
-- [ ] Step 4: 提交
+- [x] Step 1: 创建 mapper 目录
+- [x] Step 2: 创建 CifAddressMapper.xml
+- [x] Step 3: 验证 XML 格式
+- [x] Step 4: 提交
 
 ### Task 4: 创建 CifAddressMapper.java
 
-- [ ] Step 1: 创建 CifAddressMapper.java（使用 @Update 注解实现 delete）
-- [ ] Step 2: 编译验证
-- [ ] Step 3: 提交
+- [x] Step 1: 创建 CifAddressMapper.java（使用 @Update 注解实现 delete）
+- [x] Step 2: 编译验证
+- [x] Step 3: 提交
 
 ### Task 5: 创建 MyBatisConfig.java
 
-- [ ] Step 1: 创建 MyBatisConfig.java（初始化 SqlSessionFactory）
-- [ ] Step 2: 编译验证
-- [ ] Step 3: 提交
+- [x] Step 1: 创建 MyBatisConfig.java（初始化 SqlSessionFactory）
+- [x] Step 2: 编译验证
+- [x] Step 3: 提交
 
 ### Task 6: 创建 MyBatisClientAddressRepository.java
 
-- [ ] Step 1: 创建 MyBatisClientAddressRepository.java
-- [ ] Step 2: 编译验证
-- [ ] Step 3: 提交
+- [x] Step 1: 创建 MyBatisClientAddressRepository.java
+- [x] Step 2: 编译验证
+- [x] Step 3: 提交
 
 ### Task 7: 创建 MyBatisClientAddressRepositoryTest
 
-- [ ] Step 1: 查看 JdbcClientAddressRepositoryTest 作为参考
-- [ ] Step 2: 创建 MyBatisClientAddressRepositoryTest
-- [ ] Step 3: 运行测试验证
-- [ ] Step 4: 提交
+- [x] Step 1: 查看 JdbcClientAddressRepositoryTest 作为参考
+- [x] Step 2: 创建 MyBatisClientAddressRepositoryTest
+- [x] Step 3: 运行测试验证
+- [x] Step 4: 提交
 
 ### Task 8: 完整测试验证
 
-- [ ] Step 1: 运行所有测试
-- [ ] Step 2: 提交
+- [x] Step 1: 运行所有测试
+- [x] Step 2: 提交
 
 ---
 
