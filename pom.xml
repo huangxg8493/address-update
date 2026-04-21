@@ -57,6 +57,18 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.33</version>
         </dependency>
+        <!-- HikariCP: spring-boot-starter-jdbc transitively manages version -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <!-- <version>4.0.3</version> -->
+        </dependency>
+        <!-- snakeyaml: spring-boot-starter transitively manages version -->
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <!-- <version>2.0</version> -->
+        </dependency>
 
         <!-- Test -->
         <dependency>
