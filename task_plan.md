@@ -104,7 +104,7 @@
 
 ## 当前阶段
 
-### Phase 6: seqNo 雪花算法实现
+### ✅ 所有 Phase 已完成
 
 #### Task 12: 创建 SnowflakeIdGenerator 工具类
 
