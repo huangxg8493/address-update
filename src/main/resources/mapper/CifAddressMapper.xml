@@ -181,4 +181,48 @@
         </where>
     </update>
 
+    <!-- 分页查询 -->
+    <select id="findPage" resultMap="CifAddressResultMap">
+        SELECT
+            SEQ_NO,
+            CLIENT_NO,
+            ADDRESS_TYPE,
+            ADDRESS_DETAIL,
+            LAST_CHANGE_DATE,
+            IS_MAILING_ADDRESS,
+            IS_NEWEST,
+            DEL_FLAG
+        FROM CIF_ADDRESS
+        <where>
+            <if test="clientNo != null and clientNo != ''">
+                AND CLIENT_NO = #{clientNo,jdbcType=VARCHAR}
+            </if>
+            <if test="addressType != null and addressType != ''">
+                AND ADDRESS_TYPE = #{addressType,jdbcType=VARCHAR}
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                AND DEL_FLAG = #{delFlag,jdbcType=CHAR}
+            </if>
+        </where>
+        ORDER BY LAST_CHANGE_DATE DESC
+        LIMIT #{offset,jdbcType=INTEGER} OFFSET #{limit,jdbcType=INTEGER}
+    </select>
+
+    <!-- 分页计数 -->
+    <select id="countPage" resultType="long">
+        SELECT COUNT(*)
+        FROM CIF_ADDRESS
+        <where>
+            <if test="clientNo != null and clientNo != ''">
+                AND CLIENT_NO = #{clientNo,jdbcType=VARCHAR}
+            </if>
+            <if test="addressType != null and addressType != ''">
+                AND ADDRESS_TYPE = #{addressType,jdbcType=VARCHAR}
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                AND DEL_FLAG = #{delFlag,jdbcType=CHAR}
+            </if>
+        </where>
+    </select>
+
 </mapper>
