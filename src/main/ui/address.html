@@ -257,15 +257,16 @@ th {
                 <div class="form-group">
                     <label>地址类型:</label>
                     <select id="addressType">
-                        <option value="RESIDENCE">居住地址</option>
-                        <option value="CONTACT">联系地址</option>
-                        <option value="COMPANY">单位地址</option>
-                        <option value="HOUSEHOLD">户籍地址</option>
-                        <option value="CERTIFICATE">证件地址</option>
-                        <option value="BUSINESS">营业地址</option>
-                        <option value="REGISTERED">注册地址</option>
-                        <option value="OFFICE">办公地址</option>
-                        <option value="PERMANENT">永久地址</option>
+                        <option value="01">其他地址</option>
+                        <option value="02">联系地址</option>
+                        <option value="03">居住地址</option>
+                        <option value="04">单位地址</option>
+                        <option value="05">户籍地址</option>
+                        <option value="06">证件地址</option>
+                        <option value="07">营业地址</option>
+                        <option value="08">注册地址</option>
+                        <option value="09">办公地址</option>
+                        <option value="10">永久地址</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -388,15 +389,16 @@ function renderPagination(total, currentPage, totalPages) {
 // 获取地址类型显示名称
 function getAddressTypeName(typeCode) {
     const typeMap = {
-        'RESIDENCE': '居住地址',
-        'CONTACT': '联系地址',
-        'COMPANY': '单位地址',
-        'HOUSEHOLD': '户籍地址',
-        'CERTIFICATE': '证件地址',
-        'BUSINESS': '营业地址',
-        'REGISTERED': '注册地址',
-        'OFFICE': '办公地址',
-        'PERMANENT': '永久地址'
+        '01': '其他地址',
+        '02': '联系地址',
+        '03': '居住地址',
+        '04': '单位地址',
+        '05': '户籍地址',
+        '06': '证件地址',
+        '07': '营业地址',
+        '08': '注册地址',
+        '09': '办公地址',
+        '10': '永久地址'
     };
     return typeMap[typeCode] || typeCode;
 }
@@ -404,15 +406,16 @@ function getAddressTypeName(typeCode) {
 // 获取地址类型代码
 function getAddressTypeCode(typeName) {
     const codeMap = {
-        '居住地址': 'RESIDENCE',
-        '联系地址': 'CONTACT',
-        '单位地址': 'COMPANY',
-        '户籍地址': 'HOUSEHOLD',
-        '证件地址': 'CERTIFICATE',
-        '营业地址': 'BUSINESS',
-        '注册地址': 'REGISTERED',
-        '办公地址': 'OFFICE',
-        '永久地址': 'PERMANENT'
+        '其他地址': '01',
+        '联系地址': '02',
+        '居住地址': '03',
+        '单位地址': '04',
+        '户籍地址': '05',
+        '证件地址': '06',
+        '营业地址': '07',
+        '注册地址': '08',
+        '办公地址': '09',
+        '永久地址': '10'
     };
     return codeMap[typeName] || typeName;
 }
@@ -422,7 +425,7 @@ function openModal(data) {
     if (data) {
         modalTitle.textContent = '编辑地址';
         seqNoInput.value = data.seqNo || '';
-        addressTypeSelect.value = data.addressType || 'RESIDENCE';
+        addressTypeSelect.value = data.addressType || '03';
         addressDetailInput.value = data.addressDetail || '';
         isMailingAddressInput.checked = data.isMailingAddress === 'Y' || data.isMailingAddress === true;
         isNewestInput.checked = data.isNewest === 'Y' || data.isNewest === true;
