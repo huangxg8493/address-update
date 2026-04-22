@@ -519,5 +519,12 @@
 
 ### Task 4: 编译验证
 
-- [ ] Step 1: mvn compile 编译项目
-- [ ] Step 2: mvn test 运行测试
+- [x] Step 1: mvn compile 编译项目
+- [x] Step 2: mvn test 运行测试
+
+---
+
+## ✅ Phase 15 已完成
+
+- 单地址更新接口 `/client/address/single/update` 已实现
+- 前端编辑和删除功能已对接新接口

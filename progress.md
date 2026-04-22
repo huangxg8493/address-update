@@ -348,16 +348,23 @@
 ## Phase 15: 单地址维护接口实现
 
 ### Task 1: 创建 DTO
-- [ ] 进行中
+- [x] 已完成
 
 ### Task 2: Service 层添加业务方法
-- [ ] 待开始
+- [x] 已完成
 
 ### Task 3: Controller 层添加接口
-- [ ] 待开始
+- [x] 已完成
 
 ### Task 4: 编译验证
-- [ ] 待开始
+- [x] 已完成
+
+### 提交记录
+- 91292f7: feat(ui): 编辑和删除改用单地址更新接口
+- 62e0def: fix: updateSingleAddress 调用合并逻辑重新计算地址标识
+- fde1c22: refactor: findBySeqNo 方法入参加上 clientNo
+- 1448821: refactor: updateSingleAddress 改用 seqNo 直接查询
+- e377d20: feat: 添加单地址更新接口 /client/address/single/update
 - 3a6714d: feat: 添加 Repository 层接口及内存实现
 - 9294fe2: feat: 添加地址选择策略接口及实现
 - ee24e44: feat: 添加 AddressMerger 地址合并逻辑
