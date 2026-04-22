@@ -20,4 +20,14 @@ public interface CifAddressMapper {
     void saveAll(List<CifAddress> addresses);
 
     void batchUpdate(List<CifAddress> addresses);
+
+    List<CifAddress> findPage(@Param("clientNo") String clientNo,
+                              @Param("addressType") String addressType,
+                              @Param("delFlag") String delFlag,
+                              @Param("offset") int offset,
+                              @Param("limit") int limit);
+
+    long countPage(@Param("clientNo") String clientNo,
+                   @Param("addressType") String addressType,
+                   @Param("delFlag") String delFlag);
 }
