@@ -28,7 +28,8 @@
       "Bash(/d/JAVA/jdk/java8/bin/java *)",
       "Read(//d/JAVA/jdk/java8//**)",
       "Read(//d/JAVA/jdk/jdk1.8.0_481//**)",
-      "Bash(java *)"
+      "Bash(java *)",
+      "Bash(echo \"Exit code: $?\")"
     ],
     "deny": [
       "Bash(git reset --hard:*)",
