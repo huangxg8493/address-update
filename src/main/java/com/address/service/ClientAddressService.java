@@ -209,6 +209,8 @@ public class ClientAddressService {
             target.setDelFlag("Y");
             target.setLastChangeDate(new Date());
             repository.update(target);
+            // 调用合并逻辑重新计算地址标识
+            updateAddresses(request.getClientNo(), null);
             return target;
         }
 
@@ -223,6 +225,8 @@ public class ClientAddressService {
             target.setIsNewest(request.getIsNewest());
         }
         repository.update(target);
+        // 调用合并逻辑重新计算地址标识
+        updateAddresses(request.getClientNo(), null);
         return target;
     }
 
