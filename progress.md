@@ -296,13 +296,26 @@
 ### Task 12: 最终验证
 - 状态：已完成（40 tests, 0 failures）
 
-### Task 10: 创建 ClientAddressQueryControllerTest
+---
+
+## Phase 14: UI 页面实现
+
+### Task 1: 创建基础 HTML 结构和样式
 - 状态：待开始
 
-### Task 11: 创建 ClientAddressQueryServiceTest
+### Task 2: 实现 JavaScript 变量和 DOM 元素定义
 - 状态：待开始
 
-### Task 12: 最终验证
+### Task 3: 实现 API 调用函数
+- 状态：待开始
+
+### Task 4: 实现渲染和分页逻辑
+- 状态：待开始
+
+### Task 5: 实现事件绑定
+- 状态：待开始
+
+### Task 6: 最终验证
 - 状态：待开始
 
 - 67b23da: refactor: 完善 CifAddressMapper.xml 使用标准 MyBatis 规范

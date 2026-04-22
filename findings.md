@@ -430,3 +430,37 @@ Response:
 - `src/main/java/com/address/controller/ClientAddressQueryController.java` (新增)
 - `src/main/java/com/address/repository/CifAddressMapper.java` (修改)
 - `src/main/resources/mapper/CifAddressMapper.xml` (修改)
+
+---
+
+## Phase 14: UI 页面实现
+
+### 背景
+为客户地址维护系统添加 Web UI 页面，实现地址的查询、新增、编辑、删除功能。
+
+### 设计决策
+- **纯 HTML + JavaScript** - 无框架、无构建工具，单文件实现
+- **调用后端 API** - POST `/client/address/query` 查询，POST `/client/address/update` 更新
+- **弹窗编辑** - 新增/编辑使用弹窗表单
+
+### 页面结构
+```
+顶部：标题 + 客户号输入框 + 查询按钮 + 新增按钮
+中部：地址列表（表格）
+底部分页：共 X 条 第 Y/Z 页 上一页 下一页
+弹窗：地址类型、地址详情、通讯地址、最新地址
+```
+
+### 表格列
+| 列名 | 字段 |
+|------|------|
+| 序号 | seqNo |
+| 地址类型 | addressType（下拉选择） |
+| 地址详情 | addressDetail |
+| 修改日期 | lastChangeDate |
+| 通讯地址 | isMailingAddress |
+| 最新地址 | isNewest |
+| 操作 | 编辑、删除按钮 |
+
+### 相关文件
+- `src/main/ui/address.html` (新增)
