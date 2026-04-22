@@ -18,6 +18,4 @@ public interface CifAddressMapper {
     void update(CifAddress address);
 
     void saveAll(List<CifAddress> addresses);
-
-    void updateAll(List<CifAddress> addresses);
 }

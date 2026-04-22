@@ -126,21 +126,4 @@
         </foreach>
     </insert>
 
-    <!-- 批量更新：使用 foreach（需要数据库支持 multiStatements） -->
-    <update id="updateAll" parameterType="java.util.List">
-        <foreach collection="list" item="addr">
-            UPDATE CIF_ADDRESS
-            <trim prefix="SET" suffixOverrides=",">
-                <if test="addr.addressType != null and addr.addressType != ''">ADDRESS_TYPE = #{addr.addressType,jdbcType=VARCHAR},</if>
-                <if test="addr.addressDetail != null and addr.addressDetail != ''">ADDRESS_DETAIL = #{addr.addressDetail,jdbcType=VARCHAR},</if>
-                <if test="addr.lastChangeDate != null">LAST_CHANGE_DATE = #{addr.lastChangeDate,jdbcType=TIMESTAMP},</if>
-                <if test="addr.isMailingAddress != null and addr.isMailingAddress != ''">IS_MAILING_ADDRESS = #{addr.isMailingAddress,jdbcType=CHAR},</if>
-                <if test="addr.isNewest != null and addr.isNewest != ''">IS_NEWEST = #{addr.isNewest,jdbcType=CHAR},</if>
-                <if test="addr.delFlag != null and addr.delFlag != ''">DEL_FLAG = #{addr.delFlag,jdbcType=CHAR},</if>
-                LAST_CHANGE_DATE = LAST_CHANGE_DATE
-            </trim>
-            <if test="addr.seqNo != null and addr.seqNo != ''">WHERE SEQ_NO = #{addr.seqNo,jdbcType=VARCHAR}</if>
-        </foreach>
-    </update>
-
 </mapper>
