@@ -11,13 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/client/address")
 public class ClientAddressController {
 
     @Autowired
     private ClientAddressService clientAddressService;
 
-    @PutMapping("/update")
+    @PostMapping("/client/address/update")
     public ApiResponse<List<CifAddress>> updateAddresses(@RequestBody AddressUpdateRequest request) {
         // 参数校验
         if (request.getClientNo() == null || request.getClientNo().trim().isEmpty()) {

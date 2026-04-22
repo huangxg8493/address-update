@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -44,7 +44,7 @@ class ClientAddressControllerTest {
         request.setClientNo("C001");
         request.setAddresses(addresses);
 
-        mockMvc.perform(put("/client/address/update")
+        mockMvc.perform(post("/client/address/update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -64,7 +64,7 @@ class ClientAddressControllerTest {
         request.setClientNo("");
         request.setAddresses(addresses);
 
-        mockMvc.perform(put("/client/address/update")
+        mockMvc.perform(post("/client/address/update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -84,7 +84,7 @@ class ClientAddressControllerTest {
         request.setClientNo(null);
         request.setAddresses(addresses);
 
-        mockMvc.perform(put("/client/address/update")
+        mockMvc.perform(post("/client/address/update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -98,7 +98,7 @@ class ClientAddressControllerTest {
         request.setClientNo("C001");
         request.setAddresses(new ArrayList<>());
 
-        mockMvc.perform(put("/client/address/update")
+        mockMvc.perform(post("/client/address/update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -112,7 +112,7 @@ class ClientAddressControllerTest {
         request.setClientNo("C001");
         request.setAddresses(null);
 
-        mockMvc.perform(put("/client/address/update")
+        mockMvc.perform(post("/client/address/update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
