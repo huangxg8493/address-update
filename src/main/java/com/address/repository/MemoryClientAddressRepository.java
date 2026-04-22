@@ -18,9 +18,10 @@ public class MemoryClientAddressRepository implements ClientAddressRepository {
     }
 
     @Override
-    public CifAddress findBySeqNo(String seqNo) {
+    public CifAddress findBySeqNo(String seqNo, String clientNo) {
         return allAddresses.stream()
                 .filter(a -> seqNo.equals(a.getSeqNo()))
+                .filter(a -> clientNo.equals(a.getClientNo()))
                 .filter(a -> !Constants.YES.equals(a.getDelFlag()))
                 .findFirst()
                 .orElse(null);

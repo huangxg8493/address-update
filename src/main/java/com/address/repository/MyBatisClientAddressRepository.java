@@ -50,10 +50,10 @@ public class MyBatisClientAddressRepository implements ClientAddressRepository {
     }
 
     @Override
-    public CifAddress findBySeqNo(String seqNo) {
+    public CifAddress findBySeqNo(String seqNo, String clientNo) {
         return execute(session -> {
             CifAddressMapper mapper = session.getMapper(CifAddressMapper.class);
-            return mapper.findBySeqNo(seqNo);
+            return mapper.findBySeqNo(seqNo, clientNo);
         });
     }
 

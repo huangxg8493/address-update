@@ -198,15 +198,10 @@ public class ClientAddressService {
             throw new RuntimeException("clientNo 不能为空");
         }
 
-        // 用 seqNo 直接查询地址
-        CifAddress target = repository.findBySeqNo(request.getSeqNo());
+        // 用 seqNo + clientNo 直接查询地址
+        CifAddress target = repository.findBySeqNo(request.getSeqNo(), request.getClientNo());
         if (target == null) {
             throw new RuntimeException("地址不存在");
-        }
-
-        // 校验 clientNo 匹配
-        if (!target.getClientNo().equals(request.getClientNo())) {
-            throw new RuntimeException("地址不属于该客户");
         }
 
         // 删除优先

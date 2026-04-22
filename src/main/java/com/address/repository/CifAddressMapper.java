@@ -13,7 +13,7 @@ public interface CifAddressMapper {
 
     List<CifAddress> findByClientNo(@Param("clientNo") String clientNo, @Param("delFlag") String delFlag);
 
-    CifAddress findBySeqNo(@Param("seqNo") String seqNo);
+    CifAddress findBySeqNo(@Param("seqNo") String seqNo, @Param("clientNo") String clientNo);
 
     void save(CifAddress address);
 

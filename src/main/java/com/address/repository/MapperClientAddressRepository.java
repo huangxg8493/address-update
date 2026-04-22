@@ -29,8 +29,8 @@ public class MapperClientAddressRepository implements ClientAddressRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public CifAddress findBySeqNo(String seqNo) {
-        return mapper.findBySeqNo(seqNo);
+    public CifAddress findBySeqNo(String seqNo, String clientNo) {
+        return mapper.findBySeqNo(seqNo, clientNo);
     }
 
     @Override

@@ -45,11 +45,12 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
     }
 
     @Override
-    public CifAddress findBySeqNo(String seqNo) {
-        String sql = "SELECT SEQ_NO, CLIENT_NO, ADDRESS_TYPE, ADDRESS_DETAIL, LAST_CHANGE_DATE, IS_MAILING_ADDRESS, IS_NEWEST, DEL_FLAG FROM CIF_ADDRESS WHERE SEQ_NO = ?";
+    public CifAddress findBySeqNo(String seqNo, String clientNo) {
+        String sql = "SELECT SEQ_NO, CLIENT_NO, ADDRESS_TYPE, ADDRESS_DETAIL, LAST_CHANGE_DATE, IS_MAILING_ADDRESS, IS_NEWEST, DEL_FLAG FROM CIF_ADDRESS WHERE SEQ_NO = ? AND CLIENT_NO = ?";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, seqNo);
+            ps.setString(2, clientNo);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return mapRow(rs);
