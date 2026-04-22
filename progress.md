@@ -187,19 +187,19 @@
 ## Phase 10: 日志记录功能实现
 
 ### Task 1: 添加 Maven 依赖
-- 状态：进行中
+- 状态：已完成
 
 ### Task 2: 创建 logback.xml
-- 状态：待开始
+- 状态：已完成
 
 ### Task 3: 修改 MyBatisClientAddressRepository 添加日志
-- 状态：待开始
+- 状态：已完成
 
 ### Task 4: 修改 JdbcClientAddressRepository 添加日志
-- 状态：待开始
+- 状态：已完成
 
 ### Task 5: 验证日志输出
-- 状态：待开始
+- 状态：已完成
 
 ---
 

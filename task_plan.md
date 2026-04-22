@@ -258,32 +258,32 @@
 
 ### Task 1: 添加 Maven 依赖
 
-- [ ] Step 1: 在 pom.xml 添加 slf4j-api 和 logback-classic 依赖
-- [ ] Step 2: 验证依赖下载
-- [ ] Step 3: 提交
+- [x] Step 1: 在 pom.xml 添加 slf4j-api 和 logback-classic 依赖
+- [x] Step 2: 验证依赖下载
+- [x] Step 3: 提交
 
 ### Task 2: 创建 logback.xml
 
-- [ ] Step 1: 创建 src/main/resources/logback.xml
-- [ ] Step 2: 提交
+- [x] Step 1: 创建 src/main/resources/logback.xml
+- [x] Step 2: 提交
 
 ### Task 3: 修改 MyBatisClientAddressRepository 添加日志
 
-- [ ] Step 1: 添加 Logger 和日志语句
-- [ ] Step 2: 编译验证
-- [ ] Step 3: 提交
+- [x] Step 1: 添加 Logger 和日志语句
+- [x] Step 2: 编译验证
+- [x] Step 3: 提交
 
 ### Task 4: 修改 JdbcClientAddressRepository 添加日志
 
-- [ ] Step 1: 添加 Logger 和日志语句
-- [ ] Step 2: 编译验证
-- [ ] Step 3: 提交
+- [x] Step 1: 添加 Logger 和日志语句
+- [x] Step 2: 编译验证
+- [x] Step 3: 提交
 
 ### Task 5: 验证日志输出
 
-- [ ] Step 1: 运行测试
-- [ ] Step 2: 检查日志文件
-- [ ] Step 3: 提交
+- [x] Step 1: 运行测试
+- [x] Step 2: 检查日志文件
+- [x] Step 3: 提交
 
 ---
 
