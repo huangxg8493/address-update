@@ -32,6 +32,7 @@ public class ClientAddressController {
         List<CifAddress> cifAddresses = new ArrayList<>();
         for (AddressItem item : request.getAddresses()) {
             CifAddress addr = new CifAddress();
+            addr.setClientNo(request.getClientNo());
             addr.setSeqNo(item.getSeqNo());
             addr.setAddressType(item.getAddressType());
             addr.setAddressDetail(item.getAddressDetail());
