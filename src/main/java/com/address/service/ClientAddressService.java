@@ -43,6 +43,32 @@ public class ClientAddressService {
         List<CifAddress> stock = repository.findByClientNo(clientNo);
         logger.info("Step 1 完成: 存量数量={}", stock.size());
 
+        // Step 1.5: 设置存量地址默认值（未标注的标识设为 N）
+        logger.info("Step 1.5: 设置存量地址默认值 clientNo={}", clientNo);
+        for (CifAddress addr : stock) {
+            if (addr.getIsMailingAddress() == null) {
+                addr.setIsMailingAddress(Constants.NO);
+            }
+            if (addr.getIsNewest() == null) {
+                addr.setIsNewest(Constants.NO);
+            }
+        }
+
+        // Step 1.6: 设置上送地址默认值（未标注的标识设为 N/Y，修改时间为当前系统日期）
+        logger.info("Step 1.6: 设置上送地址默认值 clientNo={}", clientNo);
+        Date now = new Date();
+        for (CifAddress addr : incoming) {
+            if (addr.getIsMailingAddress() == null) {
+                addr.setIsMailingAddress(Constants.NO);
+            }
+            if (addr.getIsNewest() == null) {
+                addr.setIsNewest(Constants.YES);
+            }
+            if (addr.getLastChangeDate() == null) {
+                addr.setLastChangeDate(now);
+            }
+        }
+
         // Step 2: 合并上送地址（去重）
         logger.info("Step 2: 合并上送地址（去重） clientNo={}", clientNo);
         List<CifAddress> mergedIncoming = merger.mergeIncoming(incoming);
