@@ -47,10 +47,10 @@ class ClientAddressControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value("200"))
                 .andExpect(jsonPath("$.message").value("成功"))
-                .andExpect(jsonPath("$.data").isArray())
-                .andExpect(jsonPath("$.data[0].clientNo").value("C001"))
-                .andExpect(jsonPath("$.data[0].addressType").value("02"))
-                .andExpect(jsonPath("$.data[0].addressDetail").value("联系地址"))
+                .andExpect(jsonPath("$.data.clientNo").value("C001"))
+                .andExpect(jsonPath("$.data.addresses").isArray())
+                .andExpect(jsonPath("$.data.addresses[0].addressType").value("02"))
+                .andExpect(jsonPath("$.data.addresses[0].addressDetail").value("联系地址"))
                 .andReturn();
     }
 
@@ -80,10 +80,9 @@ class ClientAddressControllerTest {
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value("200"))
-                .andExpect(jsonPath("$.data").isArray())
-                .andExpect(jsonPath("$.data.length()").value(2))
-                .andExpect(jsonPath("$.data[0].clientNo").value("C002"))
-                .andExpect(jsonPath("$.data[1].clientNo").value("C002"));
+                .andExpect(jsonPath("$.data.clientNo").value("C002"))
+                .andExpect(jsonPath("$.data.addresses").isArray())
+                .andExpect(jsonPath("$.data.addresses.length()").value(2));
     }
 
     @Test

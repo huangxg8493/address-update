@@ -3,7 +3,7 @@ package com.address.controller;
 import com.address.common.ApiResponse;
 import com.address.common.ErrorCode;
 import com.address.dto.AddressUpdateRequest;
-import com.address.dto.AddressUpdateRequest.AddressItem;
+import com.address.dto.AddressUpdateResponse;
 import com.address.model.CifAddress;
 import com.address.service.ClientAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class ClientAddressController {
     private ClientAddressService clientAddressService;
 
     @PostMapping("/client/address/update")
-    public ApiResponse<List<CifAddress>> updateAddresses(@RequestBody AddressUpdateRequest request) {
+    public ApiResponse<AddressUpdateResponse> updateAddresses(@RequestBody AddressUpdateRequest request) {
         // 参数校验
         if (request.getClientNo() == null || request.getClientNo().trim().isEmpty()) {
             return ApiResponse.error(ErrorCode.BAD_REQUEST.getCode(), "客户号不能为空");
@@ -30,7 +30,7 @@ public class ClientAddressController {
 
         // DTO 转换为 CifAddress
         List<CifAddress> cifAddresses = new ArrayList<>();
-        for (AddressItem item : request.getAddresses()) {
+        for (com.address.dto.AddressUpdateRequest.AddressItem item : request.getAddresses()) {
             CifAddress addr = new CifAddress();
             addr.setClientNo(request.getClientNo());
             addr.setSeqNo(item.getSeqNo());
@@ -47,6 +47,21 @@ public class ClientAddressController {
             cifAddresses
         );
 
-        return ApiResponse.success(result);
+        // 转换为响应 DTO
+        AddressUpdateResponse response = new AddressUpdateResponse();
+        response.setClientNo(request.getClientNo());
+        List<com.address.dto.AddressUpdateResponse.AddressItem> responseItems = new ArrayList<>();
+        for (CifAddress addr : result) {
+            com.address.dto.AddressUpdateResponse.AddressItem item = new com.address.dto.AddressUpdateResponse.AddressItem();
+            item.setSeqNo(addr.getSeqNo());
+            item.setAddressType(addr.getAddressType());
+            item.setAddressDetail(addr.getAddressDetail());
+            item.setIsMailingAddress(addr.getIsMailingAddress());
+            item.setIsNewest(addr.getIsNewest());
+            responseItems.add(item);
+        }
+        response.setAddresses(responseItems);
+
+        return ApiResponse.success(response);
     }
 }
