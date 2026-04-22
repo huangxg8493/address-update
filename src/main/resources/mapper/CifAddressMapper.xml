@@ -94,10 +94,13 @@
                 DEL_FLAG = #{delFlag,jdbcType=CHAR},
             </if>
         </set>
-        WHERE SEQ_NO = #{seqNo,jdbcType=VARCHAR}
+        <where>
+            <if test="seqNo != null and seqNo != ''">
+                SEQ_NO = #{seqNo,jdbcType=VARCHAR}
+            </if>
+        </where>
     </update>
 
-    <!-- 批量插入：使用 foreach -->
     <insert id="saveAll" parameterType="java.util.List">
         INSERT INTO CIF_ADDRESS (
             SEQ_NO,
@@ -147,7 +150,11 @@
                     DEL_FLAG = #{addr.delFlag,jdbcType=CHAR},
                 </if>
             </set>
-            WHERE SEQ_NO = #{addr.seqNo,jdbcType=VARCHAR};
+            <where>
+                <if test="addr.seqNo != null and addr.seqNo != ''">
+                    SEQ_NO = #{addr.seqNo,jdbcType=VARCHAR}
+                </if>
+            </where>
         </foreach>
     </update>
 
