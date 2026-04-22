@@ -141,7 +141,7 @@ async function queryAddresses(clientNo, pageNum, pageSize, addressType) {
     return result.data;
 }
 
-// 调用更新接口
+// 调用更新接口（批量）
 async function updateAddresses(clientNo, addresses) {
     const response = await fetch(API_BASE + '/client/address/update', {
         method: 'POST',
@@ -154,8 +154,24 @@ async function updateAddresses(clientNo, addresses) {
         })
     });
     const result = await response.json();
-    if (result.code !== '00000') {
+    if (result.code !== '00000' && result.code !== '200') {
         throw new Error(result.message || '更新失败');
+    }
+    return result.data;
+}
+
+// 调用单地址更新接口
+async function updateSingleAddress(address) {
+    const response = await fetch(API_BASE + '/client/address/single/update', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(address)
+    });
+    const result = await response.json();
+    if (result.code !== '00000' && result.code !== '200') {
+        throw new Error(result.message || '操作失败');
     }
     return result.data;
 }
@@ -312,18 +328,19 @@ function bindEvents() {
                 seqNo: cells[0].textContent,
                 addressType: getAddressTypeCode(cells[1].textContent),
                 addressDetail: cells[2].textContent,
-                isMailingAddress: cells[4].textContent === '√' ? true : false,
-                isNewest: cells[5].textContent === '√' ? true : false
+                isMailingAddress: cells[4].textContent.includes('√') ? 'Y' : 'N',
+                isNewest: cells[5].textContent.includes('√') ? 'Y' : 'N'
             });
         }
 
         if (target.classList.contains('deleteBtn')) {
             if (!confirm('确定删除该地址？')) return;
             try {
-                await updateAddresses(currentClientNo, [{
+                await updateSingleAddress({
                     seqNo: seqNo,
-                    del_flag: 'Y'
-                }]);
+                    clientNo: currentClientNo,
+                    delFlag: 'Y'
+                });
                 alert('删除成功');
                 // 刷新列表
                 const data = await queryAddresses(currentClientNo, currentPage, pageSize);
@@ -356,13 +373,15 @@ function bindEvents() {
         e.preventDefault();
         const address = {
             seqNo: seqNoInput.value || null,
+            clientNo: currentClientNo,
             addressType: addressTypeSelect.value,
             addressDetail: addressDetailInput.value,
             isMailingAddress: document.querySelector('input[name="isMailingAddress"]:checked').value,
-            isNewest: document.querySelector('input[name="isNewest"]:checked').value
+            isNewest: document.querySelector('input[name="isNewest"]:checked').value,
+            delFlag: 'N'
         };
         try {
-            await updateAddresses(currentClientNo, [address]);
+            await updateSingleAddress(address);
             alert('保存成功');
             closeModal();
             // 刷新列表
