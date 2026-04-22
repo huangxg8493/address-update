@@ -54,7 +54,7 @@
             <h2 id="modalTitle">新增地址</h2>
             <form id="addressForm">
                 <input type="hidden" id="seqNo">
-                <div class="form-group">
+                <div class="form-row">
                     <label>地址类型:</label>
                     <select id="addressType">
                         <option value="01">其他地址</option>
@@ -69,15 +69,23 @@
                         <option value="10">永久地址</option>
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="form-row">
                     <label>地址详情:</label>
                     <textarea id="addressDetail" rows="3"></textarea>
                 </div>
-                <div class="form-group">
-                    <label><input type="checkbox" id="isMailingAddress"> 通讯地址</label>
+                <div class="form-row">
+                    <label>通讯地址:</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="isMailingAddress" value="Y"> 是</label>
+                        <label class="radio-label"><input type="radio" name="isMailingAddress" value="N" checked> 否</label>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label><input type="checkbox" id="isNewest"> 最新地址</label>
+                <div class="form-row">
+                    <label>最新地址:</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="isNewest" value="Y"> 是</label>
+                        <label class="radio-label"><input type="radio" name="isNewest" value="N" checked> 否</label>
+                    </div>
                 </div>
                 <div class="form-actions">
                     <button type="button" id="cancelBtn">取消</button>
@@ -109,8 +117,6 @@ const addressForm = document.getElementById('addressForm');
 const seqNoInput = document.getElementById('seqNo');
 const addressTypeSelect = document.getElementById('addressType');
 const addressDetailInput = document.getElementById('addressDetail');
-const isMailingAddressInput = document.getElementById('isMailingAddress');
-const isNewestInput = document.getElementById('isNewest');
 const cancelBtn = document.getElementById('cancelBtn');
 const pageSizeSelect = document.getElementById('pageSizeSelect');
 
@@ -168,8 +174,8 @@ function renderAddressTable(addresses) {
             <td>${getAddressTypeName(addr.addressType)}</td>
             <td>${addr.addressDetail || ''}</td>
             <td>${addr.lastChangeDate || ''}</td>
-            <td>${addr.isMailingAddress === 'Y' ? '√' : ''}</td>
-            <td>${addr.isNewest === 'Y' ? '√' : ''}</td>
+            <td><span class="${addr.isMailingAddress === 'Y' ? 'flag-yes' : 'flag-no'}">${addr.isMailingAddress === 'Y' ? '√' : '×'}</span></td>
+            <td><span class="${addr.isNewest === 'Y' ? 'flag-yes' : 'flag-no'}">${addr.isNewest === 'Y' ? '√' : '×'}</span></td>
             <td>
                 <button class="editBtn" data-seqno="${addr.seqNo}">编辑</button>
                 <button class="deleteBtn" data-seqno="${addr.seqNo}">删除</button>
@@ -227,8 +233,8 @@ function openModal(data) {
         seqNoInput.value = data.seqNo || '';
         addressTypeSelect.value = data.addressType || '03';
         addressDetailInput.value = data.addressDetail || '';
-        isMailingAddressInput.checked = data.isMailingAddress === 'Y' || data.isMailingAddress === true;
-        isNewestInput.checked = data.isNewest === 'Y' || data.isNewest === true;
+        document.querySelector('input[name="isMailingAddress"][value="' + (data.isMailingAddress === 'Y' ? 'Y' : 'N') + '"]').checked = true;
+        document.querySelector('input[name="isNewest"][value="' + (data.isNewest === 'Y' ? 'Y' : 'N') + '"]').checked = true;
     } else {
         modalTitle.textContent = '新增地址';
         addressForm.reset();
@@ -352,8 +358,8 @@ function bindEvents() {
             seqNo: seqNoInput.value || null,
             addressType: addressTypeSelect.value,
             addressDetail: addressDetailInput.value,
-            isMailingAddress: isMailingAddressInput.checked ? 'Y' : 'N',
-            isNewest: isNewestInput.checked ? 'Y' : 'N'
+            isMailingAddress: document.querySelector('input[name="isMailingAddress"]:checked').value,
+            isNewest: document.querySelector('input[name="isNewest"]:checked').value
         };
         try {
             await updateAddresses(currentClientNo, [address]);

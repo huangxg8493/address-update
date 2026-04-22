@@ -150,6 +150,62 @@ th {
     font-weight: 500;
 }
 
+.form-row {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.form-row label {
+    width: 80px;
+    line-height: 32px;
+    font-weight: 500;
+}
+
+.form-row select,
+.form-row textarea {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-row textarea {
+    resize: vertical;
+}
+
+.checkbox-label {
+    display: inline-flex !important;
+    align-items: center;
+    width: auto !important;
+    margin-right: 20px;
+    font-weight: normal !important;
+    cursor: pointer;
+}
+
+.checkbox-label input {
+    margin-right: 6px;
+}
+
+.radio-group {
+    display: flex;
+    align-items: center;
+}
+
+.radio-label {
+    display: inline-flex !important;
+    align-items: center;
+    width: auto !important;
+    margin-right: 15px;
+    font-weight: normal !important;
+    cursor: pointer;
+}
+
+.radio-label input {
+    margin-right: 4px;
+}
+
 .form-group select,
 .form-group textarea {
     width: 100%;
@@ -197,4 +253,14 @@ th {
 .deleteBtn {
     background-color: #ff4d4f;
     color: white;
+}
+
+.flag-yes {
+    color: #52c41a;
+    font-weight: bold;
+}
+
+.flag-no {
+    color: #ff4d4f;
+    font-weight: bold;
 }
