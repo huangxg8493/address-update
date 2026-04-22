@@ -176,4 +176,56 @@ class MapperClientAddressRepositoryTest {
         List<CifAddress> result = repository.findByClientNo(clientNo);
         assertEquals(3, result.size());
     }
+
+    @Autowired
+    private MyBatisClientAddressRepository myBatisRepo;
+
+    @Test
+    void testBatchUpdateWithExecutor() {
+        String clientNo = "C107";
+        // 准备存量数据
+        CifAddress addr1 = new CifAddress();
+        addr1.setSeqNo("BE01");
+        addr1.setClientNo(clientNo);
+        addr1.setAddressType("02");
+        addr1.setAddressDetail("原地址1");
+        addr1.setIsNewest("Y");
+        addr1.setDelFlag("N");
+        repository.save(addr1);
+
+        CifAddress addr2 = new CifAddress();
+        addr2.setSeqNo("BE02");
+        addr2.setClientNo(clientNo);
+        addr2.setAddressType("03");
+        addr2.setAddressDetail("原地址2");
+        addr2.setIsNewest("N");
+        addr2.setDelFlag("N");
+        repository.save(addr2);
+
+        // 使用 BATCH Executor 模式更新
+        List<CifAddress> updates = new ArrayList<>();
+        CifAddress up1 = new CifAddress();
+        up1.setSeqNo("BE01");
+        up1.setAddressDetail("BATCH更新地址1");
+        up1.setIsNewest("Y");
+        updates.add(up1);
+
+        CifAddress up2 = new CifAddress();
+        up2.setSeqNo("BE02");
+        up2.setAddressDetail("BATCH更新地址2");
+        up2.setIsNewest("Y");
+        updates.add(up2);
+
+        myBatisRepo.batchUpdateWithExecutor(updates);
+
+        // 验证更新结果
+        List<CifAddress> result = repository.findByClientNo(clientNo);
+        assertEquals(2, result.size());
+
+        CifAddress r1 = result.stream().filter(a -> a.getSeqNo().equals("BE01")).findFirst().get();
+        assertEquals("BATCH更新地址1", r1.getAddressDetail());
+
+        CifAddress r2 = result.stream().filter(a -> a.getSeqNo().equals("BE02")).findFirst().get();
+        assertEquals("BATCH更新地址2", r2.getAddressDetail());
+    }
 }

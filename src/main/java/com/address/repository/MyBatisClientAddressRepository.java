@@ -2,6 +2,7 @@ package com.address.repository;
 
 import com.address.constants.Constants;
 import com.address.model.CifAddress;
+import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
@@ -82,6 +83,24 @@ public class MyBatisClientAddressRepository implements ClientAddressRepository {
             session.getMapper(CifAddressMapper.class).batchUpdate(addresses);
             return null;
         });
+    }
+
+    /**
+     * 使用 MyBatis BATCH Executor 模式的批量更新
+     * 所有 SQL 在 flushStatements() 时一次性发送，效率高于循环单条 update
+     */
+    public void batchUpdateWithExecutor(List<CifAddress> addresses) {
+        logger.info("BATCH模式批量更新地址 clientNo={}, 数量={}", addresses.get(0).getClientNo(), addresses.size());
+        // 使用 BATCH executor 打开 session
+        try (SqlSession session = sqlSessionFactory.openSession(ExecutorType.BATCH)) {
+            CifAddressMapper mapper = session.getMapper(CifAddressMapper.class);
+            for (CifAddress address : addresses) {
+                mapper.update(address);
+            }
+            // 一次性发送所有批量 SQL 到数据库
+            session.flushStatements();
+            session.commit();
+        }
     }
 
     @Override
