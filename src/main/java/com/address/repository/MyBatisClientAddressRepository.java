@@ -79,10 +79,7 @@ public class MyBatisClientAddressRepository implements ClientAddressRepository {
     public void updateAll(List<CifAddress> addresses) {
         logger.info("批量更新地址 clientNo={}, 数量={}", addresses.get(0).getClientNo(), addresses.size());
         execute(session -> {
-            CifAddressMapper mapper = session.getMapper(CifAddressMapper.class);
-            for (CifAddress address : addresses) {
-                mapper.update(address);
-            }
+            session.getMapper(CifAddressMapper.class).batchUpdate(addresses);
             return null;
         });
     }

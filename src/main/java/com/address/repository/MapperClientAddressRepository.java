@@ -52,9 +52,7 @@ public class MapperClientAddressRepository implements ClientAddressRepository {
     @Transactional
     public void updateAll(List<CifAddress> addresses) {
         logger.info("批量更新地址 clientNo={}, 数量={}", addresses.get(0).getClientNo(), addresses.size());
-        for (CifAddress address : addresses) {
-            mapper.update(address);
-        }
+        mapper.batchUpdate(addresses);
     }
 
     @Override
