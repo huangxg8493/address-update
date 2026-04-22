@@ -464,3 +464,54 @@ Response:
 
 ### 相关文件
 - `src/main/ui/address.html` (新增)
+
+---
+
+## Phase 15: 单地址维护接口实现
+
+### 背景
+为客户地址维护系统添加单地址更新接口 POST /client/address/single/update，支持单个地址的修改和逻辑删除。
+
+### 设计决策
+- **URL:** POST `/client/address/single/update`
+- **请求格式:** 完整 CifAddress 字段（seqNo, clientNo, addressType, addressDetail, isMailingAddress, isNewest, delFlag）
+- **业务规则:**
+  - delFlag='Y' 时执行逻辑删除（优先于修改）
+  - seqNo 有值且 delFlag='N' 时执行修改
+  - 修改时自动更新 lastChangeDate 为当前时间
+- **响应格式:** 返回更新后的 CifAddress 数据
+
+### 接口规格
+```
+POST /client/address/single/update
+Content-Type: application/json
+
+Request:
+{
+  "seqNo": "702055748011692032",
+  "clientNo": "C001",
+  "addressType": "03",
+  "addressDetail": "北京市朝阳区建国路88号",
+  "lastChangeDate": "2026-04-22 15:18:54",
+  "isMailingAddress": "Y",
+  "isNewest": "Y",
+  "delFlag": "N"
+}
+
+Response:
+{
+  "code": "00000",
+  "message": "成功",
+  "data": {
+    "seqNo": "702055748011692032",
+    "clientNo": "C001",
+    ...
+  }
+}
+```
+
+### 相关文件
+- `src/main/java/com/address/dto/SingleAddressRequest.java` (新增)
+- `src/main/java/com/address/dto/SingleAddressResponse.java` (新增)
+- `src/main/java/com/address/controller/ClientAddressController.java` (修改)
+- `src/main/java/com/address/service/ClientAddressService.java` (修改)

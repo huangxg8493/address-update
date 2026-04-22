@@ -342,6 +342,22 @@
 - c20cc7b: chore: 创建实施计划文件
 - b0f9625: feat: 添加 CifAddress 实体类及基本测试
 - 53ce2f4: feat: 添加 AddressType 枚举
+
+---
+
+## Phase 15: 单地址维护接口实现
+
+### Task 1: 创建 DTO
+- [ ] 进行中
+
+### Task 2: Service 层添加业务方法
+- [ ] 待开始
+
+### Task 3: Controller 层添加接口
+- [ ] 待开始
+
+### Task 4: 编译验证
+- [ ] 待开始
 - 3a6714d: feat: 添加 Repository 层接口及内存实现
 - 9294fe2: feat: 添加地址选择策略接口及实现
 - ee24e44: feat: 添加 AddressMerger 地址合并逻辑

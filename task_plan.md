@@ -494,3 +494,30 @@
 
 - [x] Step 1: 检查文件完整性
 - [x] Step 2: 提交
+
+---
+
+## Phase 15: 单地址维护接口实现
+
+### Task 1: 创建 DTO
+
+- [x] Step 1: 创建 SingleAddressRequest.java
+- [x] Step 2: 创建 SingleAddressResponse.java
+- [x] Step 3: 提交
+
+### Task 2: Service 层添加业务方法
+
+- [x] Step 1: 添加 updateSingleAddress 方法到 ClientAddressService.java
+- [x] Step 2: 添加 import
+- [x] Step 3: 提交
+
+### Task 3: Controller 层添加接口
+
+- [x] Step 1: 添加 import
+- [x] Step 2: 添加 /client/address/single/update 接口方法
+- [x] Step 3: 提交
+
+### Task 4: 编译验证
+
+- [ ] Step 1: mvn compile 编译项目
+- [ ] Step 2: mvn test 运行测试
