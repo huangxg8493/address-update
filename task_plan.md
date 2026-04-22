@@ -377,74 +377,74 @@
 
 ### Task 1: 创建 AddressQueryRequest DTO
 
-- [ ] Step 1: 创建 AddressQueryRequest.java
-- [ ] Step 2: 编译验证
-- [ ] Step 3: 提交
+- [x] Step 1: 创建 AddressQueryRequest.java
+- [x] Step 2: 编译验证
+- [x] Step 3: 提交
 
 ### Task 2: 创建 PageResult DTO
 
-- [ ] Step 1: 创建 PageResult.java
-- [ ] Step 2: 编译验证
-- [ ] Step 3: 提交
+- [x] Step 1: 创建 PageResult.java
+- [x] Step 2: 编译验证
+- [x] Step 3: 提交
 
 ### Task 3: 创建 AddressQueryResponse DTO
 
-- [ ] Step 1: 创建 AddressQueryResponse.java
-- [ ] Step 2: 编译验证
-- [ ] Step 3: 提交
+- [x] Step 1: 创建 AddressQueryResponse.java
+- [x] Step 2: 编译验证
+- [x] Step 3: 提交
 
 ### Task 4: 创建 AddressQueryRepository 接口
 
-- [ ] Step 1: 创建 AddressQueryRepository.java
-- [ ] Step 2: 编译验证
-- [ ] Step 3: 提交
+- [x] Step 1: 创建 AddressQueryRepository.java
+- [x] Step 2: 编译验证
+- [x] Step 3: 提交
 
 ### Task 5: 修改 CifAddressMapper 添加分页方法
 
-- [ ] Step 1: 添加 findPage 和 countPage 方法
-- [ ] Step 2: 编译验证
-- [ ] Step 3: 提交
+- [x] Step 1: 添加 findPage 和 countPage 方法
+- [x] Step 2: 编译验证
+- [x] Step 3: 提交
 
 ### Task 6: 修改 CifAddressMapper.xml 添加分页 SQL
 
-- [ ] Step 1: 添加 findPage 和 countPage SQL
-- [ ] Step 2: 编译验证
-- [ ] Step 3: 提交
+- [x] Step 1: 添加 findPage 和 countPage SQL
+- [x] Step 2: 编译验证
+- [x] Step 3: 提交
 
 ### Task 7: 创建 MyBatisAddressQueryRepository 实现
 
-- [ ] Step 1: 创建 MyBatisAddressQueryRepository.java
-- [ ] Step 2: 编译验证
-- [ ] Step 3: 提交
+- [x] Step 1: 创建 MyBatisAddressQueryRepository.java
+- [x] Step 2: 编译验证
+- [x] Step 3: 提交
 
 ### Task 8: 创建 ClientAddressQueryService
 
-- [ ] Step 1: 创建 ClientAddressQueryService.java
-- [ ] Step 2: 编译验证
-- [ ] Step 3: 提交
+- [x] Step 1: 创建 ClientAddressQueryService.java
+- [x] Step 2: 编译验证
+- [x] Step 3: 提交
 
 ### Task 9: 创建 ClientAddressQueryController
 
-- [ ] Step 1: 创建 ClientAddressQueryController.java
-- [ ] Step 2: 编译验证
-- [ ] Step 3: 提交
+- [x] Step 1: 创建 ClientAddressQueryController.java
+- [x] Step 2: 编译验证
+- [x] Step 3: 提交
 
 ### Task 10: 创建 ClientAddressQueryControllerTest
 
-- [ ] Step 1: 创建 ClientAddressQueryControllerTest.java
-- [ ] Step 2: 运行测试
-- [ ] Step 3: 提交
+- [x] Step 1: 创建 ClientAddressQueryControllerTest.java
+- [x] Step 2: 运行测试
+- [x] Step 3: 提交
 
 ### Task 11: 创建 ClientAddressQueryServiceTest
 
-- [ ] Step 1: 创建 ClientAddressQueryServiceTest.java
-- [ ] Step 2: 运行测试
-- [ ] Step 3: 提交
+- [x] Step 1: 创建 ClientAddressQueryServiceTest.java
+- [x] Step 2: 运行测试
+- [x] Step 3: 提交
 
 ### Task 12: 最终验证
 
-- [ ] Step 1: 运行全部测试
-- [ ] Step 2: 检查 git 状态
+- [x] Step 1: 运行全部测试
+- [x] Step 2: 检查 git 状态
 
 ---
 
