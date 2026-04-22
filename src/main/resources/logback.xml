@@ -26,13 +26,25 @@
     </appender>
 
     <!-- 根 logger -->
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
     </root>
 
     <!-- Repository 日志 -->
-    <logger name="com.address.repository" level="INFO" additivity="false">
+    <logger name="com.address.repository" level="DEBUG" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </logger>
+
+    <!-- Service 日志 -->
+    <logger name="com.address.service" level="DEBUG" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </logger>
+
+    <!-- Controller 日志 -->
+    <logger name="com.address.controller" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
     </logger>
