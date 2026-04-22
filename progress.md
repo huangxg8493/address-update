@@ -261,31 +261,40 @@
 ## Phase 13: 地址查询接口实现
 
 ### Task 1: 创建 AddressQueryRequest DTO
-- 状态：待开始
+- 状态：已完成
 
 ### Task 2: 创建 PageResult DTO
-- 状态：待开始
+- 状态：已完成
 
 ### Task 3: 创建 AddressQueryResponse DTO
-- 状态：待开始
+- 状态：已完成
 
 ### Task 4: 创建 AddressQueryRepository 接口
-- 状态：待开始
+- 状态：已完成
 
 ### Task 5: 修改 CifAddressMapper 添加分页方法
-- 状态：待开始
+- 状态：已完成
 
 ### Task 6: 修改 CifAddressMapper.xml 添加分页 SQL
-- 状态：待开始
+- 状态：已完成
 
 ### Task 7: 创建 MyBatisAddressQueryRepository 实现
-- 状态：待开始
+- 状态：已完成
 
 ### Task 8: 创建 ClientAddressQueryService
-- 状态：待开始
+- 状态：已完成
 
 ### Task 9: 创建 ClientAddressQueryController
-- 状态：待开始
+- 状态：已完成
+
+### Task 10: 创建 ClientAddressQueryControllerTest
+- 状态：已完成
+
+### Task 11: 创建 ClientAddressQueryServiceTest
+- 状态：已完成
+
+### Task 12: 最终验证
+- 状态：已完成（40 tests, 0 failures）
 
 ### Task 10: 创建 ClientAddressQueryControllerTest
 - 状态：待开始
