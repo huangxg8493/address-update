@@ -289,7 +289,7 @@ async function queryAddresses(clientNo, pageNum, pageSize, addressType) {
         })
     });
     const result = await response.json();
-    if (result.code !== '00000') {
+    if (result.code !== '00000' && result.code !== '200') {
         throw new Error(result.message || '查询失败');
     }
     return result.data;
