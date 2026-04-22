@@ -1,4 +1,8 @@
 {
+  "env": {
+    "JAVA_HOME": "d:\\JAVA\\jdk\\java8\\jdk",
+    "PATH": "d:\\JAVA\\jdk\\java8\\jdk\\bin;%PATH%"
+  },
   "permissions": {
     "allow": [
       "Bash(cd *)",
@@ -19,7 +23,12 @@
       "Bash(mvn test-compile *)",
       "Bash(mvn *)",
       "Bash(xmllint *)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(JAVA_HOME=/d/JAVA/jdk/java8 mvn test -Dtest=ClientAddressServiceTest -f D:/AI/address-update/pom.xml)",
+      "Bash(/d/JAVA/jdk/java8/bin/java *)",
+      "Read(//d/JAVA/jdk/java8//**)",
+      "Read(//d/JAVA/jdk/jdk1.8.0_481//**)",
+      "Bash(java *)"
     ],
     "deny": [
       "Bash(git reset --hard:*)",
