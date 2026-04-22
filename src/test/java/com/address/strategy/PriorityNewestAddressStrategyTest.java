@@ -3,15 +3,19 @@ package com.address.strategy;
 import com.address.model.CifAddress;
 import com.address.strategy.impl.PriorityNewestAddressStrategy;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class PriorityNewestAddressStrategyTest {
 
-    private PriorityNewestAddressStrategy strategy = new PriorityNewestAddressStrategy();
+    @Autowired
+    private PriorityNewestAddressStrategy strategy;
 
     @Test
     void testSelectByType() {

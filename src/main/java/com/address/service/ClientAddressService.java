@@ -29,11 +29,12 @@ public class ClientAddressService {
     @Autowired
     public ClientAddressService(ClientAddressRepository repository,
                                 MailingAddressStrategy mailingStrategy,
-                                NewestAddressStrategy newestStrategy) {
+                                NewestAddressStrategy newestStrategy,
+                                AddressMerger merger) {
         this.repository = repository;
         this.mailingStrategy = mailingStrategy;
         this.newestStrategy = newestStrategy;
-        this.merger = new AddressMerger();
+        this.merger = merger;
     }
 
     public List<CifAddress> updateAddresses(String clientNo, List<CifAddress> incoming) {
@@ -130,8 +131,12 @@ public class ClientAddressService {
                         stockAddr.setAddressType(incomingAddr.getAddressType());
                         stockAddr.setAddressDetail(incomingAddr.getAddressDetail());
                         stockAddr.setLastChangeDate(new Date());
-                        stockAddr.setIsMailingAddress(incomingAddr.getIsMailingAddress());
-                        stockAddr.setIsNewest(incomingAddr.getIsNewest());
+                        if (Constants.YES.equals(incomingAddr.getIsMailingAddress())) {
+                            stockAddr.setIsMailingAddress(incomingAddr.getIsMailingAddress());
+                        }
+                        if (Constants.YES.equals(incomingAddr.getIsNewest())) {
+                            stockAddr.setIsNewest(incomingAddr.getIsNewest());
+                        }
                         break;
                     }
                 }

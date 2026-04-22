@@ -3,14 +3,18 @@ package com.address.strategy;
 import com.address.model.CifAddress;
 import com.address.strategy.impl.PriorityMailingAddressStrategy;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class PriorityMailingAddressStrategyTest {
 
-    private PriorityMailingAddressStrategy strategy = new PriorityMailingAddressStrategy();
+    @Autowired
+    private PriorityMailingAddressStrategy strategy;
 
     @Test
     void testSelectMailingAddressWhenExists() {
