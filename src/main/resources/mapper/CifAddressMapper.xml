@@ -129,53 +129,56 @@
     <!-- 批量更新：单条SQL用CASE WHEN，只进行一次数据库往返 -->
     <update id="batchUpdate" parameterType="java.util.List">
         UPDATE CIF_ADDRESS
-        SET
-            ADDRESS_TYPE = CASE SEQ_NO
-                <foreach collection="list" item="addr">
-                    <if test="addr.addressType != null and addr.addressType != ''">
+        <set>
+            <if test="list[0].addressType != null and list[0].addressType != ''">
+                ADDRESS_TYPE = CASE SEQ_NO
+                    <foreach collection="list" item="addr">
                         WHEN #{addr.seqNo,jdbcType=VARCHAR} THEN #{addr.addressType,jdbcType=VARCHAR}
-                    </if>
-                </foreach>
-                ELSE ADDRESS_TYPE END,
-            ADDRESS_DETAIL = CASE SEQ_NO
-                <foreach collection="list" item="addr">
-                    <if test="addr.addressDetail != null and addr.addressDetail != ''">
+                    </foreach>
+                    ELSE ADDRESS_TYPE END,
+            </if>
+            <if test="list[0].addressDetail != null and list[0].addressDetail != ''">
+                ADDRESS_DETAIL = CASE SEQ_NO
+                    <foreach collection="list" item="addr">
                         WHEN #{addr.seqNo,jdbcType=VARCHAR} THEN #{addr.addressDetail,jdbcType=VARCHAR}
-                    </if>
-                </foreach>
-                ELSE ADDRESS_DETAIL END,
-            LAST_CHANGE_DATE = CASE SEQ_NO
-                <foreach collection="list" item="addr">
-                    <if test="addr.lastChangeDate != null">
+                    </foreach>
+                    ELSE ADDRESS_DETAIL END,
+            </if>
+            <if test="list[0].lastChangeDate != null">
+                LAST_CHANGE_DATE = CASE SEQ_NO
+                    <foreach collection="list" item="addr">
                         WHEN #{addr.seqNo,jdbcType=VARCHAR} THEN #{addr.lastChangeDate,jdbcType=TIMESTAMP}
-                    </if>
-                </foreach>
-                ELSE LAST_CHANGE_DATE END,
-            IS_MAILING_ADDRESS = CASE SEQ_NO
-                <foreach collection="list" item="addr">
-                    <if test="addr.isMailingAddress != null and addr.isMailingAddress != ''">
+                    </foreach>
+                    ELSE LAST_CHANGE_DATE END,
+            </if>
+            <if test="list[0].isMailingAddress != null and list[0].isMailingAddress != ''">
+                IS_MAILING_ADDRESS = CASE SEQ_NO
+                    <foreach collection="list" item="addr">
                         WHEN #{addr.seqNo,jdbcType=VARCHAR} THEN #{addr.isMailingAddress,jdbcType=CHAR}
-                    </if>
-                </foreach>
-                ELSE IS_MAILING_ADDRESS END,
-            IS_NEWEST = CASE SEQ_NO
-                <foreach collection="list" item="addr">
-                    <if test="addr.isNewest != null and addr.isNewest != ''">
+                    </foreach>
+                    ELSE IS_MAILING_ADDRESS END,
+            </if>
+            <if test="list[0].isNewest != null and list[0].isNewest != ''">
+                IS_NEWEST = CASE SEQ_NO
+                    <foreach collection="list" item="addr">
                         WHEN #{addr.seqNo,jdbcType=VARCHAR} THEN #{addr.isNewest,jdbcType=CHAR}
-                    </if>
-                </foreach>
-                ELSE IS_NEWEST END,
-            DEL_FLAG = CASE SEQ_NO
-                <foreach collection="list" item="addr">
-                    <if test="addr.delFlag != null and addr.delFlag != ''">
+                    </foreach>
+                    ELSE IS_NEWEST END,
+            </if>
+            <if test="list[0].delFlag != null and list[0].delFlag != ''">
+                DEL_FLAG = CASE SEQ_NO
+                    <foreach collection="list" item="addr">
                         WHEN #{addr.seqNo,jdbcType=VARCHAR} THEN #{addr.delFlag,jdbcType=CHAR}
-                    </if>
-                </foreach>
-                ELSE DEL_FLAG END
-        WHERE SEQ_NO IN
-        <foreach collection="list" item="addr" open="(" separator="," close=")">
-            #{addr.seqNo,jdbcType=VARCHAR}
-        </foreach>
+                    </foreach>
+                    ELSE DEL_FLAG END,
+            </if>
+        </set>
+        <where>
+            SEQ_NO IN
+            <foreach collection="list" item="addr" open="(" separator="," close=")">
+                #{addr.seqNo,jdbcType=VARCHAR}
+            </foreach>
+        </where>
     </update>
 
 </mapper>
