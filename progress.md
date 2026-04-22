@@ -231,19 +231,19 @@
 ## Phase 12: RESTful 接口实现
 
 ### Task 1: 新建 ApiResponse 统一响应类
-- 状态：待开始
+- 状态：已完成
 
 ### Task 2: 新建 ErrorCode 错误码枚举
-- 状态：待开始
+- 状态：已完成
 
 ### Task 3: 新建 AddressUpdateRequest 请求 DTO
-- 状态：待开始
+- 状态：已完成
 
 ### Task 4: 新建 ClientAddressController
-- 状态：待开始
+- 状态：已完成
 
 ### Task 5: 修改 Application 添加 Controller 扫描
-- 状态：待开始
+- 状态：已完成（@SpringBootApplication 默认 @ComponentScan，无需修改）
 
 ---
 
