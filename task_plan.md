@@ -333,6 +333,46 @@
 
 ---
 
+## Phase 12: RESTful 接口实现
+
+### Task 1: 新建 ApiResponse 统一响应类
+
+- [x] Step 1: 编写测试（ApiResponseTest）
+- [x] Step 2: 运行测试验证失败（class not found）
+- [x] Step 3: 编写最小实现（ApiResponse.java）
+- [x] Step 4: 运行测试验证通过
+- [x] Step 5: 提交
+
+### Task 2: 新建 ErrorCode 错误码枚举
+
+- [x] Step 1: 编写最小实现（ErrorCode.java）
+- [x] Step 2: 提交
+
+### Task 3: 新建 AddressUpdateRequest 请求 DTO
+
+- [x] Step 1: 编写最小实现（AddressUpdateRequest.java）
+- [x] Step 2: 提交
+
+### Task 4: 新建 ClientAddressController
+
+- [x] Step 1: 编写测试（ClientAddressControllerTest）
+- [x] Step 2: 运行测试验证通过
+- [x] Step 3: 编写 Controller 实现
+- [x] Step 4: 运行测试验证通过
+- [x] Step 5: 提交
+
+### Task 5: 修改 Application 添加 Controller 扫描
+
+- [x] Step 1: 添加 @ComponentScan
+- [x] Step 2: 运行测试验证
+- [x] Step 3: 提交
+
+### Task 6: 端到端集成测试（可选）
+
+- [ ] Step 1: 创建 ClientAddressControllerIntegrationTest（如需要）
+
+---
+
 ## 遇到的问题
 
 | 问题 | 解决方案 |

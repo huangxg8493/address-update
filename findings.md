@@ -340,3 +340,41 @@ src/main/java/com/address/
 - `src/main/resources/logback.xml` (新增)
 - `src/main/java/com/address/repository/MyBatisClientAddressRepository.java` (修改)
 - `src/main/java/com/address/repository/JdbcClientAddressRepository.java` (修改)
+
+---
+
+## Phase 12: RESTful 接口实现
+
+### 背景
+为客户地址维护系统添加 RESTful API 接口，支持 PUT `/client/address/update` 更新客户地址。
+
+### 设计决策
+- **统一响应包装** - ApiResponse<T> 封装 code/message/data
+- **错误码体系** - 200/400/404/409/500 五级错误码
+- **参数校验** - clientNo 和 addresses 非空校验
+- **Service 复用** - 直接调用现有 ClientAddressService.updateAddresses()
+
+### 相关文件
+- `src/main/java/com/address/common/ApiResponse.java` (新增)
+- `src/main/java/com/address/common/ErrorCode.java` (新增)
+- `src/main/java/com/address/dto/AddressUpdateRequest.java` (新增)
+- `src/main/java/com/address/controller/ClientAddressController.java` (新增)
+
+### 接口规格
+```
+PUT /client/address/update
+Content-Type: application/json
+
+Request:
+{
+  "clientNo": "C001",
+  "addresses": [{"addressType": "02", "addressDetail": "联系地址", ...}]
+}
+
+Response:
+{
+  "code": "200",
+  "message": "成功",
+  "data": [{...}, {...}]
+}
+```
