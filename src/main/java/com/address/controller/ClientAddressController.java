@@ -9,7 +9,9 @@ import com.address.service.ClientAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -48,6 +50,7 @@ public class ClientAddressController {
         );
 
         // 转换为响应 DTO
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         AddressUpdateResponse response = new AddressUpdateResponse();
         response.setClientNo(request.getClientNo());
         List<com.address.dto.AddressUpdateResponse.AddressItem> responseItems = new ArrayList<>();
@@ -56,6 +59,7 @@ public class ClientAddressController {
             item.setSeqNo(addr.getSeqNo());
             item.setAddressType(addr.getAddressType());
             item.setAddressDetail(addr.getAddressDetail());
+            item.setLastChangeDate(addr.getLastChangeDate() != null ? sdf.format(addr.getLastChangeDate()) : null);
             item.setIsMailingAddress(addr.getIsMailingAddress());
             item.setIsNewest(addr.getIsNewest());
             responseItems.add(item);

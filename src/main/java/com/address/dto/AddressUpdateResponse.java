@@ -15,6 +15,7 @@ public class AddressUpdateResponse {
         private String seqNo;
         private String addressType;
         private String addressDetail;
+        private String lastChangeDate;
         private String isMailingAddress;
         private String isNewest;
 
@@ -24,6 +25,8 @@ public class AddressUpdateResponse {
         public void setAddressType(String addressType) { this.addressType = addressType; }
         public String getAddressDetail() { return addressDetail; }
         public void setAddressDetail(String addressDetail) { this.addressDetail = addressDetail; }
+        public String getLastChangeDate() { return lastChangeDate; }
+        public void setLastChangeDate(String lastChangeDate) { this.lastChangeDate = lastChangeDate; }
         public String getIsMailingAddress() { return isMailingAddress; }
         public void setIsMailingAddress(String isMailingAddress) { this.isMailingAddress = isMailingAddress; }
         public String getIsNewest() { return isNewest; }
