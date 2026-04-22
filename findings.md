@@ -378,3 +378,55 @@ Response:
   "data": [{...}, {...}]
 }
 ```
+
+---
+
+## Phase 13: 地址查询接口实现
+
+### 背景
+为客户地址维护系统添加分页查询接口 POST /client/address/query，支持按客户号和地址类型分页查询地址列表。
+
+### 设计决策
+- **POST 请求** - 请求参数放入 body 中，支持复杂查询条件
+- **分页参数** - pageNum（从1开始，默认1）+ pageSize（默认10）
+- **独立 Repository** - 新建 AddressQueryRepository 分离查询和变更职责
+- **MyBatis 分页** - 使用 LIMIT OFFSET 语法
+
+### 接口规格
+```
+POST /client/address/query
+Content-Type: application/json
+
+Request:
+{
+  "clientNo": "C001",
+  "addressType": "02",     // 可选
+  "pageNum": 1,            // 默认1
+  "pageSize": 10           // 默认10
+}
+
+Response:
+{
+  "code": "200",
+  "message": "成功",
+  "data": {
+    "clientNo": "C001",
+    "pageNum": 1,
+    "pageSize": 10,
+    "total": 25,
+    "totalPages": 3,
+    "list": [...]
+  }
+}
+```
+
+### 相关文件
+- `src/main/java/com/address/dto/AddressQueryRequest.java` (新增)
+- `src/main/java/com/address/dto/PageResult.java` (新增)
+- `src/main/java/com/address/dto/AddressQueryResponse.java` (新增)
+- `src/main/java/com/address/repository/AddressQueryRepository.java` (新增)
+- `src/main/java/com/address/repository/MyBatisAddressQueryRepository.java` (新增)
+- `src/main/java/com/address/service/ClientAddressQueryService.java` (新增)
+- `src/main/java/com/address/controller/ClientAddressQueryController.java` (新增)
+- `src/main/java/com/address/repository/CifAddressMapper.java` (修改)
+- `src/main/resources/mapper/CifAddressMapper.xml` (修改)

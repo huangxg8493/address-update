@@ -256,6 +256,46 @@
 - 39141d4: feat: 创建 Spring Boot 启动类 Application
 - 69c2f5f: feat: 引入 Spring Boot 2.7.18 依赖
 
+---
+
+## Phase 13: 地址查询接口实现
+
+### Task 1: 创建 AddressQueryRequest DTO
+- 状态：待开始
+
+### Task 2: 创建 PageResult DTO
+- 状态：待开始
+
+### Task 3: 创建 AddressQueryResponse DTO
+- 状态：待开始
+
+### Task 4: 创建 AddressQueryRepository 接口
+- 状态：待开始
+
+### Task 5: 修改 CifAddressMapper 添加分页方法
+- 状态：待开始
+
+### Task 6: 修改 CifAddressMapper.xml 添加分页 SQL
+- 状态：待开始
+
+### Task 7: 创建 MyBatisAddressQueryRepository 实现
+- 状态：待开始
+
+### Task 8: 创建 ClientAddressQueryService
+- 状态：待开始
+
+### Task 9: 创建 ClientAddressQueryController
+- 状态：待开始
+
+### Task 10: 创建 ClientAddressQueryControllerTest
+- 状态：待开始
+
+### Task 11: 创建 ClientAddressQueryServiceTest
+- 状态：待开始
+
+### Task 12: 最终验证
+- 状态：待开始
+
 - 67b23da: refactor: 完善 CifAddressMapper.xml 使用标准 MyBatis 规范
 - 3e39750: docs: 更新 task_plan.md Phase 9 完成状态
 - 02ed9d2: feat: 完成 MyBatis 迁移
