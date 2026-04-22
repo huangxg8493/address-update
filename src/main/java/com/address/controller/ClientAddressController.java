@@ -4,6 +4,8 @@ import com.address.common.ApiResponse;
 import com.address.common.ErrorCode;
 import com.address.dto.AddressUpdateRequest;
 import com.address.dto.AddressUpdateResponse;
+import com.address.dto.SingleAddressRequest;
+import com.address.dto.SingleAddressResponse;
 import com.address.model.CifAddress;
 import com.address.service.ClientAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,5 +69,36 @@ public class ClientAddressController {
         response.setAddresses(responseItems);
 
         return ApiResponse.success(response);
+    }
+
+    @PostMapping("/client/address/single/update")
+    public ApiResponse<SingleAddressResponse> updateSingleAddress(@RequestBody SingleAddressRequest request) {
+        // 参数校验
+        if (request.getClientNo() == null || request.getClientNo().trim().isEmpty()) {
+            return ApiResponse.error(ErrorCode.BAD_REQUEST.getCode(), "客户号不能为空");
+        }
+        if (request.getSeqNo() == null || request.getSeqNo().trim().isEmpty()) {
+            return ApiResponse.error(ErrorCode.BAD_REQUEST.getCode(), "seqNo不能为空");
+        }
+
+        try {
+            CifAddress result = clientAddressService.updateSingleAddress(request);
+
+            // 转换为响应 DTO
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SingleAddressResponse response = new SingleAddressResponse();
+            response.setSeqNo(result.getSeqNo());
+            response.setClientNo(result.getClientNo());
+            response.setAddressType(result.getAddressType());
+            response.setAddressDetail(result.getAddressDetail());
+            response.setLastChangeDate(result.getLastChangeDate() != null ? sdf.format(result.getLastChangeDate()) : null);
+            response.setIsMailingAddress(result.getIsMailingAddress());
+            response.setIsNewest(result.getIsNewest());
+            response.setDelFlag(result.getDelFlag());
+
+            return ApiResponse.success(response);
+        } catch (RuntimeException e) {
+            return ApiResponse.error(ErrorCode.BAD_REQUEST.getCode(), e.getMessage());
+        }
     }
 }

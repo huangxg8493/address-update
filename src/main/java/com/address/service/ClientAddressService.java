@@ -1,6 +1,7 @@
 package com.address.service;
 
 import com.address.constants.Constants;
+import com.address.dto.SingleAddressRequest;
 import com.address.model.CifAddress;
 import com.address.repository.ClientAddressRepository;
 import com.address.strategy.MailingAddressStrategy;
@@ -186,6 +187,51 @@ public class ClientAddressService {
             }
         }
         return null;
+    }
+
+    public CifAddress updateSingleAddress(SingleAddressRequest request) {
+        // 参数校验
+        if (request.getSeqNo() == null || request.getSeqNo().trim().isEmpty()) {
+            throw new RuntimeException("seqNo 不能为空");
+        }
+        if (request.getClientNo() == null || request.getClientNo().trim().isEmpty()) {
+            throw new RuntimeException("clientNo 不能为空");
+        }
+
+        // 获取存量地址
+        List<CifAddress> stock = repository.findByClientNo(request.getClientNo());
+        CifAddress target = null;
+        for (CifAddress addr : stock) {
+            if (addr.getSeqNo().equals(request.getSeqNo())) {
+                target = addr;
+                break;
+            }
+        }
+
+        if (target == null) {
+            throw new RuntimeException("地址不存在");
+        }
+
+        // 删除优先
+        if ("Y".equals(request.getDelFlag())) {
+            target.setDelFlag("Y");
+            target.setLastChangeDate(new Date());
+            repository.update(target);
+            return target;
+        }
+
+        // 修改
+        target.setAddressType(request.getAddressType());
+        target.setAddressDetail(request.getAddressDetail());
+        target.setLastChangeDate(new Date());
+        if (request.getIsMailingAddress() != null) {
+            target.setIsMailingAddress(request.getIsMailingAddress());
+        }
+        if (request.getIsNewest() != null) {
+            target.setIsNewest(request.getIsNewest());
+        }
+        repository.update(target);
+        return target;
     }
 
     private String generateId() {
