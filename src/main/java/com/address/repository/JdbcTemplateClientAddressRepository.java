@@ -33,6 +33,14 @@ public class JdbcTemplateClientAddressRepository implements ClientAddressReposit
     }
 
     @Override
+    public CifAddress findBySeqNo(String seqNo) {
+        String sql = "SELECT SEQ_NO, CLIENT_NO, ADDRESS_TYPE, ADDRESS_DETAIL, LAST_CHANGE_DATE, " +
+                     "IS_MAILING_ADDRESS, IS_NEWEST, DEL_FLAG FROM CIF_ADDRESS WHERE SEQ_NO = ?";
+        List<CifAddress> results = jdbcTemplate.query(sql, new CifAddressRowMapper(), seqNo);
+        return results.isEmpty() ? null : results.get(0);
+    }
+
+    @Override
     public void save(CifAddress address) {
         logger.info("保存地址 clientNo={}", address.getClientNo());
         String sql = "INSERT INTO CIF_ADDRESS (SEQ_NO, CLIENT_NO, ADDRESS_TYPE, ADDRESS_DETAIL, " +

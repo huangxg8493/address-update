@@ -28,6 +28,12 @@ public class MapperClientAddressRepository implements ClientAddressRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public CifAddress findBySeqNo(String seqNo) {
+        return mapper.findBySeqNo(seqNo);
+    }
+
+    @Override
     @Transactional
     public void save(CifAddress address) {
         logger.info("保存地址 clientNo={}", address.getClientNo());

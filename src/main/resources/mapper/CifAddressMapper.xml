@@ -45,6 +45,21 @@
         </where>
     </select>
 
+    <!-- 按 seqNo 查询单条地址 -->
+    <select id="findBySeqNo" resultMap="CifAddressResultMap">
+        SELECT
+            SEQ_NO,
+            CLIENT_NO,
+            ADDRESS_TYPE,
+            ADDRESS_DETAIL,
+            LAST_CHANGE_DATE,
+            IS_MAILING_ADDRESS,
+            IS_NEWEST,
+            DEL_FLAG
+        FROM CIF_ADDRESS
+        WHERE SEQ_NO = #{seqNo,jdbcType=VARCHAR}
+    </select>
+
     <!-- 插入：单条记录（使用 trim 去除多余逗号） -->
     <insert id="save" parameterType="CifAddress">
         INSERT INTO CIF_ADDRESS
