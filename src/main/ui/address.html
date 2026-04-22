@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>客户地址管理</title>
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Microsoft YaHei", Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.search-bar {
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 200px;
+}
+
+.search-bar button {
+    padding: 8px 16px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#queryBtn {
+    background-color: #1890ff;
+    color: white;
+}
+
+#addBtn {
+    background-color: #52c41a;
+    color: white;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #fafafa;
+    font-weight: 600;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.pagination button {
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.pagination button:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    width: 400px;
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-actions {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.form-actions button {
+    padding: 8px 20px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#cancelBtn {
+    background-color: #999;
+    color: white;
+}
+
+.form-actions button[type="submit"] {
+    background-color: #1890ff;
+    color: white;
+}
+
+.editBtn, .deleteBtn {
+    padding: 4px 8px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.editBtn {
+    background-color: #1890ff;
+    color: white;
+}
+
+.deleteBtn {
+    background-color: #ff4d4f;
+    color: white;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>客户地址管理</h1>
+        <!-- 查询区域 -->
+        <div class="search-bar">
+            <input type="text" id="clientNoInput" placeholder="请输入客户号">
+            <button id="queryBtn">查询</button>
+            <button id="addBtn">新增地址</button>
+        </div>
+        <!-- 地址列表 -->
+        <table id="addressTable">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>地址类型</th>
+                    <th>地址详情</th>
+                    <th>修改日期</th>
+                    <th>通讯地址</th>
+                    <th>最新地址</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="addressTableBody">
+            </tbody>
+        </table>
+        <!-- 分页 -->
+        <div class="pagination">
+            <span id="pageInfo"></span>
+            <button id="prevBtn">上一页</button>
+            <button id="nextBtn">下一页</button>
+        </div>
+    </div>
+    <!-- 弹窗 -->
+    <div id="addressModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">新增地址</h2>
+            <form id="addressForm">
+                <input type="hidden" id="seqNo">
+                <div class="form-group">
+                    <label>地址类型:</label>
+                    <select id="addressType">
+                        <option value="RESIDENCE">居住地址</option>
+                        <option value="CONTACT">联系地址</option>
+                        <option value="COMPANY">单位地址</option>
+                        <option value="HOUSEHOLD">户籍地址</option>
+                        <option value="CERTIFICATE">证件地址</option>
+                        <option value="BUSINESS">营业地址</option>
+                        <option value="REGISTERED">注册地址</option>
+                        <option value="OFFICE">办公地址</option>
+                        <option value="PERMANENT">永久地址</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>地址详情:</label>
+                    <textarea id="addressDetail" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label><input type="checkbox" id="isMailingAddress"> 通讯地址</label>
+                </div>
+                <div class="form-group">
+                    <label><input type="checkbox" id="isNewest"> 最新地址</label>
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="cancelBtn">取消</button>
+                    <button type="submit">确定</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+// API 基础路径
+const API_BASE = '';
+
+// 状态变量
+let currentClientNo = '';
+let currentPage = 1;
+const pageSize = 10;
+
+// DOM 元素
+const clientNoInput = document.getElementById('clientNoInput');
+const queryBtn = document.getElementById('queryBtn');
+const addBtn = document.getElementById('addBtn');
+const addressTableBody = document.getElementById('addressTableBody');
+const pageInfo = document.getElementById('pageInfo');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const addressModal = document.getElementById('addressModal');
+const modalTitle = document.getElementById('modalTitle');
+const addressForm = document.getElementById('addressForm');
+const seqNoInput = document.getElementById('seqNo');
+const addressTypeSelect = document.getElementById('addressType');
+const addressDetailInput = document.getElementById('addressDetail');
+const isMailingAddressInput = document.getElementById('isMailingAddress');
+const isNewestInput = document.getElementById('isNewest');
+const cancelBtn = document.getElementById('cancelBtn');
+
+// 调用查询接口
+async function queryAddresses(clientNo, pageNum, pageSize, addressType) {
+    const response = await fetch(API_BASE + '/client/address/query', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            clientNo: clientNo,
+            pageNum: pageNum,
+            pageSize: pageSize,
+            addressType: addressType || null
+        })
+    });
+    const result = await response.json();
+    if (result.code !== '00000') {
+        throw new Error(result.message || '查询失败');
+    }
+    return result.data;
+}
+
+// 调用更新接口
+async function updateAddresses(clientNo, addresses) {
+    const response = await fetch(API_BASE + '/client/address/update', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            clientNo: clientNo,
+            addresses: addresses
+        })
+    });
+    const result = await response.json();
+    if (result.code !== '00000') {
+        throw new Error(result.message || '更新失败');
+    }
+    return result.data;
+}
+
+// 渲染地址列表
+function renderAddressTable(addresses) {
+    addressTableBody.innerHTML = '';
+    if (!addresses || addresses.length === 0) {
+        addressTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;">暂无数据</td></tr>';
+        return;
+    }
+    addresses.forEach(addr => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${addr.seqNo || ''}</td>
+            <td>${getAddressTypeName(addr.addressType)}</td>
+            <td>${addr.addressDetail || ''}</td>
+            <td>${addr.lastChangeDate || ''}</td>
+            <td>${addr.isMailingAddress === 'Y' ? '√' : ''}</td>
+            <td>${addr.isNewest === 'Y' ? '√' : ''}</td>
+            <td>
+                <button class="editBtn" data-seqno="${addr.seqNo}">编辑</button>
+                <button class="deleteBtn" data-seqno="${addr.seqNo}">删除</button>
+            </td>
+        `;
+        addressTableBody.appendChild(tr);
+    });
+}
+
+// 渲染分页信息
+function renderPagination(total, currentPage, totalPages) {
+    pageInfo.textContent = `共 ${total} 条  第 ${currentPage}/${totalPages || 1} 页`;
+    prevBtn.disabled = currentPage <= 1;
+    nextBtn.disabled = currentPage >= totalPages;
+}
+
+// 获取地址类型显示名称
+function getAddressTypeName(typeCode) {
+    const typeMap = {
+        'RESIDENCE': '居住地址',
+        'CONTACT': '联系地址',
+        'COMPANY': '单位地址',
+        'HOUSEHOLD': '户籍地址',
+        'CERTIFICATE': '证件地址',
+        'BUSINESS': '营业地址',
+        'REGISTERED': '注册地址',
+        'OFFICE': '办公地址',
+        'PERMANENT': '永久地址'
+    };
+    return typeMap[typeCode] || typeCode;
+}
+
+// 获取地址类型代码
+function getAddressTypeCode(typeName) {
+    const codeMap = {
+        '居住地址': 'RESIDENCE',
+        '联系地址': 'CONTACT',
+        '单位地址': 'COMPANY',
+        '户籍地址': 'HOUSEHOLD',
+        '证件地址': 'CERTIFICATE',
+        '营业地址': 'BUSINESS',
+        '注册地址': 'REGISTERED',
+        '办公地址': 'OFFICE',
+        '永久地址': 'PERMANENT'
+    };
+    return codeMap[typeName] || typeName;
+}
+
+// 打开弹窗
+function openModal(data) {
+    if (data) {
+        modalTitle.textContent = '编辑地址';
+        seqNoInput.value = data.seqNo || '';
+        addressTypeSelect.value = data.addressType || 'RESIDENCE';
+        addressDetailInput.value = data.addressDetail || '';
+        isMailingAddressInput.checked = data.isMailingAddress === 'Y' || data.isMailingAddress === true;
+        isNewestInput.checked = data.isNewest === 'Y' || data.isNewest === true;
+    } else {
+        modalTitle.textContent = '新增地址';
+        addressForm.reset();
+        seqNoInput.value = '';
+    }
+    addressModal.style.display = 'flex';
+}
+
+// 关闭弹窗
+function closeModal() {
+    addressModal.style.display = 'none';
+    addressForm.reset();
+}
+
+// 绑定事件
+function bindEvents() {
+    // 查询按钮
+    queryBtn.addEventListener('click', async () => {
+        const clientNo = clientNoInput.value.trim();
+        if (!clientNo) {
+            alert('请输入客户号');
+            return;
+        }
+        currentClientNo = clientNo;
+        currentPage = 1;
+        try {
+            const data = await queryAddresses(currentClientNo, currentPage, pageSize);
+            renderAddressTable(data.list);
+            renderPagination(data.total, currentPage, Math.ceil(data.total / pageSize));
+        } catch (e) {
+            alert(e.message);
+        }
+    });
+
+    // 新增按钮
+    addBtn.addEventListener('click', () => {
+        openModal();
+    });
+
+    // 上一页
+    prevBtn.addEventListener('click', async () => {
+        if (currentPage <= 1) return;
+        currentPage--;
+        try {
+            const data = await queryAddresses(currentClientNo, currentPage, pageSize);
+            renderAddressTable(data.list);
+            renderPagination(data.total, currentPage, Math.ceil(data.total / pageSize));
+        } catch (e) {
+            alert(e.message);
+        }
+    });
+
+    // 下一页
+    nextBtn.addEventListener('click', async () => {
+        currentPage++;
+        try {
+            const data = await queryAddresses(currentClientNo, currentPage, pageSize);
+            renderAddressTable(data.list);
+            renderPagination(data.total, currentPage, Math.ceil(data.total / pageSize));
+        } catch (e) {
+            alert(e.message);
+        }
+    });
+
+    // 表格操作按钮（编辑、删除）
+    addressTableBody.addEventListener('click', async (e) => {
+        const target = e.target;
+        const seqNo = target.dataset.seqno;
+
+        if (target.classList.contains('editBtn')) {
+            // 获取当前行数据并打开编辑弹窗
+            const row = target.closest('tr');
+            const cells = row.cells;
+            openModal({
+                seqNo: cells[0].textContent,
+                addressType: getAddressTypeCode(cells[1].textContent),
+                addressDetail: cells[2].textContent,
+                isMailingAddress: cells[4].textContent === '√' ? true : false,
+                isNewest: cells[5].textContent === '√' ? true : false
+            });
+        }
+
+        if (target.classList.contains('deleteBtn')) {
+            if (!confirm('确定删除该地址？')) return;
+            try {
+                await updateAddresses(currentClientNo, [{
+                    seqNo: seqNo,
+                    del_flag: 'Y'
+                }]);
+                alert('删除成功');
+                // 刷新列表
+                const data = await queryAddresses(currentClientNo, currentPage, pageSize);
+                renderAddressTable(data.list);
+                renderPagination(data.total, currentPage, Math.ceil(data.total / pageSize));
+            } catch (e) {
+                alert(e.message);
+            }
+        }
+    });
+
+    // 取消按钮
+    cancelBtn.addEventListener('click', closeModal);
+
+    // 表单提交
+    addressForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const address = {
+            seqNo: seqNoInput.value || null,
+            addressType: addressTypeSelect.value,
+            addressDetail: addressDetailInput.value,
+            isMailingAddress: isMailingAddressInput.checked ? 'Y' : 'N',
+            isNewest: isNewestInput.checked ? 'Y' : 'N'
+        };
+        try {
+            await updateAddresses(currentClientNo, [address]);
+            alert('保存成功');
+            closeModal();
+            // 刷新列表
+            const data = await queryAddresses(currentClientNo, currentPage, pageSize);
+            renderAddressTable(data.list);
+            renderPagination(data.total, currentPage, Math.ceil(data.total / pageSize));
+        } catch (e) {
+            alert(e.message);
+        }
+    });
+}
+
+// 页面加载完成后绑定事件
+document.addEventListener('DOMContentLoaded', bindEvents);
+    </script>
+</body>
+</html>
