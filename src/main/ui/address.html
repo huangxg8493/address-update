@@ -116,6 +116,14 @@ th {
     cursor: not-allowed;
 }
 
+.pagination select {
+    padding: 6px 8px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
 .modal {
     display: none;
     position: fixed;
@@ -230,6 +238,12 @@ th {
         <!-- 分页 -->
         <div class="pagination">
             <span id="pageInfo"></span>
+            <select id="pageSizeSelect">
+                <option value="5">5条/页</option>
+                <option value="10" selected>10条/页</option>
+                <option value="20">20条/页</option>
+                <option value="50">50条/页</option>
+            </select>
             <button id="prevBtn">上一页</button>
             <button id="nextBtn">下一页</button>
         </div>
@@ -278,7 +292,7 @@ const API_BASE = '';
 // 状态变量
 let currentClientNo = '';
 let currentPage = 1;
-const pageSize = 10;
+let pageSize = 10;
 
 // DOM 元素
 const clientNoInput = document.getElementById('clientNoInput');
@@ -297,6 +311,7 @@ const addressDetailInput = document.getElementById('addressDetail');
 const isMailingAddressInput = document.getElementById('isMailingAddress');
 const isNewestInput = document.getElementById('isNewest');
 const cancelBtn = document.getElementById('cancelBtn');
+const pageSizeSelect = document.getElementById('pageSizeSelect');
 
 // 调用查询接口
 async function queryAddresses(clientNo, pageNum, pageSize, addressType) {
@@ -513,6 +528,19 @@ function bindEvents() {
 
     // 取消按钮
     cancelBtn.addEventListener('click', closeModal);
+
+    // 每页条数切换
+    pageSizeSelect.addEventListener('change', async () => {
+        pageSize = parseInt(pageSizeSelect.value);
+        currentPage = 1;
+        try {
+            const data = await queryAddresses(currentClientNo, currentPage, pageSize);
+            renderAddressTable(data.list);
+            renderPagination(data.total, currentPage, Math.ceil(data.total / pageSize));
+        } catch (e) {
+            alert(e.message);
+        }
+    });
 
     // 表单提交
     addressForm.addEventListener('submit', async (e) => {
