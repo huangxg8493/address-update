@@ -205,7 +205,7 @@
             </if>
         </where>
         ORDER BY LAST_CHANGE_DATE DESC
-        LIMIT #{offset,jdbcType=INTEGER} OFFSET #{limit,jdbcType=INTEGER}
+        LIMIT #{limit,jdbcType=INTEGER} OFFSET #{offset,jdbcType=INTEGER}
     </select>
 
     <!-- 分页计数 -->
