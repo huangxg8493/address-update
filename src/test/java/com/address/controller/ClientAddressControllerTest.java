@@ -1,10 +1,7 @@
 package com.address.controller;
 
-import com.address.common.ApiResponse;
-import com.address.common.ErrorCode;
 import com.address.dto.AddressUpdateRequest;
-import com.address.model.CifAddress;
-import com.address.service.ClientAddressService;
+import com.address.dto.AddressUpdateRequest.AddressItem;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +26,10 @@ class ClientAddressControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Autowired
-    private ClientAddressService clientAddressService;
-
     @Test
     void updateAddresses_success() throws Exception {
-        List<CifAddress> addresses = new ArrayList<>();
-        CifAddress addr = new CifAddress();
+        List<AddressItem> addresses = new ArrayList<>();
+        AddressItem addr = new AddressItem();
         addr.setAddressType("02");
         addr.setAddressDetail("联系地址");
         addresses.add(addr);
@@ -54,8 +48,8 @@ class ClientAddressControllerTest {
 
     @Test
     void updateAddresses_emptyClientNo_returns400() throws Exception {
-        List<CifAddress> addresses = new ArrayList<>();
-        CifAddress addr = new CifAddress();
+        List<AddressItem> addresses = new ArrayList<>();
+        AddressItem addr = new AddressItem();
         addr.setAddressType("02");
         addr.setAddressDetail("联系地址");
         addresses.add(addr);
@@ -74,8 +68,8 @@ class ClientAddressControllerTest {
 
     @Test
     void updateAddresses_nullClientNo_returns400() throws Exception {
-        List<CifAddress> addresses = new ArrayList<>();
-        CifAddress addr = new CifAddress();
+        List<AddressItem> addresses = new ArrayList<>();
+        AddressItem addr = new AddressItem();
         addr.setAddressType("02");
         addr.setAddressDetail("联系地址");
         addresses.add(addr);

@@ -3,11 +3,13 @@ package com.address.controller;
 import com.address.common.ApiResponse;
 import com.address.common.ErrorCode;
 import com.address.dto.AddressUpdateRequest;
+import com.address.dto.AddressUpdateRequest.AddressItem;
 import com.address.model.CifAddress;
 import com.address.service.ClientAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,10 +28,20 @@ public class ClientAddressController {
             return ApiResponse.error(ErrorCode.BAD_REQUEST.getCode(), "地址列表不能为空");
         }
 
+        // DTO 转换为 CifAddress
+        List<CifAddress> cifAddresses = new ArrayList<>();
+        for (AddressItem item : request.getAddresses()) {
+            CifAddress addr = new CifAddress();
+            addr.setSeqNo(item.getSeqNo());
+            addr.setAddressType(item.getAddressType());
+            addr.setAddressDetail(item.getAddressDetail());
+            cifAddresses.add(addr);
+        }
+
         // 调用 service
         List<CifAddress> result = clientAddressService.updateAddresses(
             request.getClientNo(),
-            request.getAddresses()
+            cifAddresses
         );
 
         return ApiResponse.success(result);

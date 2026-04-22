@@ -1,14 +1,26 @@
 package com.address.dto;
 
-import com.address.model.CifAddress;
 import java.util.List;
 
 public class AddressUpdateRequest {
     private String clientNo;
-    private List<CifAddress> addresses;
+    private List<AddressItem> addresses;
 
     public String getClientNo() { return clientNo; }
     public void setClientNo(String clientNo) { this.clientNo = clientNo; }
-    public List<CifAddress> getAddresses() { return addresses; }
-    public void setAddresses(List<CifAddress> addresses) { this.addresses = addresses; }
+    public List<AddressItem> getAddresses() { return addresses; }
+    public void setAddresses(List<AddressItem> addresses) { this.addresses = addresses; }
+
+    public static class AddressItem {
+        private String seqNo;
+        private String addressType;
+        private String addressDetail;
+
+        public String getSeqNo() { return seqNo; }
+        public void setSeqNo(String seqNo) { this.seqNo = seqNo; }
+        public String getAddressType() { return addressType; }
+        public void setAddressType(String addressType) { this.addressType = addressType; }
+        public String getAddressDetail() { return addressDetail; }
+        public void setAddressDetail(String addressDetail) { this.addressDetail = addressDetail; }
+    }
 }
