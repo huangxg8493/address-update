@@ -35,6 +35,8 @@ public class ClientAddressController {
             addr.setSeqNo(item.getSeqNo());
             addr.setAddressType(item.getAddressType());
             addr.setAddressDetail(item.getAddressDetail());
+            addr.setIsMailingAddress(item.getIsMailingAddress());
+            addr.setIsNewest(item.getIsNewest());
             cifAddresses.add(addr);
         }
 
