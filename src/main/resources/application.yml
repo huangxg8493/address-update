@@ -17,3 +17,7 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.address.model
+
+jwt:
+  secret: defaultSecretKeyForDevelopmentOnlyChangeInProduction12345
+  expiration: 86400000
