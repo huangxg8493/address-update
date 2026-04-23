@@ -3,6 +3,12 @@ CREATE TABLE sys_user (
     phone VARCHAR(20) NOT NULL UNIQUE COMMENT '手机号',
     password VARCHAR(255) NOT NULL COMMENT '密码（BCrypt加密）',
     status CHAR(1) NOT NULL DEFAULT 'Y' COMMENT '状态 Y-启用 N-禁用',
+    user_name VARCHAR(100) COMMENT '用户名称',
+    email VARCHAR(100) COMMENT '邮箱',
+    province VARCHAR(50) COMMENT '省',
+    city VARCHAR(50) COMMENT '市',
+    district VARCHAR(50) COMMENT '区',
+    hobby VARCHAR(500) COMMENT '业余爱好',
     create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     INDEX idx_phone (phone)
