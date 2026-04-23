@@ -39,9 +39,7 @@ public class ClientAddressService {
     }
 
     public List<CifAddress> updateAddresses(String clientNo, List<CifAddress> incoming) {
-        if (incoming == null) {
-            incoming = new ArrayList<>();
-        }
+        if (incoming == null) incoming = new ArrayList<>();
         // Step 1: 获取存量数组
         logger.info("Step 1: 获取存量数组 clientNo={}", clientNo);
         List<CifAddress> stock = repository.findByClientNo(clientNo);
@@ -215,8 +213,8 @@ public class ClientAddressService {
             target.setDelFlag("Y");
             target.setLastChangeDate(new Date());
             repository.update(target);
-            // 调用合并逻辑重新计算地址标识，传入空列表表示没有新增/上送的地址
-            updateAddresses(request.getClientNo(), new ArrayList<>());
+            // 调用合并逻辑重新计算地址标识
+            updateAddresses(request.getClientNo(), null);
             return target;
         }
 
@@ -231,8 +229,8 @@ public class ClientAddressService {
             target.setIsNewest(request.getIsNewest());
         }
         repository.update(target);
-        // 调用合并逻辑重新计算地址标识，传入空列表表示没有新增/上送的地址
-        updateAddresses(request.getClientNo(), new ArrayList<>());
+        // 调用合并逻辑重新计算地址标识
+        updateAddresses(request.getClientNo(), null);
         return target;
     }
 
