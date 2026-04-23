@@ -17,7 +17,7 @@ public class JwtUtil {
     @Value("${jwt.secret:defaultSecretKeyForDevelopmentOnlyChangeInProduction12345}")
     private String secret;
 
-    @Value("${jwt.expiration:86400000}")  // 24小时
+    @Value("${jwt.expiration:86400000}")
     private Long expiration;
 
     private SecretKey getSigningKey() {
@@ -63,6 +63,9 @@ public class JwtUtil {
     }
 
     public boolean validateToken(String token) {
+        if (token == null || token.isEmpty()) {
+            return false;
+        }
         try {
             parseToken(token);
             return true;
