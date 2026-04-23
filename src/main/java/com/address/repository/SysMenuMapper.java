@@ -2,6 +2,7 @@ package com.address.repository;
 
 import com.address.model.SysMenu;
 import org.apache.ibatis.annotations.*;
+import java.util.List;
 
 @Mapper
 public interface SysMenuMapper {
@@ -15,15 +16,75 @@ public interface SysMenuMapper {
     @Update("UPDATE sys_menu SET del_flag='Y' WHERE menu_id=#{menuId}")
     void deleteById(@Param("menuId") Long menuId);
 
-    @Select("SELECT * FROM sys_menu WHERE menu_id = #{menuId} AND del_flag='N'")
+    @Select("SELECT menu_id, menu_name, menu_url, icon, sort_order, status, is_leaf, level_depth, component, component_path, parent_id, del_flag, create_time FROM sys_menu WHERE menu_id = #{menuId} AND del_flag='N'")
+    @Results({
+        @Result(property = "menuId", column = "menu_id"),
+        @Result(property = "menuName", column = "menu_name"),
+        @Result(property = "menuUrl", column = "menu_url"),
+        @Result(property = "icon", column = "icon"),
+        @Result(property = "sortOrder", column = "sort_order"),
+        @Result(property = "status", column = "status"),
+        @Result(property = "isLeaf", column = "is_leaf"),
+        @Result(property = "levelDepth", column = "level_depth"),
+        @Result(property = "component", column = "component"),
+        @Result(property = "componentPath", column = "component_path"),
+        @Result(property = "parentId", column = "parent_id"),
+        @Result(property = "delFlag", column = "del_flag"),
+        @Result(property = "createTime", column = "create_time")
+    })
     SysMenu findById(@Param("menuId") Long menuId);
 
-    @Select("SELECT * FROM sys_menu WHERE del_flag='N'")
-    java.util.List<SysMenu> findAll();
+    @Select("SELECT menu_id, menu_name, menu_url, icon, sort_order, status, is_leaf, level_depth, component, component_path, parent_id, del_flag, create_time FROM sys_menu WHERE del_flag='N'")
+    @Results({
+        @Result(property = "menuId", column = "menu_id"),
+        @Result(property = "menuName", column = "menu_name"),
+        @Result(property = "menuUrl", column = "menu_url"),
+        @Result(property = "icon", column = "icon"),
+        @Result(property = "sortOrder", column = "sort_order"),
+        @Result(property = "status", column = "status"),
+        @Result(property = "isLeaf", column = "is_leaf"),
+        @Result(property = "levelDepth", column = "level_depth"),
+        @Result(property = "component", column = "component"),
+        @Result(property = "componentPath", column = "component_path"),
+        @Result(property = "parentId", column = "parent_id"),
+        @Result(property = "delFlag", column = "del_flag"),
+        @Result(property = "createTime", column = "create_time")
+    })
+    List<SysMenu> findAll();
 
-    @Select("SELECT * FROM sys_menu WHERE parent_id = #{parentId} AND del_flag='N'")
-    java.util.List<SysMenu> findByParentId(@Param("parentId") Long parentId);
+    @Select("SELECT menu_id, menu_name, menu_url, icon, sort_order, status, is_leaf, level_depth, component, component_path, parent_id, del_flag, create_time FROM sys_menu WHERE parent_id = #{parentId} AND del_flag='N'")
+    @Results({
+        @Result(property = "menuId", column = "menu_id"),
+        @Result(property = "menuName", column = "menu_name"),
+        @Result(property = "menuUrl", column = "menu_url"),
+        @Result(property = "icon", column = "icon"),
+        @Result(property = "sortOrder", column = "sort_order"),
+        @Result(property = "status", column = "status"),
+        @Result(property = "isLeaf", column = "is_leaf"),
+        @Result(property = "levelDepth", column = "level_depth"),
+        @Result(property = "component", column = "component"),
+        @Result(property = "componentPath", column = "component_path"),
+        @Result(property = "parentId", column = "parent_id"),
+        @Result(property = "delFlag", column = "del_flag"),
+        @Result(property = "createTime", column = "create_time")
+    })
+    List<SysMenu> findByParentId(@Param("parentId") Long parentId);
 
-    @Select("SELECT * FROM sys_menu WHERE parent_id IS NULL AND del_flag='N'")
-    java.util.List<SysMenu> findRootMenus();
+    @Select("SELECT menu_id, menu_name, menu_url, icon, sort_order, status, is_leaf, level_depth, component, component_path, parent_id, del_flag, create_time FROM sys_menu WHERE parent_id IS NULL AND del_flag='N'")
+    @Results({
+        @Result(property = "menuId", column = "menu_id"),
+        @Result(property = "menuName", column = "menu_name"),
+        @Result(property = "menuUrl", column = "menu_url"),
+        @Result(property = "icon", column = "icon"),
+        @Result(property = "sortOrder", column = "sort_order"),
+        @Result(property = "status", column = "status"),
+        @Result(property = "isLeaf", column = "is_leaf"),
+        @Result(property = "levelDepth", column = "level_depth"),
+        @Result(property = "component", column = "component"),
+        @Result(property = "componentPath", column = "component_path"),
+        @Result(property = "parentId", column = "parent_id"),
+        @Result(property = "delFlag", column = "del_flag"),
+        @Result(property = "createTime", column = "create_time")
+    })
+    List<SysMenu> findRootMenus();
 }
