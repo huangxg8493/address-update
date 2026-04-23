@@ -56,18 +56,7 @@
                 <input type="hidden" id="seqNo">
                 <div class="form-row">
                     <label>地址类型:</label>
-                    <select id="addressType">
-                        <option value="01">其他地址</option>
-                        <option value="02">联系地址</option>
-                        <option value="03">居住地址</option>
-                        <option value="04">单位地址</option>
-                        <option value="05">户籍地址</option>
-                        <option value="06">证件地址</option>
-                        <option value="07">营业地址</option>
-                        <option value="08">注册地址</option>
-                        <option value="09">办公地址</option>
-                        <option value="10">永久地址</option>
-                    </select>
+                    <select id="addressType"></select>
                 </div>
                 <div class="form-row">
                     <label>地址详情:</label>
@@ -97,6 +86,20 @@
     <script>
 // API 基础路径
 const API_BASE = '';
+
+// 地址类型数据（后续可改为接口获取）
+const ADDRESS_TYPES = [
+    { code: '01', name: '其他地址' },
+    { code: '02', name: '联系地址' },
+    { code: '03', name: '居住地址' },
+    { code: '04', name: '单位地址' },
+    { code: '05', name: '户籍地址' },
+    { code: '06', name: '证件地址' },
+    { code: '07', name: '营业地址' },
+    { code: '08', name: '注册地址' },
+    { code: '09', name: '办公地址' },
+    { code: '10', name: '永久地址' }
+];
 
 // Toast 消息弹窗
 function showToast(message, type = 'info', duration = 3000) {
@@ -224,36 +227,21 @@ function renderPagination(total, currentPage, totalPages) {
 
 // 获取地址类型显示名称
 function getAddressTypeName(typeCode) {
-    const typeMap = {
-        '01': '其他地址',
-        '02': '联系地址',
-        '03': '居住地址',
-        '04': '单位地址',
-        '05': '户籍地址',
-        '06': '证件地址',
-        '07': '营业地址',
-        '08': '注册地址',
-        '09': '办公地址',
-        '10': '永久地址'
-    };
-    return typeMap[typeCode] || typeCode;
+    const type = ADDRESS_TYPES.find(t => t.code === typeCode);
+    return type ? type.name : typeCode;
 }
 
 // 获取地址类型代码
 function getAddressTypeCode(typeName) {
-    const codeMap = {
-        '其他地址': '01',
-        '联系地址': '02',
-        '居住地址': '03',
-        '单位地址': '04',
-        '户籍地址': '05',
-        '证件地址': '06',
-        '营业地址': '07',
-        '注册地址': '08',
-        '办公地址': '09',
-        '永久地址': '10'
-    };
-    return codeMap[typeName] || typeName;
+    const type = ADDRESS_TYPES.find(t => t.name === typeName);
+    return type ? type.code : typeName;
+}
+
+// 渲染地址类型下拉框
+function renderAddressTypeSelect() {
+    addressTypeSelect.innerHTML = ADDRESS_TYPES.map(t =>
+        '<option value="' + t.code + '">' + t.name + '</option>'
+    ).join('');
 }
 
 // 打开弹窗
@@ -409,7 +397,10 @@ function bindEvents() {
 }
 
 // 页面加载完成后绑定事件
-document.addEventListener('DOMContentLoaded', bindEvents);
+document.addEventListener('DOMContentLoaded', function() {
+    renderAddressTypeSelect();
+    bindEvents();
+});
     </script>
 </body>
 </html>
