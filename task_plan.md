@@ -539,95 +539,103 @@
 
 ### Task 1: 添加项目依赖
 
-- [ ] Step 1: 添加 JJWT 和 Spring Security 依赖到 pom.xml
-- [ ] Step 2: 提交
+- [x] Step 1: 添加 JJWT 和 Spring Security 依赖到 pom.xml
+- [x] Step 2: 提交
 
 ### Task 2: 创建用户相关实体和 Mapper
 
-- [ ] Step 1: 创建 SysUser.java 实体
-- [ ] Step 2: 创建 SysRole.java 实体
-- [ ] Step 3: 创建 SysUserRole.java 实体
-- [ ] Step 4: 创建 SysUserMapper.java 接口
-- [ ] Step 5: 创建 SysRoleMapper.java 接口
-- [ ] Step 6: 创建 SysUserRoleMapper.java 接口
-- [ ] Step 7: 提交
+- [x] Step 1: 创建 SysUser.java 实体
+- [x] Step 2: 创建 SysRole.java 实体
+- [x] Step 3: 创建 SysUserRole.java 实体
+- [x] Step 4: 创建 SysUserMapper.java 接口
+- [x] Step 5: 创建 SysRoleMapper.java 接口
+- [x] Step 6: 创建 SysUserRoleMapper.java 接口
+- [x] Step 7: 提交
 
 ### Task 3: 创建权限和数据范围相关实体和 Mapper
 
-- [ ] Step 1: 创建 SysPermission.java 实体
-- [ ] Step 2: 创建 SysRolePermission.java 实体
-- [ ] Step 3: 创建 SysDataScope.java 实体
-- [ ] Step 4: 创建 SysRoleDataScope.java 实体
-- [ ] Step 5: 创建 SysPermissionMapper.java 接口
-- [ ] Step 6: 创建 SysRolePermissionMapper.java 接口
-- [ ] Step 7: 创建 SysDataScopeMapper.java 接口
-- [ ] Step 8: 创建 SysRoleDataScopeMapper.java 接口
-- [ ] Step 9: 提交
+- [x] Step 1: 创建 SysPermission.java 实体
+- [x] Step 2: 创建 SysRolePermission.java 实体
+- [x] Step 3: 创建 SysDataScope.java 实体
+- [x] Step 4: 创建 SysRoleDataScope.java 实体
+- [x] Step 5: 创建 SysPermissionMapper.java 接口
+- [x] Step 6: 创建 SysRolePermissionMapper.java 接口
+- [x] Step 7: 创建 SysDataScopeMapper.java 接口
+- [x] Step 8: 创建 SysRoleDataScopeMapper.java 接口
+- [x] Step 9: 提交
 
 ### Task 4: 创建 JWT 工具类和安全配置
 
-- [ ] Step 1: 创建 JwtUtil.java 工具类
-- [ ] Step 2: 创建 JwtAuthenticationFilter.java 过滤器
-- [ ] Step 3: 创建 UserDetailsServiceImpl.java 用户服务
-- [ ] Step 4: 创建 SecurityConfig.java 安全配置
-- [ ] Step 5: 提交
+- [x] Step 1: 创建 JwtUtil.java 工具类
+- [x] Step 2: 创建 JwtAuthenticationFilter.java 过滤器
+- [x] Step 3: 创建 UserDetailsServiceImpl.java 用户服务
+- [x] Step 4: 创建 SecurityConfig.java 安全配置
+- [x] Step 5: 提交
 
 ### Task 5: 创建认证 DTO 和 Service
 
-- [ ] Step 1: 创建 LoginRequest.java
-- [ ] Step 2: 创建 LoginResponse.java
-- [ ] Step 3: 创建 RegisterRequest.java
-- [ ] Step 4: 创建 AuthService.java
-- [ ] Step 5: 提交
+- [x] Step 1: 创建 LoginRequest.java
+- [x] Step 2: 创建 LoginResponse.java
+- [x] Step 3: 创建 RegisterRequest.java
+- [x] Step 4: 创建 AuthService.java
+- [x] Step 5: 提交
 
 ### Task 6: 创建用户管理 DTO、Service、Controller
 
-- [ ] Step 1: 创建 UserQueryRequest.java
-- [ ] Step 2: 创建 UserCreateRequest.java
-- [ ] Step 3: 创建 UserUpdateRequest.java
-- [ ] Step 4: 创建 UserResponse.java
-- [ ] Step 5: 创建 UserService.java
-- [ ] Step 6: 创建 UserController.java
-- [ ] Step 7: 提交
+- [x] Step 1: 创建 UserQueryRequest.java
+- [x] Step 2: 创建 UserCreateRequest.java
+- [x] Step 3: 创建 UserUpdateRequest.java
+- [x] Step 4: 创建 UserResponse.java
+- [x] Step 5: 创建 UserService.java
+- [x] Step 6: 创建 UserController.java
+- [x] Step 7: 提交
 
 ### Task 7: 创建角色管理 DTO、Service、Controller
 
-- [ ] Step 1: 创建 RoleQueryRequest.java
-- [ ] Step 2: 创建 RoleCreateRequest.java
-- [ ] Step 3: 创建 RoleUpdateRequest.java
-- [ ] Step 4: 创建 RoleResponse.java
-- [ ] Step 5: 创建 RoleService.java
-- [ ] Step 6: 创建 RoleController.java
-- [ ] Step 7: 提交
+- [x] Step 1: 创建 RoleQueryRequest.java
+- [x] Step 2: 创建 RoleCreateRequest.java
+- [x] Step 3: 创建 RoleUpdateRequest.java
+- [x] Step 4: 创建 RoleResponse.java
+- [x] Step 5: 创建 RoleService.java
+- [x] Step 6: 创建 RoleController.java
+- [x] Step 7: 提交
 
 ### Task 8: 创建权限和数据范围管理 DTO、Service、Controller
 
-- [ ] Step 1: 创建 PermissionCreateRequest.java
-- [ ] Step 2: 创建 PermissionUpdateRequest.java
-- [ ] Step 3: 创建 PermissionResponse.java
-- [ ] Step 4: 创建 DataScopeCreateRequest.java
-- [ ] Step 5: 创建 DataScopeUpdateRequest.java
-- [ ] Step 6: 创建 DataScopeResponse.java
-- [ ] Step 7: 创建 PermissionService.java
-- [ ] Step 8: 创建 DataScopeService.java
-- [ ] Step 9: 创建 PermissionController.java
-- [ ] Step 10: 创建 DataScopeController.java
-- [ ] Step 11: 提交
+- [x] Step 1: 创建 PermissionCreateRequest.java
+- [x] Step 2: 创建 PermissionUpdateRequest.java
+- [x] Step 3: 创建 PermissionResponse.java
+- [x] Step 4: 创建 DataScopeCreateRequest.java
+- [x] Step 5: 创建 DataScopeUpdateRequest.java
+- [x] Step 6: 创建 DataScopeResponse.java
+- [x] Step 7: 创建 PermissionService.java
+- [x] Step 8: 创建 DataScopeService.java
+- [x] Step 9: 创建 PermissionController.java
+- [x] Step 10: 创建 DataScopeController.java
+- [x] Step 11: 提交
 
 ### Task 9: 创建 AuthController 和配置
 
-- [ ] Step 1: 创建 AuthController.java
-- [ ] Step 2: 添加认证错误码到 ErrorCode.java
-- [ ] Step 3: 添加 JWT 配置到 application.yml
-- [ ] Step 4: 提交
+- [x] Step 1: 创建 AuthController.java
+- [x] Step 2: 添加认证错误码到 ErrorCode.java
+- [x] Step 3: 添加 JWT 配置到 application.yml
+- [x] Step 4: 提交
 
 ### Task 10: 创建数据库表结构 SQL
 
-- [ ] Step 1: 创建 sql/sys_user.sql
-- [ ] Step 2: 创建 sql/sys_role.sql
-- [ ] Step 3: 创建 sql/sys_user_role.sql
-- [ ] Step 4: 创建 sql/sys_permission.sql
-- [ ] Step 5: 创建 sql/sys_role_permission.sql
-- [ ] Step 6: 创建 sql/sys_data_scope.sql
-- [ ] Step 7: 创建 sql/sys_role_data_scope.sql
-- [ ] Step 8: 提交
+- [x] Step 1: 创建 sql/sys_user.sql
+- [x] Step 2: 创建 sql/sys_role.sql
+- [x] Step 3: 创建 sql/sys_user_role.sql
+- [x] Step 4: 创建 sql/sys_permission.sql
+- [x] Step 5: 创建 sql/sys_role_permission.sql
+- [x] Step 6: 创建 sql/sys_data_scope.sql
+- [x] Step 7: 创建 sql/sys_role_data_scope.sql
+- [x] Step 8: 提交
+
+---
+
+## ✅ Phase 16 已完成
+
+- 手机号登录功能已实现
+- JWT 无状态认证已配置
+- 角色+权限+数据范围管理已实现
