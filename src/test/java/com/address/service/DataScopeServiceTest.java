@@ -25,7 +25,6 @@ public class DataScopeServiceTest {
     private SysDataScopeMapper sysDataScopeMapper;
 
     @Test
-    @Sql(scripts = "/sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void testCreate() {
         DataScopeCreateRequest request = new DataScopeCreateRequest();
         request.setScopeCode("SCOPE_" + System.currentTimeMillis());
@@ -41,7 +40,6 @@ public class DataScopeServiceTest {
     }
 
     @Test
-    @Sql(scripts = "/sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void testQuery() {
         SysDataScope dataScope = new SysDataScope();
         dataScope.setScopeId(System.currentTimeMillis());
@@ -57,7 +55,7 @@ public class DataScopeServiceTest {
     }
 
     @Test
-    @Sql(scripts = "/sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(scripts = "classpath:sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void testUpdate() {
         SysDataScope dataScope = new SysDataScope();
         dataScope.setScopeId(System.currentTimeMillis());
@@ -79,7 +77,6 @@ public class DataScopeServiceTest {
     }
 
     @Test
-    @Sql(scripts = "/sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void testDelete() {
         SysDataScope dataScope = new SysDataScope();
         dataScope.setScopeId(System.currentTimeMillis());

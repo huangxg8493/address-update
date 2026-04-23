@@ -66,6 +66,9 @@ public class PermissionService {
     }
 
     private PermissionResponse toResponse(SysPermission permission) {
+        if (permission == null) {
+            return null;
+        }
         PermissionResponse response = new PermissionResponse();
         response.setPermissionId(permission.getPermissionId());
         response.setPermissionCode(permission.getPermissionCode());

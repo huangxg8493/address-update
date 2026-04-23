@@ -28,7 +28,7 @@ public class AuthServiceTest {
     private PasswordEncoder passwordEncoder;
 
     @Test
-    @Sql(scripts = "/sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(scripts = "classpath:sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void testRegister() {
         RegisterRequest request = new RegisterRequest();
         request.setPhone("13900000001");
@@ -65,7 +65,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    @Sql(scripts = "/sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(scripts = "classpath:sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void testLogin() {
         SysUser user = new SysUser();
         user.setUserId(System.currentTimeMillis());
@@ -100,7 +100,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    @Sql(scripts = "/sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(scripts = "classpath:sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void testLoginWrongPassword() {
         SysUser user = new SysUser();
         user.setUserId(System.currentTimeMillis());

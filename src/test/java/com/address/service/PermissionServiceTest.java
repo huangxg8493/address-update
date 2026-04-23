@@ -25,7 +25,6 @@ public class PermissionServiceTest {
     private SysPermissionMapper sysPermissionMapper;
 
     @Test
-    @Sql(scripts = "/sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void testCreate() {
         PermissionCreateRequest request = new PermissionCreateRequest();
         request.setPermissionCode("PERM_" + System.currentTimeMillis());
@@ -40,7 +39,6 @@ public class PermissionServiceTest {
     }
 
     @Test
-    @Sql(scripts = "/sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void testQuery() {
         SysPermission permission = new SysPermission();
         permission.setPermissionId(System.currentTimeMillis());
@@ -56,7 +54,7 @@ public class PermissionServiceTest {
     }
 
     @Test
-    @Sql(scripts = "/sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(scripts = "classpath:sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void testUpdate() {
         SysPermission permission = new SysPermission();
         permission.setPermissionId(System.currentTimeMillis());
@@ -78,7 +76,6 @@ public class PermissionServiceTest {
     }
 
     @Test
-    @Sql(scripts = "/sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void testDelete() {
         SysPermission permission = new SysPermission();
         permission.setPermissionId(System.currentTimeMillis());

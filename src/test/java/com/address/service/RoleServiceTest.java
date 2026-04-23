@@ -26,7 +26,7 @@ public class RoleServiceTest {
     private SysRoleMapper sysRoleMapper;
 
     @Test
-    @Sql(scripts = "/sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(scripts = "classpath:sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void testCreate() {
         RoleCreateRequest request = new RoleCreateRequest();
         request.setRoleCode("ROLE_TEST_" + System.currentTimeMillis());
@@ -42,7 +42,7 @@ public class RoleServiceTest {
     }
 
     @Test
-    @Sql(scripts = "/sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(scripts = "classpath:sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void testQuery() {
         SysRole role = new SysRole();
         role.setRoleId(System.currentTimeMillis());
@@ -59,7 +59,7 @@ public class RoleServiceTest {
     }
 
     @Test
-    @Sql(scripts = "/sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(scripts = "classpath:sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void testUpdate() {
         SysRole role = new SysRole();
         role.setRoleId(System.currentTimeMillis());
@@ -81,7 +81,7 @@ public class RoleServiceTest {
     }
 
     @Test
-    @Sql(scripts = "/sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(scripts = "classpath:sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void testDelete() {
         SysRole role = new SysRole();
         role.setRoleId(System.currentTimeMillis());

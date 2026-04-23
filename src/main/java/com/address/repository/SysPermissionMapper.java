@@ -13,7 +13,7 @@ public interface SysPermissionMapper {
             "menu_url=#{menuUrl} WHERE permission_id=#{permissionId}")
     void update(SysPermission permission);
 
-    @Select("SELECT * FROM sys_permission WHERE permission_id = #{permissionId}")
+    @Select("SELECT permission_id AS permissionId, permission_code AS permissionCode, permission_name AS permissionName, menu_url AS menuUrl, create_time AS createTime FROM sys_permission WHERE permission_id = #{permissionId}")
     SysPermission findById(@Param("permissionId") Long permissionId);
 
     @Select("SELECT * FROM sys_permission WHERE permission_code = #{permissionCode}")

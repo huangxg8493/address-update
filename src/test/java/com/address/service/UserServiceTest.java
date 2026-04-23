@@ -30,7 +30,7 @@ public class UserServiceTest {
     private PasswordEncoder passwordEncoder;
 
     @Test
-    @Sql(scripts = "/sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(scripts = "classpath:sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void testCreate() {
         UserCreateRequest request = new UserCreateRequest();
         request.setPhone("13900001001");
@@ -46,7 +46,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @Sql(scripts = "/sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(scripts = "classpath:sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void testQuery() {
         SysUser user = new SysUser();
         user.setUserId(System.currentTimeMillis());
@@ -66,7 +66,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @Sql(scripts = "/sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(scripts = "classpath:sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void testUpdate() {
         SysUser user = new SysUser();
         user.setUserId(System.currentTimeMillis());
@@ -88,7 +88,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @Sql(scripts = "/sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(scripts = "classpath:sql/clean_test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void testDelete() {
         SysUser user = new SysUser();
         user.setUserId(System.currentTimeMillis());

@@ -62,6 +62,9 @@ public class DataScopeService {
     }
 
     private DataScopeResponse toResponse(SysDataScope dataScope) {
+        if (dataScope == null) {
+            return null;
+        }
         DataScopeResponse response = new DataScopeResponse();
         response.setScopeId(dataScope.getScopeId());
         response.setScopeCode(dataScope.getScopeCode());

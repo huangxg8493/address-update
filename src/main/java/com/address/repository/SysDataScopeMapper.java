@@ -13,7 +13,7 @@ public interface SysDataScopeMapper {
             "scope_type=#{scopeType} WHERE scope_id=#{scopeId}")
     void update(SysDataScope dataScope);
 
-    @Select("SELECT * FROM sys_data_scope WHERE scope_id = #{scopeId}")
+    @Select("SELECT scope_id AS scopeId, scope_code AS scopeCode, scope_name AS scopeName, scope_type AS scopeType, create_time AS createTime FROM sys_data_scope WHERE scope_id = #{scopeId}")
     SysDataScope findById(@Param("scopeId") Long scopeId);
 
     @Select("SELECT * FROM sys_data_scope")
