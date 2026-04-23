@@ -678,3 +678,229 @@
   }
 }
 ```
+
+---
+
+## 菜单接口
+
+### 27. 查询菜单列表
+- **接口 URL**: `/api/menus/query`
+- **请求方法**: POST
+- **描述**: 分页/条件查询菜单
+- **请求报文**:
+```json
+{
+  "menuName": "string",
+  "menuUrl": "string",
+  "status": "string",
+  "parentId": 0,
+  "pageNum": 1,
+  "pageSize": 10
+}
+```
+- **响应报文**:
+```json
+{
+  "code": "200",
+  "message": "成功",
+  "data": [
+    {
+      "menuId": 0,
+      "menuName": "string",
+      "menuUrl": "string",
+      "icon": "string",
+      "sortOrder": 0,
+      "status": "string",
+      "isLeaf": "string",
+      "levelDepth": 1,
+      "component": "string",
+      "componentPath": "string",
+      "parentId": 0,
+      "delFlag": "string",
+      "createTime": "2026-04-23T00:00:00"
+    }
+  ]
+}
+```
+
+---
+
+### 28. 获取菜单详情
+- **接口 URL**: `/api/menus/{menuId}`
+- **请求方法**: GET
+- **描述**: 获取单个菜单详情
+- **路径参数**: `menuId` (Long)
+- **响应报文**:
+```json
+{
+  "code": "200",
+  "message": "成功",
+  "data": {
+    "menuId": 0,
+    "menuName": "string",
+    "menuUrl": "string",
+    "icon": "string",
+    "sortOrder": 0,
+    "status": "string",
+    "isLeaf": "string",
+    "levelDepth": 1,
+    "component": "string",
+    "componentPath": "string",
+    "parentId": 0,
+    "delFlag": "string",
+    "createTime": "2026-04-23T00:00:00"
+  }
+}
+```
+
+---
+
+### 29. 创建菜单
+- **接口 URL**: `/api/menus/create`
+- **请求方法**: POST
+- **描述**: 新增菜单
+- **请求报文**:
+```json
+{
+  "menuName": "string",
+  "menuUrl": "string",
+  "icon": "string",
+  "sortOrder": 0,
+  "status": "string",
+  "component": "string",
+  "componentPath": "string",
+  "parentId": 0
+}
+```
+- **响应报文**:
+```json
+{
+  "code": "200",
+  "message": "成功",
+  "data": {
+    "menuId": 0,
+    "menuName": "string",
+    "menuUrl": "string",
+    "icon": "string",
+    "sortOrder": 0,
+    "status": "string",
+    "isLeaf": "string",
+    "levelDepth": 1,
+    "component": "string",
+    "componentPath": "string",
+    "parentId": 0,
+    "delFlag": "string",
+    "createTime": "2026-04-23T00:00:00"
+  }
+}
+```
+
+---
+
+### 30. 更新菜单
+- **接口 URL**: `/api/menus/update`
+- **请求方法**: POST
+- **描述**: 更新菜单
+- **请求报文**:
+```json
+{
+  "menuId": 0,
+  "menuName": "string",
+  "menuUrl": "string",
+  "icon": "string",
+  "sortOrder": 0,
+  "status": "string",
+  "component": "string",
+  "componentPath": "string",
+  "parentId": 0
+}
+```
+- **响应报文**:
+```json
+{
+  "code": "200",
+  "message": "成功",
+  "data": {
+    "menuId": 0,
+    "menuName": "string",
+    "menuUrl": "string",
+    "icon": "string",
+    "sortOrder": 0,
+    "status": "string",
+    "isLeaf": "string",
+    "levelDepth": 1,
+    "component": "string",
+    "componentPath": "string",
+    "parentId": 0,
+    "delFlag": "string",
+    "createTime": "2026-04-23T00:00:00"
+  }
+}
+```
+
+---
+
+### 31. 删除菜单
+- **接口 URL**: `/api/menus/delete`
+- **请求方法**: POST
+- **描述**: 软删除菜单
+- **请求参数**: `menuId` (Long)
+- **响应报文**:
+```json
+{
+  "code": "200",
+  "message": "成功",
+  "data": null
+}
+```
+
+---
+
+### 32. 获取菜单树
+- **接口 URL**: `/api/menus/tree`
+- **请求方法**: POST
+- **描述**: 获取完整菜单树
+- **请求报文**: 无
+- **响应报文**:
+```json
+{
+  "code": "200",
+  "message": "成功",
+  "data": [
+    {
+      "menuId": 0,
+      "menuName": "string",
+      "menuUrl": "string",
+      "icon": "string",
+      "sortOrder": 0,
+      "status": "string",
+      "isLeaf": "string",
+      "levelDepth": 1,
+      "component": "string",
+      "componentPath": "string",
+      "parentId": 0,
+      "children": []
+    }
+  ]
+}
+```
+
+---
+
+### 33. 角色分配菜单
+- **接口 URL**: `/api/roles/{roleId}/menus/assign`
+- **请求方法**: POST
+- **描述**: 为角色分配菜单权限
+- **路径参数**: `roleId` (Long)
+- **请求报文**:
+```json
+[1, 2, 3]
+```
+- **响应报文**:
+```json
+{
+  "code": "200",
+  "message": "成功",
+  "data": null
+}
+```
