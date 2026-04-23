@@ -12,40 +12,39 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/roles")
 public class RoleController {
 
     @Autowired
     private RoleService roleService;
 
-    @PostMapping("/query")
+    @PostMapping("/api/roles/query")
     public ApiResponse<List<RoleResponse>> query(@RequestBody RoleQueryRequest request) {
         return ApiResponse.success(roleService.query(request));
     }
 
-    @PostMapping("/create")
+    @PostMapping("/api/roles/create")
     public ApiResponse<RoleResponse> create(@RequestBody RoleCreateRequest request) {
         return ApiResponse.success(roleService.create(request));
     }
 
-    @PostMapping("/update")
+    @PostMapping("/api/roles/update")
     public ApiResponse<RoleResponse> update(@RequestBody RoleUpdateRequest request) {
         return ApiResponse.success(roleService.update(request));
     }
 
-    @PostMapping("/delete")
+    @PostMapping("/api/roles/delete")
     public ApiResponse<Void> delete(@RequestParam Long roleId) {
         roleService.delete(roleId);
         return ApiResponse.success(null);
     }
 
-    @PostMapping("/{roleId}/permissions/assign")
+    @PostMapping("/api/roles/{roleId}/permissions/assign")
     public ApiResponse<Void> assignPermissions(@PathVariable Long roleId, @RequestBody List<Long> permissionIds) {
         roleService.assignPermissions(roleId, permissionIds);
         return ApiResponse.success(null);
     }
 
-    @PostMapping("/{roleId}/dataScopes/assign")
+    @PostMapping("/api/roles/{roleId}/dataScopes/assign")
     public ApiResponse<Void> assignDataScopes(@PathVariable Long roleId, @RequestBody List<Long> scopeIds) {
         roleService.assignDataScopes(roleId, scopeIds);
         return ApiResponse.success(null);

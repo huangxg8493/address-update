@@ -14,40 +14,39 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("/query")
+    @PostMapping("/api/users/query")
     public ApiResponse<List<UserResponse>> query(@RequestBody UserQueryRequest request) {
         return ApiResponse.success(userService.query(request));
     }
 
-    @PostMapping("/create")
+    @PostMapping("/api/users/create")
     public ApiResponse<UserResponse> create(@RequestBody UserCreateRequest request) {
         return ApiResponse.success(userService.create(request));
     }
 
-    @PostMapping("/update")
+    @PostMapping("/api/users/update")
     public ApiResponse<UserResponse> update(@RequestBody UserUpdateRequest request) {
         return ApiResponse.success(userService.update(request));
     }
 
-    @PostMapping("/delete")
+    @PostMapping("/api/users/delete")
     public ApiResponse<Void> delete(@RequestParam Long userId) {
         userService.delete(userId);
         return ApiResponse.success(null);
     }
 
-    @PostMapping("/{userId}/roles/assign")
+    @PostMapping("/api/users/{userId}/roles/assign")
     public ApiResponse<Void> assignRoles(@PathVariable Long userId, @RequestBody List<Long> roleIds) {
         userService.assignRoles(userId, roleIds);
         return ApiResponse.success(null);
     }
 
-    @PostMapping("/me/get")
+    @PostMapping("/api/users/me/get")
     public ApiResponse<UserResponse> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
         return ApiResponse.success(null);
     }
