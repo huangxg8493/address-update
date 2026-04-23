@@ -98,6 +98,20 @@
 // API 基础路径
 const API_BASE = '';
 
+// Toast 消息弹窗
+function showToast(message, type = 'info', duration = 3000) {
+    const existing = document.querySelector('.toast');
+    if (existing) existing.remove();
+    const toast = document.createElement('div');
+    toast.className = 'toast ' + type;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(function() {
+        toast.style.animation = 'toastOut 0.3s ease';
+        setTimeout(function() { toast.remove(); }, 300);
+    }, duration);
+}
+
 // 状态变量
 let currentClientNo = '';
 let currentPage = 1;
@@ -271,7 +285,7 @@ function bindEvents() {
     queryBtn.addEventListener('click', async () => {
         const clientNo = clientNoInput.value.trim();
         if (!clientNo) {
-            alert('请输入客户号');
+            showToast('请输入客户号', 'info');
             return;
         }
         currentClientNo = clientNo;
@@ -281,7 +295,7 @@ function bindEvents() {
             renderAddressTable(data.list);
             renderPagination(data.total, currentPage, Math.ceil(data.total / pageSize));
         } catch (e) {
-            alert(e.message);
+            showToast(e.message, 'error');
         }
     });
 
@@ -299,7 +313,7 @@ function bindEvents() {
             renderAddressTable(data.list);
             renderPagination(data.total, currentPage, Math.ceil(data.total / pageSize));
         } catch (e) {
-            alert(e.message);
+            showToast(e.message, 'error');
         }
     });
 
@@ -311,7 +325,7 @@ function bindEvents() {
             renderAddressTable(data.list);
             renderPagination(data.total, currentPage, Math.ceil(data.total / pageSize));
         } catch (e) {
-            alert(e.message);
+            showToast(e.message, 'error');
         }
     });
 
@@ -341,13 +355,13 @@ function bindEvents() {
                     clientNo: currentClientNo,
                     delFlag: 'Y'
                 });
-                alert('删除成功');
+                showToast('删除成功', 'success');
                 // 刷新列表
                 const data = await queryAddresses(currentClientNo, currentPage, pageSize);
                 renderAddressTable(data.list);
                 renderPagination(data.total, currentPage, Math.ceil(data.total / pageSize));
             } catch (e) {
-                alert(e.message);
+                showToast(e.message, 'error');
             }
         }
     });
@@ -364,7 +378,7 @@ function bindEvents() {
             renderAddressTable(data.list);
             renderPagination(data.total, currentPage, Math.ceil(data.total / pageSize));
         } catch (e) {
-            alert(e.message);
+            showToast(e.message, 'error');
         }
     });
 
@@ -382,14 +396,14 @@ function bindEvents() {
         };
         try {
             await updateSingleAddress(address);
-            alert('保存成功');
+            showToast('保存成功', 'success');
             closeModal();
             // 刷新列表
             const data = await queryAddresses(currentClientNo, currentPage, pageSize);
             renderAddressTable(data.list);
             renderPagination(data.total, currentPage, Math.ceil(data.total / pageSize));
         } catch (e) {
-            alert(e.message);
+            showToast(e.message, 'error');
         }
     });
 }
