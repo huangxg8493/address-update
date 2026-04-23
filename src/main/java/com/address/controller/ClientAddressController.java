@@ -25,7 +25,7 @@ public class ClientAddressController {
     @Autowired
     private ClientAddressService clientAddressService;
 
-    @PostMapping("/client/address/update")
+    @PostMapping("/api/client/address/update")
     public ApiResponse<AddressUpdateResponse> updateAddresses(@RequestBody AddressUpdateRequest request) {
         // 参数校验
         if (request.getClientNo() == null || request.getClientNo().trim().isEmpty()) {
@@ -74,7 +74,7 @@ public class ClientAddressController {
         return ApiResponse.success(response);
     }
 
-    @PostMapping("/client/address/single/update")
+    @PostMapping("/api/client/address/single/update")
     public ApiResponse<SingleAddressResponse> updateSingleAddress(@RequestBody SingleAddressRequest request) {
         // 参数校验
         if (request.getClientNo() == null || request.getClientNo().trim().isEmpty()) {

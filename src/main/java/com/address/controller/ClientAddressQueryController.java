@@ -16,7 +16,7 @@ public class ClientAddressQueryController {
     @Autowired
     private ClientAddressQueryService queryService;
 
-    @PostMapping("/client/address/query")
+    @PostMapping("/api/client/address/query")
     public ApiResponse<AddressQueryResponse> queryAddresses(@RequestBody AddressQueryRequest request) {
         if (request.getClientNo() == null || request.getClientNo().trim().isEmpty()) {
             return ApiResponse.error(ErrorCode.BAD_REQUEST.getCode(), "客户号不能为空");
