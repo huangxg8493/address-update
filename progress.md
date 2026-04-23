@@ -348,44 +348,58 @@
 ## Phase 18: SysUser 字段扩展实施记录
 
 ### Task 1: 修改 SysUser 实体
-- [ ] Step 1: 修改实体类，添加新字段
-- [ ] Step 2: 添加 getter/setter 方法
-- [ ] Step 3: 提交
+- [x] Step 1: 修改实体类，添加新字段
+- [x] Step 2: 添加 getter/setter 方法
+- [x] Step 3: 提交
 
 ### Task 2: 修改 SysUserMapper
-- [ ] Step 1: 修改 insert 语句
-- [ ] Step 2: 修改 update 语句
-- [ ] Step 3: 修改 findById 查询
-- [ ] Step 4: 修改 findByPhone 查询
-- [ ] Step 5: 修改 findAll 查询
-- [ ] Step 6: 提交
+- [x] Step 1: 修改 insert 语句
+- [x] Step 2: 修改 update 语句
+- [x] Step 3: 修改 findById 查询
+- [x] Step 4: 修改 findByPhone 查询
+- [x] Step 5: 修改 findAll 查询
+- [x] Step 6: 提交
 
 ### Task 3: 修改 UserCreateRequest
-- [ ] Step 1: 添加新字段
-- [ ] Step 2: 添加 getter/setter
-- [ ] Step 3: 提交
+- [x] Step 1: 添加新字段
+- [x] Step 2: 添加 getter/setter
+- [x] Step 3: 提交
 
 ### Task 4: 修改 UserUpdateRequest
-- [ ] Step 1: 添加新字段
-- [ ] Step 2: 添加 getter/setter
-- [ ] Step 3: 提交
+- [x] Step 1: 添加新字段
+- [x] Step 2: 添加 getter/setter
+- [x] Step 3: 提交
 
 ### Task 5: 修改 UserResponse
-- [ ] Step 1: 添加新字段
-- [ ] Step 2: 添加 getter/setter
-- [ ] Step 3: 提交
+- [x] Step 1: 添加新字段
+- [x] Step 2: 添加 getter/setter
+- [x] Step 3: 提交
 
 ### Task 6: 修改 UserService
-- [ ] Step 1: 修改 toResponse 方法
-- [ ] Step 2: 提交
+- [x] Step 1: 修改 toResponse 方法
+- [x] Step 2: 提交
 
 ### Task 7: 修改 sql/sys_user.sql
-- [ ] Step 1: 更新建表语句
-- [ ] Step 2: 提交
+- [x] Step 1: 更新建表语句
+- [x] Step 2: 提交
 
 ### Task 8: 编译验证
-- [ ] Step 1: 运行编译
-- [ ] Step 2: 运行测试
+- [x] Step 1: 运行编译
+- [x] Step 2: 运行测试
+
+### 提交记录
+- 8e1ee86: feat(model): SysUser 新增 userName, email, province, city, district, hobby 字段
+- eae3b70: feat(mapper): SysUserMapper 新增字段映射
+- c78a074: feat(dto): UserCreateRequest 新增字段
+- 137ebf3: feat(dto): UserUpdateRequest 新增字段
+- 7fec307: feat(dto): UserResponse 新增字段
+- d04cc18: feat(service): UserService 新增字段映射
+- 5eef839: feat(sql): sys_user 表新增字段
+- 90164d8: feat(test): 添加测试配置支持 sys_user 新字段
+
+### 备注
+- Controller 测试失败（403）是之前就存在的 Spring Security 配置问题，与本次修改无关
+- UserServiceTest 测试通过，证明 sys_user 新字段修改正确
 
 ---
 
