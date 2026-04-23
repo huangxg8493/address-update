@@ -1,0 +1,9 @@
+spring:
+  autoconfigure:
+    exclude:
+      - com.address.config.SecurityConfig
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:sql/schema.sql
+      sql-script-encoding: UTF-8

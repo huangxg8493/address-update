@@ -12,6 +12,9 @@ import java.sql.ResultSet;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@org.springframework.test.context.TestPropertySource(properties = {
+    "spring.sql.init.mode=never"
+})
 public class DatabaseInitializerTest {
 
     @Autowired
@@ -24,6 +27,12 @@ public class DatabaseInitializerTest {
             "phone VARCHAR(20) NOT NULL UNIQUE, " +
             "password VARCHAR(255) NOT NULL, " +
             "status CHAR(1) NOT NULL DEFAULT 'Y', " +
+            "user_name VARCHAR(100), " +
+            "email VARCHAR(100), " +
+            "province VARCHAR(50), " +
+            "city VARCHAR(50), " +
+            "district VARCHAR(50), " +
+            "hobby VARCHAR(500), " +
             "create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, " +
             "update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
         );
