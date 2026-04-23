@@ -110,8 +110,7 @@ function showToast(message, type = 'info', duration = 3000) {
     toast.textContent = message;
     document.body.appendChild(toast);
     setTimeout(function() {
-        toast.style.animation = 'toastOut 0.3s ease';
-        setTimeout(function() { toast.remove(); }, 300);
+        toast.remove();
     }, duration);
 }
 
