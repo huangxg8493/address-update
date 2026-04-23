@@ -54,6 +54,12 @@ public class UserService {
         user.setPhone(request.getPhone());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setStatus(request.getStatus() != null ? request.getStatus() : "Y");
+        user.setUserName(request.getUserName());
+        user.setEmail(request.getEmail());
+        user.setProvince(request.getProvince());
+        user.setCity(request.getCity());
+        user.setDistrict(request.getDistrict());
+        user.setHobby(request.getHobby());
         user.setCreateTime(LocalDateTime.now());
         user.setUpdateTime(LocalDateTime.now());
         sysUserMapper.insert(user);
@@ -73,6 +79,24 @@ public class UserService {
         }
         if (request.getStatus() != null) {
             user.setStatus(request.getStatus());
+        }
+        if (request.getUserName() != null) {
+            user.setUserName(request.getUserName());
+        }
+        if (request.getEmail() != null) {
+            user.setEmail(request.getEmail());
+        }
+        if (request.getProvince() != null) {
+            user.setProvince(request.getProvince());
+        }
+        if (request.getCity() != null) {
+            user.setCity(request.getCity());
+        }
+        if (request.getDistrict() != null) {
+            user.setDistrict(request.getDistrict());
+        }
+        if (request.getHobby() != null) {
+            user.setHobby(request.getHobby());
         }
         user.setUpdateTime(LocalDateTime.now());
         sysUserMapper.update(user);
@@ -99,6 +123,12 @@ public class UserService {
         response.setUserId(user.getUserId());
         response.setPhone(user.getPhone());
         response.setStatus(user.getStatus());
+        response.setUserName(user.getUserName());
+        response.setEmail(user.getEmail());
+        response.setProvince(user.getProvince());
+        response.setCity(user.getCity());
+        response.setDistrict(user.getDistrict());
+        response.setHobby(user.getHobby());
         response.setCreateTime(user.getCreateTime());
         response.setUpdateTime(user.getUpdateTime());
         return response;
