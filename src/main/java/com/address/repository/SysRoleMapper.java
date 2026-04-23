@@ -1,0 +1,26 @@
+package com.address.repository;
+
+import com.address.model.SysRole;
+import org.apache.ibatis.annotations.*;
+
+@Mapper
+public interface SysRoleMapper {
+    @Insert("INSERT INTO sys_role(role_id, role_code, role_name, status, create_time) " +
+            "VALUES(#{roleId}, #{roleCode}, #{roleName}, #{status}, #{createTime})")
+    void insert(SysRole role);
+
+    @Update("UPDATE sys_role SET role_code=#{roleCode}, role_name=#{roleName}, status=#{status} WHERE role_id=#{roleId}")
+    void update(SysRole role);
+
+    @Select("SELECT * FROM sys_role WHERE role_id = #{roleId}")
+    SysRole findById(@Param("roleId") Long roleId);
+
+    @Select("SELECT * FROM sys_role WHERE role_code = #{roleCode}")
+    SysRole findByCode(@Param("roleCode") String roleCode);
+
+    @Select("SELECT * FROM sys_role")
+    java.util.List<SysRole> findAll();
+
+    @Delete("DELETE FROM sys_role WHERE role_id = #{roleId}")
+    void deleteById(@Param("roleId") Long roleId);
+}
