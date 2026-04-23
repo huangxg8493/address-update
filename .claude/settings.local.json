@@ -29,12 +29,14 @@
       "Read(//d/JAVA/jdk/java8//**)",
       "Read(//d/JAVA/jdk/jdk1.8.0_481//**)",
       "Bash(java *)",
-      "Bash(echo \"Exit code: $?\")"
+      "Bash(javac *)",
+      "Bash(echo *)",
+      "Bash(javap *)",
+      "Bash(xargs grep *)"
     ],
     "deny": [
       "Bash(git reset --hard:*)",
-      "Bash(git clean:*)",
-      "Bash(rm -rf:*)"
+      "Bash(git clean:*)"
     ]
   }
 }
