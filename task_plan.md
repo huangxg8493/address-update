@@ -650,32 +650,51 @@
 
 ### Task 1: 创建菜单实体 SysMenu
 
-- [ ] Step 1: 创建 src/main/java/com/address/model/SysMenu.java
-- [ ] Step 2: 提交
+- [x] Step 1: 创建 src/main/java/com/address/model/SysMenu.java
+- [x] Step 2: 提交
 
 ### Task 2: 创建菜单相关 DTO
 
-- [ ] Step 1: 创建 MenuCreateRequest.java
-- [ ] Step 2: 创建 MenuUpdateRequest.java
-- [ ] Step 3: 创建 MenuQueryRequest.java
-- [ ] Step 4: 创建 MenuResponse.java
-- [ ] Step 5: 创建 MenuTreeResponse.java
-- [ ] Step 6: 提交
+- [x] Step 1: 创建 MenuCreateRequest.java
+- [x] Step 2: 创建 MenuUpdateRequest.java
+- [x] Step 3: 创建 MenuQueryRequest.java
+- [x] Step 4: 创建 MenuResponse.java
+- [x] Step 5: 创建 MenuTreeResponse.java
+- [x] Step 6: 提交
 
 ### Task 3: 创建菜单 Mapper
 
-- [ ] Step 1: 创建 src/main/java/com/address/repository/SysMenuMapper.java
-- [ ] Step 2: 提交
+- [x] Step 1: 创建 src/main/java/com/address/repository/SysMenuMapper.java
+- [x] Step 2: 提交
 
 ### Task 4: 创建菜单 Service
 
-- [ ] Step 1: 创建 src/main/java/com/address/service/MenuService.java
-- [ ] Step 2: 提交
+- [x] Step 1: 创建 src/main/java/com/address/service/MenuService.java
+- [x] Step 2: 提交
 
 ### Task 5: 创建菜单 Controller
 
-- [ ] Step 1: 创建 src/main/java/com/address/controller/MenuController.java
-- [ ] Step 2: 提交
+- [x] Step 1: 创建 src/main/java/com/address/controller/MenuController.java
+- [x] Step 2: 提交
+
+### Task 6: 创建菜单单元测试
+
+- [x] Step 1: 创建 src/test/java/com/address/controller/MenuControllerTest.java
+- [x] Step 2: 提交
+
+### Task 7: 更新接口文档
+
+- [x] Step 1: 在 http/interface.md 中添加菜单接口
+- [x] Step 2: 提交
+
+---
+
+## ✅ Phase 17 已完成
+
+- 菜单管理模块已实现
+- 支持无限级层级结构（parentId 自引用）
+- 软删除机制（del_flag='Y'）
+- 7 个接口：查询、详情、创建、更新、删除、菜单树、角色分配菜单
 
 ### Task 6: 创建菜单单元测试
 
