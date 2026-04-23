@@ -24,7 +24,7 @@ public class MenuController {
         return ApiResponse.success(menuService.query(request));
     }
 
-    @GetMapping("/api/menus/{menuId}")
+    @PostMapping("/api/menus/{menuId}")
     public ApiResponse<MenuResponse> getById(@PathVariable Long menuId) {
         try {
             return ApiResponse.success(menuService.getById(menuId));
