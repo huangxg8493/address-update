@@ -2,12 +2,15 @@ package com.address.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
 import javax.sql.DataSource;
 import java.io.InputStream;
 import java.util.Map;
 
 public class DbConfig {
+    private static final Logger logger = LoggerFactory.getLogger(DbConfig.class);
     private static final Map<String, Object> config;
     private static final DataSource dataSource;
 
@@ -16,6 +19,7 @@ public class DbConfig {
         try (InputStream in = DbConfig.class.getClassLoader().getResourceAsStream("config.yaml")) {
             config = yaml.load(in);
         } catch (Exception e) {
+            logger.error("加载 config.yaml 失败", e);
             throw new RuntimeException("加载 config.yaml 失败", e);
         }
 

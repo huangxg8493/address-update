@@ -41,8 +41,7 @@ public class MyBatisConfig {
             SQL_SESSION_FACTORY = new SqlSessionFactoryBuilder().build(config);
             logger.info("MyBatisConfig 初始化成功");
         } catch (Exception e) {
-            logger.error("MyBatisConfig 初始化失败: " + e.getMessage());
-            e.printStackTrace();
+            logger.error("MyBatisConfig 初始化失败", e);
             throw new RuntimeException("初始化 MyBatis SqlSessionFactory 失败", e);
         }
     }

@@ -192,15 +192,18 @@ public class ClientAddressService {
     public CifAddress updateSingleAddress(SingleAddressRequest request) {
         // 参数校验
         if (request.getSeqNo() == null || request.getSeqNo().trim().isEmpty()) {
+            logger.error("seqNo 不能为空 clientNo={}", request.getClientNo());
             throw new RuntimeException("seqNo 不能为空");
         }
         if (request.getClientNo() == null || request.getClientNo().trim().isEmpty()) {
+            logger.error("clientNo 不能为空 seqNo={}", request.getSeqNo());
             throw new RuntimeException("clientNo 不能为空");
         }
 
         // 用 seqNo + clientNo 直接查询地址
         CifAddress target = repository.findBySeqNo(request.getSeqNo(), request.getClientNo());
         if (target == null) {
+            logger.error("地址不存在 clientNo={}, seqNo={}", request.getClientNo(), request.getSeqNo());
             throw new RuntimeException("地址不存在");
         }
 

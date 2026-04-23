@@ -1,5 +1,8 @@
 package com.address.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public enum AddressType {
     OTHER("01"),           // 其他地址
     CONTACT("02"),         // 联系地址
@@ -11,6 +14,8 @@ public enum AddressType {
     REGISTERED("08"),      // 注册地址
     OFFICE("09"),          // 办公地址
     PERMANENT("10");       // 永久地址
+
+    private static final Logger logger = LoggerFactory.getLogger(AddressType.class);
 
     private final String code;
 
@@ -28,6 +33,7 @@ public enum AddressType {
                 return type;
             }
         }
+        logger.error("无效的地址类型编码: {}", code);
         throw new RuntimeException("无效的地址类型编码: " + code);
     }
 }

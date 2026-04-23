@@ -39,6 +39,7 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
                 }
             }
         } catch (SQLException e) {
+            logger.error("查询地址失败 clientNo={}", clientNo, e);
             throw new RuntimeException("查询地址失败", e);
         }
         return result;
@@ -57,6 +58,7 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
                 }
             }
         } catch (SQLException e) {
+            logger.error("查询地址失败 seqNo={}, clientNo={}", seqNo, clientNo, e);
             throw new RuntimeException("查询地址失败", e);
         }
         return null;
@@ -73,6 +75,7 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
             setParams(ps, address);
             ps.executeUpdate();
         } catch (SQLException e) {
+            logger.error("保存地址失败 clientNo={}", address.getClientNo(), e);
             throw new RuntimeException("保存地址失败", e);
         }
     }
@@ -95,6 +98,7 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
             ps.setString(7, address.getSeqNo());
             ps.executeUpdate();
         } catch (SQLException e) {
+            logger.error("更新地址失败 seqNo={}", address.getSeqNo(), e);
             throw new RuntimeException("更新地址失败", e);
         }
     }
@@ -113,6 +117,7 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
             }
             ps.executeBatch();
         } catch (SQLException e) {
+            logger.error("批量保存地址失败 clientNo={}, 数量={}", addresses.get(0).getClientNo(), addresses.size(), e);
             throw new RuntimeException("批量保存地址失败", e);
         }
     }
@@ -135,6 +140,7 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
             ps.setString(2, seqNo);
             ps.executeUpdate();
         } catch (SQLException e) {
+            logger.error("删除地址失败 seqNo={}", seqNo, e);
             throw new RuntimeException("删除地址失败", e);
         }
     }
@@ -195,6 +201,7 @@ public class JdbcClientAddressRepository implements ClientAddressRepository {
                 }
             }
         } catch (SQLException e) {
+            logger.error("初始化数据库表失败", e);
             throw new RuntimeException("初始化数据库表失败", e);
         }
     }

@@ -8,6 +8,8 @@ import com.address.dto.SingleAddressRequest;
 import com.address.dto.SingleAddressResponse;
 import com.address.model.CifAddress;
 import com.address.service.ClientAddressService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +20,7 @@ import java.util.List;
 
 @RestController
 public class ClientAddressController {
+    private static final Logger logger = LoggerFactory.getLogger(ClientAddressController.class);
 
     @Autowired
     private ClientAddressService clientAddressService;
@@ -98,6 +101,7 @@ public class ClientAddressController {
 
             return ApiResponse.success(response);
         } catch (RuntimeException e) {
+            logger.error("updateSingleAddress 处理异常 clientNo={}, seqNo={}", request.getClientNo(), request.getSeqNo(), e);
             return ApiResponse.error(ErrorCode.BAD_REQUEST.getCode(), e.getMessage());
         }
     }
