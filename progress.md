@@ -372,3 +372,70 @@
 - 609968e: fix: 修复 ClientAddressServiceTest 测试
 - cfab2ae: feat: 添加 AddressBusinessException 业务异常
 - 1c4df40: chore: 添加 CLAUDE.md 代码库指南
+
+---
+
+## Phase 16: 手机号登录功能实现
+
+### 2026-04-23 设计阶段
+
+#### 需求收集
+- 用户用手机号登录功能
+- 建立角色配置表，角色可配
+- 角色+权限控制+数据范围
+- 认证+完整信息：验证通过后返回用户完整信息，包括关联的角色、权限、数据范围
+- 密码用户自设
+- 用户获取方式：自注册和管理员创建
+- 接口统一使用 POST
+- 复用现有 ApiResponse 统一响应格式
+
+#### 设计文档
+- 完成设计文档：`docs/superpowers/specs/2026-04-23-login-design.md`
+- 完成实现计划：`docs/superpowers/plans/2026-04-23-login-plan.md`
+
+#### 规划文件同步
+- task_plan.md：添加 Phase 16 任务步骤
+- findings.md：添加登录功能设计详情
+- progress.md：添加登录功能实施记录
+
+### 实施计划
+
+#### Task 1: 添加项目依赖
+- [ ] Step 1: 添加 JJWT 和 Spring Security 依赖到 pom.xml
+- [ ] Step 2: 提交
+
+#### Task 2: 创建用户相关实体和 Mapper
+- [ ] Step 1-6: 创建 SysUser, SysRole, SysUserRole 实体和 Mapper
+- [ ] Step 7: 提交
+
+#### Task 3: 创建权限和数据范围相关实体和 Mapper
+- [ ] Step 1-8: 创建权限和数据范围相关实体和 Mapper
+- [ ] Step 9: 提交
+
+#### Task 4: 创建 JWT 工具类和安全配置
+- [ ] Step 1-4: 创建 JwtUtil, JwtAuthenticationFilter, UserDetailsServiceImpl, SecurityConfig
+- [ ] Step 5: 提交
+
+#### Task 5: 创建认证 DTO 和 Service
+- [ ] Step 1-4: 创建 LoginRequest, LoginResponse, RegisterRequest, AuthService
+- [ ] Step 5: 提交
+
+#### Task 6: 创建用户管理 DTO、Service、Controller
+- [ ] Step 1-6: 创建用户管理相关类
+- [ ] Step 7: 提交
+
+#### Task 7: 创建角色管理 DTO、Service、Controller
+- [ ] Step 1-6: 创建角色管理相关类
+- [ ] Step 7: 提交
+
+#### Task 8: 创建权限和数据范围管理 DTO、Service、Controller
+- [ ] Step 1-10: 创建权限和数据范围管理相关类
+- [ ] Step 11: 提交
+
+#### Task 9: 创建 AuthController 和配置
+- [ ] Step 1-3: 创建 AuthController 和配置
+- [ ] Step 4: 提交
+
+#### Task 10: 创建数据库表结构 SQL
+- [ ] Step 1-7: 创建 SQL 脚本
+- [ ] Step 8: 提交
