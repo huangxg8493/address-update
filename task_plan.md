@@ -696,12 +696,58 @@
 - 软删除机制（del_flag='Y'）
 - 7 个接口：查询、详情、创建、更新、删除、菜单树、角色分配菜单
 
-### Task 6: 创建菜单单元测试
+---
 
-- [ ] Step 1: 创建 src/test/java/com/address/controller/MenuControllerTest.java
+## Phase 18: SysUser 字段扩展实现
+
+> **目标:** 为 sys_user 表新增 6 个字段（userName, email, province, city, district, hobby）
+> **架构:** 修改现有实体类和 DTO，新增字段映射，保持接口兼容
+> **技术栈:** Java8 + Maven + MyBatis + Spring Boot
+
+### Task 1: 修改 SysUser 实体
+
+- [ ] Step 1: 修改实体类，添加新字段（userName, email, province, city, district, hobby）
+- [ ] Step 2: 添加 getter/setter 方法
+- [ ] Step 3: 提交
+
+### Task 2: 修改 SysUserMapper
+
+- [ ] Step 1: 修改 insert 语句
+- [ ] Step 2: 修改 update 语句
+- [ ] Step 3: 修改 findById 查询，添加字段映射
+- [ ] Step 4: 修改 findByPhone 查询，添加字段映射
+- [ ] Step 5: 修改 findAll 查询，添加字段映射
+- [ ] Step 6: 提交
+
+### Task 3: 修改 UserCreateRequest
+
+- [ ] Step 1: 添加新字段
+- [ ] Step 2: 添加 getter/setter
+- [ ] Step 3: 提交
+
+### Task 4: 修改 UserUpdateRequest
+
+- [ ] Step 1: 添加新字段
+- [ ] Step 2: 添加 getter/setter
+- [ ] Step 3: 提交
+
+### Task 5: 修改 UserResponse
+
+- [ ] Step 1: 添加新字段
+- [ ] Step 2: 添加 getter/setter
+- [ ] Step 3: 提交
+
+### Task 6: 修改 UserService
+
+- [ ] Step 1: 修改 toResponse 方法，添加新字段映射
 - [ ] Step 2: 提交
 
-### Task 7: 更新接口文档
+### Task 7: 修改 sql/sys_user.sql
 
-- [ ] Step 1: 在 http/interface.md 中添加菜单接口
+- [ ] Step 1: 更新建表语句，添加新字段
 - [ ] Step 2: 提交
+
+### Task 8: 编译验证
+
+- [ ] Step 1: 运行编译
+- [ ] Step 2: 运行测试

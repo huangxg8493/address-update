@@ -696,3 +696,36 @@ Response:
 | /api/menus/delete | POST | 软删除 |
 | /api/menus/tree | POST | 获取完整菜单树 |
 | /api/roles/{roleId}/menus/assign | POST | 角色分配菜单 |
+
+---
+
+## Phase 18: SysUser 字段扩展设计
+
+### 背景
+为 sys_user 表新增 6 个字段：userName, email, province, city, district, hobby
+
+### 设计决策
+- **字段命名:** 使用下划线命名（user_name, email, province, city, district, hobby）
+- **Java 命名:** 使用驼峰命名（userName, email, province, city, district, hobby）
+- **Mapper 映射:** 使用 @Results 注解进行下划线到驼峰的映射
+
+### 数据模型
+
+#### sys_user（修改后）
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| user_name | varchar(100) | 用户名称 |
+| email | varchar(100) | 邮箱 |
+| province | varchar(50) | 省 |
+| city | varchar(50) | 市 |
+| district | varchar(50) | 区 |
+| hobby | varchar(500) | 业余爱好 |
+
+### 相关文件
+- `src/main/java/com/address/model/SysUser.java` (修改)
+- `src/main/java/com/address/repository/SysUserMapper.java` (修改)
+- `src/main/java/com/address/dto/UserCreateRequest.java` (修改)
+- `src/main/java/com/address/dto/UserUpdateRequest.java` (修改)
+- `src/main/java/com/address/dto/UserResponse.java` (修改)
+- `src/main/java/com/address/service/UserService.java` (修改)
+- `sql/sys_user.sql` (修改)
