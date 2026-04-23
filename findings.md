@@ -652,3 +652,47 @@ Response:
 - 密码 BCrypt 加密存储
 - JWT Token 签名验证
 - 敏感接口需携带有效 Token 访问
+
+---
+
+## Phase 17: 菜单管理模块设计
+
+### 背景
+为客户地址管理系统添加独立菜单管理模块，支持无限级层级结构，采用软删除机制。
+
+### 设计决策
+- **独立模块**：新建 sys_menu 表，与权限（SysPermission）分离
+- **无限层级**：使用 parentId 自引用实现，parentId=null 表示顶级菜单
+- **软删除**：del_flag='Y' 标记删除，查询时自动过滤
+- **计算字段**：levelDepth（层级深度）和 isLeaf（是否叶子节点）由系统维护
+
+### 数据模型
+
+#### sys_menu（菜单表）
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| menu_id | bigint | 主键，雪花算法 |
+| menu_name | varchar(100) | 菜单名称（必填） |
+| menu_url | varchar(255) | 菜单 URL（必填） |
+| icon | varchar(100) | 图标 |
+| sort_order | int | 排序号 |
+| status | char(1) | 状态 |
+| is_leaf | char(1) | 是否叶子节点 Y/N（计算字段） |
+| level_depth | int | 层级深度（计算字段） |
+| component | varchar(255) | 组件 |
+| component_path | varchar(255) | 组件所在目录 |
+| parent_id | bigint | 父菜单ID，null表示顶级 |
+| del_flag | char(1) | 软删除标记 Y/N |
+| create_time | datetime | 创建时间 |
+
+### 接口设计（全部 POST）
+
+| 接口 | 方法 | 说明 |
+|------|------|------|
+| /api/menus/query | POST | 分页/条件查询菜单 |
+| /api/menus/{menuId} | GET | 获取单个菜单 |
+| /api/menus/create | POST | 新增菜单 |
+| /api/menus/update | POST | 更新菜单 |
+| /api/menus/delete | POST | 软删除 |
+| /api/menus/tree | POST | 获取完整菜单树 |
+| /api/roles/{roleId}/menus/assign | POST | 角色分配菜单 |

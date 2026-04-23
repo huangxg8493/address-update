@@ -639,3 +639,50 @@
 - 手机号登录功能已实现
 - JWT 无状态认证已配置
 - 角色+权限+数据范围管理已实现
+
+---
+
+## Phase 17: 菜单管理模块实现
+
+> 目标：实现菜单管理模块的增删改查功能，支持无限级层级结构
+> 架构：四层架构 Controller + Service + Mapper + Model
+> 技术栈：Java8 + Maven + MyBatis + Spring Boot
+
+### Task 1: 创建菜单实体 SysMenu
+
+- [ ] Step 1: 创建 src/main/java/com/address/model/SysMenu.java
+- [ ] Step 2: 提交
+
+### Task 2: 创建菜单相关 DTO
+
+- [ ] Step 1: 创建 MenuCreateRequest.java
+- [ ] Step 2: 创建 MenuUpdateRequest.java
+- [ ] Step 3: 创建 MenuQueryRequest.java
+- [ ] Step 4: 创建 MenuResponse.java
+- [ ] Step 5: 创建 MenuTreeResponse.java
+- [ ] Step 6: 提交
+
+### Task 3: 创建菜单 Mapper
+
+- [ ] Step 1: 创建 src/main/java/com/address/repository/SysMenuMapper.java
+- [ ] Step 2: 提交
+
+### Task 4: 创建菜单 Service
+
+- [ ] Step 1: 创建 src/main/java/com/address/service/MenuService.java
+- [ ] Step 2: 提交
+
+### Task 5: 创建菜单 Controller
+
+- [ ] Step 1: 创建 src/main/java/com/address/controller/MenuController.java
+- [ ] Step 2: 提交
+
+### Task 6: 创建菜单单元测试
+
+- [ ] Step 1: 创建 src/test/java/com/address/controller/MenuControllerTest.java
+- [ ] Step 2: 提交
+
+### Task 7: 更新接口文档
+
+- [ ] Step 1: 在 http/interface.md 中添加菜单接口
+- [ ] Step 2: 提交

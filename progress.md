@@ -439,3 +439,58 @@
 #### Task 10: 创建数据库表结构 SQL
 - [ ] Step 1-7: 创建 SQL 脚本
 - [ ] Step 8: 提交
+
+---
+
+## Phase 17: 菜单管理模块实现
+
+### 2026-04-23 设计阶段
+
+#### 需求收集
+- 新建独立菜单模块 sys_menu
+- 支持无限级层级结构（parentId 自引用）
+- 软删除机制（del_flag='Y'）
+- 字段：菜单ID、菜单名称、菜单URL（必填）、图标、排序号、状态（可选）、是否叶子节点、层级深度（计算字段）、组件、组件所在目录
+
+#### 设计文档
+- 完成设计文档：`docs/superpowers/specs/2026-04-23-menu-design.md`
+- 完成实现计划：`docs/superpowers/plans/2026-04-23-menu-implementation.md`
+
+#### 规划文件同步
+- task_plan.md：添加 Phase 17 任务步骤
+- findings.md：添加菜单模块设计详情
+- progress.md：添加菜单模块实施记录
+
+### 实施计划
+
+#### Task 1: 创建菜单实体 SysMenu
+- [ ] Step 1: 创建 src/main/java/com/address/model/SysMenu.java
+- [ ] Step 2: 提交
+
+#### Task 2: 创建菜单相关 DTO
+- [ ] Step 1: 创建 MenuCreateRequest.java
+- [ ] Step 2: 创建 MenuUpdateRequest.java
+- [ ] Step 3: 创建 MenuQueryRequest.java
+- [ ] Step 4: 创建 MenuResponse.java
+- [ ] Step 5: 创建 MenuTreeResponse.java
+- [ ] Step 6: 提交
+
+#### Task 3: 创建菜单 Mapper
+- [ ] Step 1: 创建 src/main/java/com/address/repository/SysMenuMapper.java
+- [ ] Step 2: 提交
+
+#### Task 4: 创建菜单 Service
+- [ ] Step 1: 创建 src/main/java/com/address/service/MenuService.java
+- [ ] Step 2: 提交
+
+#### Task 5: 创建菜单 Controller
+- [ ] Step 1: 创建 src/main/java/com/address/controller/MenuController.java
+- [ ] Step 2: 提交
+
+#### Task 6: 创建菜单单元测试
+- [ ] Step 1: 创建 src/test/java/com/address/controller/MenuControllerTest.java
+- [ ] Step 2: 提交
+
+#### Task 7: 更新接口文档
+- [ ] Step 1: 在 http/interface.md 中添加菜单接口
+- [ ] Step 2: 提交
