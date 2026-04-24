@@ -50,3 +50,32 @@ mvn package
 - Java8 + Maven
 - 不新建异常，使用 RuntimeException
 - del_flag='Y' 的记录为逻辑删除，不参与业务规则
+
+## 技术栈
+- Spring Boot 2.7.18
+- MyBatis 3.5.13
+- MySQL + HikariCP
+- JWT 无状态认证
+- BCrypt 密码加密
+
+## 已完成模块
+
+### Phase 12-15: 地址管理
+- RESTful 接口：PUT `/client/address/update`
+- 分页查询：POST `/client/address/query`
+- 单地址维护：POST `/client/address/single/update`
+
+### Phase 16: 手机号登录
+- JWT 无状态认证
+- 角色 + 权限 + 数据范围管理
+- 认证接口：POST `/api/auth/login`, `/api/auth/register`
+- 用户管理：POST `/api/users/*`
+- 角色管理：POST `/api/roles/*`
+
+### Phase 17: 菜单管理
+- 无限级层级结构（parentId 自引用）
+- 软删除机制（del_flag='Y'）
+- 接口：POST `/api/menus/*`
+
+### Phase 18: SysUser 字段扩展
+- 新增字段：userName, email, province, city, district, hobby
