@@ -79,3 +79,15 @@ mvn package
 
 ### Phase 18: SysUser 字段扩展
 - 新增字段：userName, email, province, city, district, hobby
+
+## 测试调试技巧
+- 单独运行某类测试：`mvn test -Dtest=UserServiceTest`
+- 过滤测试输出：`mvn test 2>&1 | grep -E "Tests run|BUILD"`
+- 用 `git stash` 确认测试失败是否为预存问题
+- 创建 DebugTableTest 用 JdbcTemplate 检查数据库表结构
+- Controller 测试 403 错误通常是 Spring Security 配置问题，非代码修改导致
+
+## 测试配置
+- 测试数据库自动初始化：`spring.sql.init.mode=always`
+- 初始化脚本位置：`src/test/resources/sql/schema.sql`
+- 如需手动初始化表，在测试类中用 `jdbcTemplate.execute(CREATE TABLE...)`
