@@ -408,39 +408,48 @@
 ### 任务步骤
 
 #### Task 1: 创建 AuthErrorCode 错误码常量类
-- [ ] Step 1: 创建文件
-- [ ] Step 2: 验证编译
-- [ ] Step 3: 提交
+- [x] Step 1: 创建文件
+- [x] Step 2: 验证编译
+- [x] Step 3: 提交
 
 #### Task 2: 创建 LoginResult 认证结果封装类
-- [ ] Step 1: 创建文件
-- [ ] Step 2: 验证编译
-- [ ] Step 3: 提交
+- [x] Step 1: 创建文件
+- [x] Step 2: 验证编译
+- [x] Step 3: 提交
 
 #### Task 3: 修改 ApiResponse 支持自定义成功码
-- [ ] Step 1: 添加 success(data, code) 方法
-- [ ] Step 2: 验证编译
-- [ ] Step 3: 提交
+- [x] Step 1: 添加 success(data, code) 方法
+- [x] Step 2: 验证编译
+- [x] Step 3: 提交
 
 #### Task 4: 修改 AuthService.login() 返回 LoginResult
-- [ ] Step 1: 修改 login 方法返回类型和实现
-- [ ] Step 2: 添加必要的 import
-- [ ] Step 3: 验证编译
-- [ ] Step 4: 提交
+- [x] Step 1: 修改 login 方法返回类型和实现
+- [x] Step 2: 添加必要的 import
+- [x] Step 3: 验证编译
+- [x] Step 4: 提交
 
 #### Task 5: 修改 AuthController.login() 处理 LoginResult
-- [ ] Step 1: 修改 login 方法
-- [ ] Step 2: 添加必要的 import
-- [ ] Step 3: 验证编译
-- [ ] Step 4: 提交
+- [x] Step 1: 修改 login 方法
+- [x] Step 2: 添加必要的 import
+- [x] Step 3: 验证编译
+- [x] Step 4: 提交
 
 #### Task 6: 运行测试验证
-- [ ] Step 1: 运行 AuthServiceTest
-- [ ] Step 2: 运行完整测试套件
-- [ ] Step 3: 提交测试相关修改（如有）
+- [x] Step 1: 运行 AuthServiceTest
+- [x] Step 2: 运行完整测试套件
+- [x] Step 3: 提交测试相关修改（如有）
 
 ### 提交记录
-- （实施中）
+- 9fd4a2e: feat: 添加认证模块错误码常量类 AuthErrorCode
+- 0d4d396: feat: 添加 LoginResult 认证结果封装类
+- f9461ae: feat: ApiResponse 添加支持自定义成功码的 success(data, code) 方法
+- e67bb45: feat: AuthService.login() 改为返回 LoginResult，支持细粒度错误码
+- 8d4a17f: test: 更新 AuthServiceTest 测试登录错误码功能
+- a2c46f9: docs: 添加登录错误码设计和实施计划
+
+### 备注
+- ClientAddressControllerTest 和 ClientAddressQueryControllerTest 的 403 错误是之前就存在的 Spring Security 配置问题，与本次修改无关
+- AuthServiceTest 全部通过（6 个测试），覆盖用户未注册、用户已禁用、密码错误、登录成功四种场景
 
 ---
 
