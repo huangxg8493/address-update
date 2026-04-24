@@ -32,7 +32,8 @@
       "Bash(javac *)",
       "Bash(echo *)",
       "Bash(javap *)",
-      "Bash(xargs grep *)"
+      "Bash(xargs grep *)",
+      "Bash(git stash *)"
     ],
     "deny": [
       "Bash(git reset --hard:*)",
