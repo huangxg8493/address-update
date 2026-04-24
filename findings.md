@@ -729,3 +729,30 @@ Response:
 - `src/main/java/com/address/dto/UserResponse.java` (修改)
 - `src/main/java/com/address/service/UserService.java` (修改)
 - `sql/sys_user.sql` (修改)
+
+---
+
+## Phase 19: 登录接口返回码归类设计
+
+### 背景
+当前 `/api/auth/login` 接口通过抛出 RuntimeException 字符串返回错误信息，无法精确区分错误类型（如"用户不存在或已禁用"合并为一个信息）。需要建立结构化的错误码体系。
+
+### 设计决策
+- **错误码结构**：成功码 000000，认证模块码段 101xxx（1=认证模块，01=登录子类型）
+- **实现方式**：AuthService 直接返回错误码，不再抛出异常，Controller 统一构造 ApiResponse
+- **封装类**：LoginResult 封装 code/message/token/phone
+
+### 错误码定义
+| 错误场景 | 错误码 | 说明 |
+|---------|--------|------|
+| 成功 | `000000` | 登录成功 |
+| 用户未注册 | `101001` | 手机号未在系统注册 |
+| 用户已禁用 | `101002` | 用户存在但 status='N' |
+| 密码错误 | `101003` | 密码不匹配 |
+
+### 相关文件
+- `src/main/java/com/address/common/AuthErrorCode.java` (新增)
+- `src/main/java/com/address/dto/LoginResult.java` (新增)
+- `src/main/java/com/address/service/AuthService.java` (修改)
+- `src/main/java/com/address/common/ApiResponse.java` (修改)
+- `src/main/java/com/address/controller/AuthController.java` (修改)

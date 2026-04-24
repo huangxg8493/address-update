@@ -403,6 +403,47 @@
 
 ---
 
+## Phase 19: 登录接口返回码归类实施记录
+
+### 任务步骤
+
+#### Task 1: 创建 AuthErrorCode 错误码常量类
+- [ ] Step 1: 创建文件
+- [ ] Step 2: 验证编译
+- [ ] Step 3: 提交
+
+#### Task 2: 创建 LoginResult 认证结果封装类
+- [ ] Step 1: 创建文件
+- [ ] Step 2: 验证编译
+- [ ] Step 3: 提交
+
+#### Task 3: 修改 ApiResponse 支持自定义成功码
+- [ ] Step 1: 添加 success(data, code) 方法
+- [ ] Step 2: 验证编译
+- [ ] Step 3: 提交
+
+#### Task 4: 修改 AuthService.login() 返回 LoginResult
+- [ ] Step 1: 修改 login 方法返回类型和实现
+- [ ] Step 2: 添加必要的 import
+- [ ] Step 3: 验证编译
+- [ ] Step 4: 提交
+
+#### Task 5: 修改 AuthController.login() 处理 LoginResult
+- [ ] Step 1: 修改 login 方法
+- [ ] Step 2: 添加必要的 import
+- [ ] Step 3: 验证编译
+- [ ] Step 4: 提交
+
+#### Task 6: 运行测试验证
+- [ ] Step 1: 运行 AuthServiceTest
+- [ ] Step 2: 运行完整测试套件
+- [ ] Step 3: 提交测试相关修改（如有）
+
+### 提交记录
+- （实施中）
+
+---
+
 ## Phase 15: 单地址维护接口实现
 
 ### Task 1: 创建 DTO
