@@ -1,7 +1,9 @@
 package com.address.service;
 
+import com.address.common.AuthErrorCode;
 import com.address.dto.LoginRequest;
 import com.address.dto.LoginResponse;
+import com.address.dto.LoginResult;
 import com.address.dto.RegisterRequest;
 import com.address.model.SysUser;
 import com.address.repository.SysUserMapper;
@@ -25,19 +27,21 @@ public class AuthService {
     @Autowired
     private JwtUtil jwtUtil;
 
-    public LoginResponse login(LoginRequest request) {
+    public LoginResult login(LoginRequest request) {
         SysUser user = sysUserMapper.findActiveByPhone(request.getPhone());
         if (user == null) {
-            throw new RuntimeException("用户不存在或已禁用");
+            SysUser existUser = sysUserMapper.findByPhone(request.getPhone());
+            if (existUser == null) {
+                return LoginResult.error(AuthErrorCode.USER_NOT_FOUND, "用户未注册");
+            } else {
+                return LoginResult.error(AuthErrorCode.USER_DISABLED, "用户已禁用");
+            }
         }
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new RuntimeException("密码错误");
+            return LoginResult.error(AuthErrorCode.PASSWORD_ERROR, "密码错误");
         }
         String token = jwtUtil.generateToken(user.getUserId(), user.getPhone());
-        LoginResponse response = new LoginResponse();
-        response.setToken(token);
-        response.setPhone(user.getPhone());
-        return response;
+        return LoginResult.success(token, user.getPhone());
     }
 
     public void register(RegisterRequest request) {

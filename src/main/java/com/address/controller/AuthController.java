@@ -3,6 +3,7 @@ package com.address.controller;
 import com.address.common.ApiResponse;
 import com.address.dto.LoginRequest;
 import com.address.dto.LoginResponse;
+import com.address.dto.LoginResult;
 import com.address.dto.RegisterRequest;
 import com.address.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,11 @@ public class AuthController {
 
     @PostMapping("/api/auth/login")
     public ApiResponse<LoginResponse> login(@RequestBody LoginRequest request) {
-        return ApiResponse.success(authService.login(request));
+        LoginResult result = authService.login(request);
+        if (result.isSuccess()) {
+            return ApiResponse.success(result.toLoginResponse(), result.getCode());
+        }
+        return ApiResponse.error(result.getCode(), result.getMessage());
     }
 
     @PostMapping("/api/auth/logout")
