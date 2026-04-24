@@ -4,11 +4,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 项目概述
 
-客户地址信息维护系统（Java8 + Maven），核心规则：
+**地址信息维护 + 权限管理系统（Java8 + Maven + Spring Boot）**
+
+### 客户地址管理
 - 一个客户可有多个地址，按类型区分（居住地址、联系地址、单位地址等）
 - 每种类型地址只能有一个"最新地址"（isNewest='Y'）
 - 只能有一个"通讯地址"（isMailingAddress='Y'），且通讯地址必然是最新的
 - 通讯地址按优先级选取：其他地址 > 联系地址 > 居住地址 > 单位地址 > 户籍地址 > 证件地址 > 营业地址 > 注册地址 > 办公地址 > 永久地址
+
+### 权限管理（Phase 16-17）
+- 手机号 + JWT 无状态登录
+- 角色 + 权限 + 数据范围配置
+- 菜单管理（无限级层级结构）
 
 ## 常用命令
 
