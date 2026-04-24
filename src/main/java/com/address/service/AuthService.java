@@ -54,6 +54,12 @@ public class AuthService {
         user.setPhone(request.getPhone());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setStatus("Y");
+        user.setUserName(request.getUserName());
+        user.setEmail(request.getEmail());
+        user.setProvince(request.getProvince());
+        user.setCity(request.getCity());
+        user.setDistrict(request.getDistrict());
+        user.setHobby(request.getHobby());
         user.setCreateTime(LocalDateTime.now());
         user.setUpdateTime(LocalDateTime.now());
         sysUserMapper.insert(user);
