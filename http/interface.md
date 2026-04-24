@@ -10,7 +10,13 @@
 ```json
 {
   "phone": "string",
-  "password": "string"
+  "password": "string",
+  "userName": "string",
+  "email": "string",
+  "province": "string",
+  "city": "string",
+  "district": "string",
+  "hobby": "string"
 }
 ```
 - **响应报文**:
