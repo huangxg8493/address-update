@@ -35,15 +35,39 @@
   "password": "string"
 }
 ```
-- **响应报文**:
+- **响应报文（成功）**:
 ```json
 {
-  "code": "200",
+  "code": "000000",
   "message": "成功",
   "data": {
     "token": "string",
     "phone": "string"
   }
+}
+```
+- **响应报文（用户未注册）**:
+```json
+{
+  "code": "101001",
+  "message": "用户未注册",
+  "data": null
+}
+```
+- **响应报文（用户已禁用）**:
+```json
+{
+  "code": "101002",
+  "message": "用户已禁用",
+  "data": null
+}
+```
+- **响应报文（密码错误）**:
+```json
+{
+  "code": "101003",
+  "message": "密码错误",
+  "data": null
 }
 ```
 
