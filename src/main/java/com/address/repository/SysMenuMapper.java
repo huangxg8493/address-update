@@ -88,10 +88,15 @@ public interface SysMenuMapper {
     })
     List<SysMenu> findRootMenus();
 
-    @Select("SELECT menu_id, menu_name, menu_url, icon, sort_order, status, is_leaf, level_depth, component, component_path, parent_id, del_flag, create_time " +
+    @Select("<script>" +
+            "SELECT menu_id, menu_name, menu_url, icon, sort_order, status, is_leaf, level_depth, component, component_path, parent_id, del_flag, create_time " +
             "FROM SYS_MENU m WHERE menu_id IN (" +
-            "  SELECT DISTINCT rm.menu_id FROM SYS_ROLE_MENU rm WHERE rm.role_id IN (#{roleIds})" +
-            ") AND del_flag='N' ORDER BY sort_order")
+            "  SELECT DISTINCT rm.menu_id FROM SYS_ROLE_MENU rm WHERE rm.role_id IN " +
+            "<foreach collection='roleIds' item='id' open='(' separator=',' close=')'>" +
+            "    #{id}" +
+            "</foreach>" +
+            ") AND del_flag='N' ORDER BY sort_order" +
+            "</script>")
     @Results({
         @Result(property = "menuId", column = "menu_id"),
         @Result(property = "menuName", column = "menu_name"),
