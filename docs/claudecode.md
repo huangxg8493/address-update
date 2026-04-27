@@ -101,6 +101,9 @@ Repair-WinGetPackageManager
 4. 安装 插件
 
 winget upgrade Anthropic.ClaudeCode --source winget
+winget list Anthropic.ClaudeCode
+winget source update
+winget upgrade Anthropic.ClaudeCode --version 2.1.118 --source winget
 
 # 项目开发规则
 当进行多步骤开发任务（如新增功能、重构）时：
