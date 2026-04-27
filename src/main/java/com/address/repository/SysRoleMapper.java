@@ -21,6 +21,9 @@ public interface SysRoleMapper {
     @Select("SELECT * FROM SYS_ROLE")
     java.util.List<SysRole> findAll();
 
+    @Select("<script>SELECT * FROM SYS_ROLE WHERE role_id IN <foreach collection='roleIds' item='id' open='(' separator=',' close=')'>#{id}</foreach></script>")
+    java.util.List<SysRole> findByIds(@Param("roleIds") java.util.List<Long> roleIds);
+
     @Delete("DELETE FROM SYS_ROLE WHERE role_id = #{roleId}")
     void deleteById(@Param("roleId") Long roleId);
 }

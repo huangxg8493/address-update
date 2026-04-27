@@ -110,10 +110,14 @@ public class AuthService {
             return new ArrayList<>();
         }
         List<Long> roleIds = userRoles.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
+        // 批量查询角色，避免 N+1 问题
+        List<SysRole> roles = sysRoleMapper.findByIds(roleIds);
+        if (roles == null || roles.isEmpty()) {
+            return new ArrayList<>();
+        }
         List<RoleInfo> result = new ArrayList<>();
-        for (Long roleId : roleIds) {
-            SysRole role = sysRoleMapper.findById(roleId);
-            if (role != null && "Y".equals(role.getStatus())) {
+        for (SysRole role : roles) {
+            if ("Y".equals(role.getStatus())) {
                 RoleInfo info = new RoleInfo();
                 info.setRoleId(role.getRoleId());
                 info.setRoleCode(role.getRoleCode());
@@ -166,7 +170,7 @@ public class AuthService {
         List<SysMenu> children = childrenMap.get(menu.getMenuId());
         if (children != null && !children.isEmpty()) {
             List<MenuTreeDTO> childNodes = new ArrayList<>();
-            children.sort(Comparator.comparing(SysMenu::getSortOrder));
+            children.sort(Comparator.comparing(SysMenu::getSortOrder, Comparator.nullsLast(Integer::compareTo)));
             for (SysMenu child : children) {
                 childNodes.add(buildMenuTreeNode(child, childrenMap));
             }
