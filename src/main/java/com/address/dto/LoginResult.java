@@ -19,6 +19,11 @@ public class LoginResult {
         return new LoginResult(ErrorCode.SUCCESS, "成功", token, phone);
     }
 
+    public static LoginResult success(LoginResponse response) {
+        LoginResult result = new LoginResult(ErrorCode.SUCCESS, "成功", response.getToken(), response.getPhone());
+        return result;
+    }
+
     public static LoginResult error(String code, String message) {
         return new LoginResult(code, message, null, null);
     }
