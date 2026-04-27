@@ -81,6 +81,16 @@ CREATE TABLE IF NOT EXISTS sys_menu (
     INDEX idx_parent_id (parent_id)
 );
 
+-- 创建 sys_role_menu 表
+CREATE TABLE IF NOT EXISTS sys_role_menu (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    role_id BIGINT NOT NULL,
+    menu_id BIGINT NOT NULL,
+    create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY uk_role_menu (role_id, menu_id),
+    INDEX idx_role_id (role_id)
+);
+
 -- 创建 cif_address 表
 CREATE TABLE IF NOT EXISTS CIF_ADDRESS (
     SEQ_NO VARCHAR(64) PRIMARY KEY,
