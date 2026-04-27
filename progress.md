@@ -488,14 +488,65 @@
 - [ ] Step 2: 提交
 
 #### Task 4: 修改 RoleController 添加接口
-- [ ] Step 1: 查看 RoleController 是否存在
-- [ ] Step 2: 添加接口到 RoleController
-- [ ] Step 3: 提交
+- [x] Step 1: 查看 RoleController 是否存在
+- [x] Step 2: 添加接口到 RoleController
+- [x] Step 3: 提交
 
 #### Task 5: 编写测试用例
 - [x] Step 1: 编写测试用例
 - [x] Step 2: 运行测试
 - [x] Step 3: 提交
+
+---
+
+## Phase 21: 登录接口返回完整信息实现
+
+### 2026-04-27 设计阶段
+
+#### 需求收集
+- 登录接口 `/api/auth/login` 返回用户的完整信息
+- 包括用户基本信息、拥有的角色、有权限的菜单
+- 菜单需包含按钮级别（叶子节点 isLeaf='Y'）
+- 菜单返回树形层级结构
+
+#### 设计文档
+- 完成设计文档：`docs/superpowers/specs/2026-04-27-login-fullinfo-design.md`
+- 完成实现计划：`docs/superpowers/plans/2026-04-27-login-fullinfo-plan.md`
+
+#### 规划文件同步
+- task_plan.md：添加 Phase 21 任务步骤
+- findings.md：添加登录接口返回完整信息设计详情
+- progress.md：添加 Phase 21 实施记录
+
+### 实施计划
+
+#### Task 1: 创建 DTO 内部类
+- [ ] Step 1.1: 创建 UserInfo.java
+- [ ] Step 1.2: 创建 RoleInfo.java
+- [ ] Step 1.3: 创建 MenuTreeDTO.java
+
+#### Task 2: 扩展 LoginResponse
+- [ ] Step 1: 扩展 LoginResponse 增加 user/roles/menus 字段
+- [ ] Step 2: 提交
+
+#### Task 3: 扩展 SysMenuMapper
+- [ ] Step 1: 新增 findByRoleIds 方法支持多角色菜单查询
+- [ ] Step 2: 提交
+
+#### Task 4: 扩展 AuthService.login()
+- [ ] Step 1: 新增依赖注入（SysUserRoleMapper, SysRoleMapper, SysMenuMapper）
+- [ ] Step 2: 修改 login() 方法返回完整 LoginResponse
+- [ ] Step 3: 新增私有方法（getRolesByUserId, getMenusByUserId, buildMenuTree 等）
+- [ ] Step 4: 提交
+
+#### Task 5: 编写测试
+- [ ] Step 1: 创建 AuthServiceLoginTest.java
+- [ ] Step 2: 运行测试验证
+- [ ] Step 3: 提交
+
+#### Task 6: 验证
+- [ ] 运行完整测试套件
+- [ ] 确保所有测试通过
 
 ---
 

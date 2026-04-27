@@ -829,3 +829,107 @@ public class SysRoleMenu {
 1. **批量分配**：先删后插（deleteByRoleId → insertBatch）
 2. **查询**：selectByRoleId + 关联 SysMenu 查询完整信息
 3. **防重复**：uk_role_menu 唯一索引保证不重复插入
+
+---
+
+## Phase 21: 登录接口返回完整信息设计
+
+### 背景
+登录接口 `/api/auth/login` 需要返回用户的完整信息，包括用户基本信息、拥有的角色、有权限的菜单（含按钮级别，树形层级结构）。
+
+### 设计决策
+- **策略**：单一响应，登录成功返回 token + 用户信息 + 角色列表 + 菜单树
+- **按钮级别**：叶子节点（isLeaf='Y'）作为按钮，通过 parentId 挂在父菜单下
+- **菜单树**：使用 children 递归嵌套，叶子节点 isLeaf=true
+- **多角色合并**：SQL 层 DISTINCT 去重
+
+### 响应结构
+
+```json
+{
+  "code": "000000",
+  "message": "成功",
+  "data": {
+    "token": "eyJhbG...",
+    "phone": "13800138000",
+    "user": {
+      "userId": 1234567890,
+      "userName": "张三",
+      "email": "zhangsan@example.com",
+      "province": "广东省",
+      "city": "深圳市",
+      "district": "南山区",
+      "hobby": "篮球,旅游",
+      "status": "Y"
+    },
+    "roles": [
+      { "roleId": 1, "roleCode": "admin", "roleName": "管理员", "status": "Y" }
+    ],
+    "menus": [
+      {
+        "menuId": 1,
+        "menuName": "系统管理",
+        "menuUrl": "/system",
+        "icon": "setting",
+        "sortOrder": 1,
+        "children": [
+          {
+            "menuId": 2,
+            "menuName": "用户管理",
+            "menuUrl": "/system/user",
+            "icon": "user",
+            "sortOrder": 1,
+            "children": [
+              { "menuId": 5, "menuName": "新增用户", "isLeaf": true, "children": [] }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+### 数据获取逻辑
+
+```
+1. 验证用户身份（手机号 + 密码）→ 现有逻辑不变
+2. 查询用户角色列表：SysUserRoleMapper.findByUserId → List<SysUserRole> → SysRoleMapper.findById
+3. 查询用户菜单权限：SysUserRoleMapper.findByUserId → roleIds → SysMenuMapper.findByRoleIds
+4. 构建菜单树：扁平菜单列表按 parentId 递归组织为树形结构
+5. 生成 JWT Token → 现有逻辑不变
+```
+
+### 涉及的组件变更
+
+| 文件 | 操作 | 说明 |
+|------|------|------|
+| `src/main/java/com/address/dto/UserInfo.java` | 新增 | 用户基本信息 DTO |
+| `src/main/java/com/address/dto/RoleInfo.java` | 新增 | 角色信息 DTO |
+| `src/main/java/com/address/dto/MenuTreeDTO.java` | 新增 | 菜单树节点 DTO |
+| `src/main/java/com/address/dto/LoginResponse.java` | 修改 | 扩展字段 user/roles/menus |
+| `src/main/java/com/address/repository/SysMenuMapper.java` | 修改 | 新增 findByRoleIds 批量查询 |
+| `src/main/java/com/address/service/AuthService.java` | 修改 | login() 组装完整响应 |
+
+### 菜单树构建算法
+
+```
+输入：扁平菜单列表（按 sortOrder 排序）
+输出：树形菜单结构
+
+1. 将菜单列表按 parentId 分组
+2. 找到 parentId=null 的根菜单
+3. 递归构建子树：
+   - 叶子节点（isLeaf='Y'）：children = []
+   - 非叶子节点：children = 子菜单列表（递归）
+```
+
+### 安全性
+- `LoginResponse.user` 不包含 `password` 字段
+- `SysUser` 查询时不加载 password
+
+---
+
+### 性能考虑
+- 用户角色和菜单信息可缓存（Redis），避免每次登录查询
+- 缓存策略（可选，后续实现）：用户信息缓存 30 分钟，菜单树缓存 1 小时
