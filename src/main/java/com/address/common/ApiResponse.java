@@ -14,7 +14,7 @@ public class ApiResponse<T> {
     }
 
     public static <T> ApiResponse<T> success(T data) {
-        return new ApiResponse<>("200", "成功", data);
+        return new ApiResponse<>(ErrorCode.SUCCESS, "成功", data);
     }
 
     public static <T> ApiResponse<T> success(T data, String code) {

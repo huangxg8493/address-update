@@ -29,10 +29,10 @@ public class ClientAddressController {
     public ApiResponse<AddressUpdateResponse> updateAddresses(@RequestBody AddressUpdateRequest request) {
         // 参数校验
         if (request.getClientNo() == null || request.getClientNo().trim().isEmpty()) {
-            return ApiResponse.error(ErrorCode.BAD_REQUEST.getCode(), "客户号不能为空");
+            return ApiResponse.error(ErrorCode.BAD_REQUEST, "客户号不能为空");
         }
         if (request.getAddresses() == null || request.getAddresses().isEmpty()) {
-            return ApiResponse.error(ErrorCode.BAD_REQUEST.getCode(), "地址列表不能为空");
+            return ApiResponse.error(ErrorCode.BAD_REQUEST, "地址列表不能为空");
         }
 
         // DTO 转换为 CifAddress
@@ -78,10 +78,10 @@ public class ClientAddressController {
     public ApiResponse<SingleAddressResponse> updateSingleAddress(@RequestBody SingleAddressRequest request) {
         // 参数校验
         if (request.getClientNo() == null || request.getClientNo().trim().isEmpty()) {
-            return ApiResponse.error(ErrorCode.BAD_REQUEST.getCode(), "客户号不能为空");
+            return ApiResponse.error(ErrorCode.BAD_REQUEST, "客户号不能为空");
         }
         if (request.getSeqNo() == null || request.getSeqNo().trim().isEmpty()) {
-            return ApiResponse.error(ErrorCode.BAD_REQUEST.getCode(), "seqNo不能为空");
+            return ApiResponse.error(ErrorCode.BAD_REQUEST, "seqNo不能为空");
         }
 
         try {
@@ -102,7 +102,7 @@ public class ClientAddressController {
             return ApiResponse.success(response);
         } catch (RuntimeException e) {
             logger.error("updateSingleAddress 处理异常 clientNo={}, seqNo={}", request.getClientNo(), request.getSeqNo(), e);
-            return ApiResponse.error(ErrorCode.BAD_REQUEST.getCode(), e.getMessage());
+            return ApiResponse.error(ErrorCode.BAD_REQUEST, e.getMessage());
         }
     }
 }

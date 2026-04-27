@@ -1,6 +1,6 @@
 package com.address.service;
 
-import com.address.common.AuthErrorCode;
+import com.address.common.ErrorCode;
 import com.address.dto.LoginRequest;
 import com.address.dto.LoginResponse;
 import com.address.dto.LoginResult;
@@ -32,13 +32,13 @@ public class AuthService {
         if (user == null) {
             SysUser existUser = sysUserMapper.findByPhone(request.getPhone());
             if (existUser == null) {
-                return LoginResult.error(AuthErrorCode.USER_NOT_FOUND, "用户未注册");
+                return LoginResult.error(ErrorCode.USER_NOT_FOUND, "用户未注册");
             } else {
-                return LoginResult.error(AuthErrorCode.USER_DISABLED, "用户已禁用");
+                return LoginResult.error(ErrorCode.USER_DISABLED, "用户已禁用");
             }
         }
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            return LoginResult.error(AuthErrorCode.PASSWORD_ERROR, "密码错误");
+            return LoginResult.error(ErrorCode.PASSWORD_ERROR, "密码错误");
         }
         String token = jwtUtil.generateToken(user.getUserId(), user.getPhone());
         return LoginResult.success(token, user.getPhone());
@@ -47,13 +47,13 @@ public class AuthService {
     public LoginResult register(RegisterRequest request) {
         SysUser existUser = sysUserMapper.findByPhone(request.getPhone());
         if (existUser != null) {
-            return LoginResult.error(AuthErrorCode.PHONE_ALREADY_EXISTS, "手机号已注册");
+            return LoginResult.error(ErrorCode.PHONE_ALREADY_EXISTS, "手机号已注册");
         }
         if (!isValidPhone(request.getPhone())) {
-            return LoginResult.error(AuthErrorCode.PHONE_FORMAT_ERROR, "手机号格式错误");
+            return LoginResult.error(ErrorCode.PHONE_FORMAT_ERROR, "手机号格式错误");
         }
         if (!isValidPassword(request.getPassword())) {
-            return LoginResult.error(AuthErrorCode.PASSWORD_INVALID, "密码格式错误");
+            return LoginResult.error(ErrorCode.PASSWORD_INVALID, "密码格式错误");
         }
         SysUser user = new SysUser();
         user.setUserId(SnowflakeIdGenerator.getInstance().nextId());

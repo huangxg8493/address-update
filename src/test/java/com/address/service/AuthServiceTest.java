@@ -1,6 +1,6 @@
 package com.address.service;
 
-import com.address.common.AuthErrorCode;
+import com.address.common.ErrorCode;
 import com.address.dto.LoginRequest;
 import com.address.dto.LoginResponse;
 import com.address.dto.LoginResult;
@@ -63,7 +63,7 @@ public class AuthServiceTest {
         LoginResult result = authService.register(request);
 
         assertFalse(result.isSuccess());
-        assertEquals(AuthErrorCode.PHONE_ALREADY_EXISTS, result.getCode());
+        assertEquals(ErrorCode.PHONE_ALREADY_EXISTS, result.getCode());
         assertEquals("手机号已注册", result.getMessage());
     }
 
@@ -86,7 +86,7 @@ public class AuthServiceTest {
         LoginResult result = authService.login(request);
 
         assertTrue(result.isSuccess());
-        assertEquals(AuthErrorCode.SUCCESS, result.getCode());
+        assertEquals(ErrorCode.SUCCESS, result.getCode());
         assertNotNull(result.getToken());
         assertEquals("13900000003", result.getPhone());
     }
@@ -100,7 +100,7 @@ public class AuthServiceTest {
         LoginResult result = authService.login(request);
 
         assertFalse(result.isSuccess());
-        assertEquals(AuthErrorCode.USER_NOT_FOUND, result.getCode());
+        assertEquals(ErrorCode.USER_NOT_FOUND, result.getCode());
         assertEquals("用户未注册", result.getMessage());
     }
 
@@ -123,7 +123,7 @@ public class AuthServiceTest {
         LoginResult result = authService.login(request);
 
         assertFalse(result.isSuccess());
-        assertEquals(AuthErrorCode.PASSWORD_ERROR, result.getCode());
+        assertEquals(ErrorCode.PASSWORD_ERROR, result.getCode());
         assertEquals("密码错误", result.getMessage());
     }
 
@@ -146,7 +146,7 @@ public class AuthServiceTest {
         LoginResult result = authService.login(request);
 
         assertFalse(result.isSuccess());
-        assertEquals(AuthErrorCode.USER_DISABLED, result.getCode());
+        assertEquals(ErrorCode.USER_DISABLED, result.getCode());
         assertEquals("用户已禁用", result.getMessage());
     }
 }

@@ -19,7 +19,7 @@ public class ClientAddressQueryController {
     @PostMapping("/api/client/address/query")
     public ApiResponse<AddressQueryResponse> queryAddresses(@RequestBody AddressQueryRequest request) {
         if (request.getClientNo() == null || request.getClientNo().trim().isEmpty()) {
-            return ApiResponse.error(ErrorCode.BAD_REQUEST.getCode(), "客户号不能为空");
+            return ApiResponse.error(ErrorCode.BAD_REQUEST, "客户号不能为空");
         }
 
         int pageNum = request.getPageNum() != null ? request.getPageNum() : 1;

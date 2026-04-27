@@ -1,6 +1,6 @@
 package com.address.dto;
 
-import com.address.common.AuthErrorCode;
+import com.address.common.ErrorCode;
 
 public class LoginResult {
     private String code;
@@ -16,7 +16,7 @@ public class LoginResult {
     }
 
     public static LoginResult success(String token, String phone) {
-        return new LoginResult(AuthErrorCode.SUCCESS, "成功", token, phone);
+        return new LoginResult(ErrorCode.SUCCESS, "成功", token, phone);
     }
 
     public static LoginResult error(String code, String message) {
@@ -24,7 +24,7 @@ public class LoginResult {
     }
 
     public boolean isSuccess() {
-        return AuthErrorCode.SUCCESS.equals(code);
+        return ErrorCode.SUCCESS.equals(code);
     }
 
     public LoginResponse toLoginResponse() {

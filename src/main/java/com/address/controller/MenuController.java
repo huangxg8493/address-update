@@ -29,7 +29,7 @@ public class MenuController {
         try {
             return ApiResponse.success(menuService.getById(menuId));
         } catch (RuntimeException e) {
-            return ApiResponse.error(ErrorCode.BAD_REQUEST.getCode(), e.getMessage());
+            return ApiResponse.error(ErrorCode.BAD_REQUEST, e.getMessage());
         }
     }
 
@@ -38,7 +38,7 @@ public class MenuController {
         try {
             return ApiResponse.success(menuService.create(request));
         } catch (RuntimeException e) {
-            return ApiResponse.error(ErrorCode.BAD_REQUEST.getCode(), e.getMessage());
+            return ApiResponse.error(ErrorCode.BAD_REQUEST, e.getMessage());
         }
     }
 
@@ -47,7 +47,7 @@ public class MenuController {
         try {
             return ApiResponse.success(menuService.update(request));
         } catch (RuntimeException e) {
-            return ApiResponse.error(ErrorCode.BAD_REQUEST.getCode(), e.getMessage());
+            return ApiResponse.error(ErrorCode.BAD_REQUEST, e.getMessage());
         }
     }
 
@@ -57,7 +57,7 @@ public class MenuController {
             menuService.delete(menuId);
             return ApiResponse.success(null);
         } catch (RuntimeException e) {
-            return ApiResponse.error(ErrorCode.BAD_REQUEST.getCode(), e.getMessage());
+            return ApiResponse.error(ErrorCode.BAD_REQUEST, e.getMessage());
         }
     }
 

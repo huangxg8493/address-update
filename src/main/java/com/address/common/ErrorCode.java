@@ -1,16 +1,28 @@
 package com.address.common;
 
-public enum ErrorCode {
-    SUCCESS("200", "成功"),
-    BAD_REQUEST("400", "参数错误"),
-    NOT_FOUND("404", "客户不存在"),
-    CONFLICT("409", "地址冲突"),
-    INTERNAL_ERROR("500", "服务器异常");
+public class ErrorCode {
+    /** 成功 */
+    public static final String SUCCESS = "000000";
+    /** 用户未注册 */
+    public static final String USER_NOT_FOUND = "101001";
+    /** 用户已禁用 */
+    public static final String USER_DISABLED = "101002";
+    /** 密码错误 */
+    public static final String PASSWORD_ERROR = "101003";
+    /** 手机号已注册 */
+    public static final String PHONE_ALREADY_EXISTS = "101004";
+    /** 手机号格式错误 */
+    public static final String PHONE_FORMAT_ERROR = "101005";
+    /** 密码格式错误 */
+    public static final String PASSWORD_INVALID = "101006";
+
+    /** 参数错误 */
+    public static final String BAD_REQUEST = "400";
 
     private final String code;
     private final String message;
 
-    ErrorCode(String code, String message) {
+    public ErrorCode(String code, String message) {
         this.code = code;
         this.message = message;
     }
