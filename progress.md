@@ -453,6 +453,52 @@
 
 ---
 
+## Phase 20: 角色菜单关联实现
+
+### 2026-04-27 设计阶段
+
+#### 需求收集
+- 新建 sys_role_menu 表实现角色与菜单的关联
+- 支持批量分配菜单给角色（一次性选择多个菜单）
+- 支持查询角色已分配的完整菜单信息（用于编辑时回显）
+- 直接分配模式：每个角色直接勾选可访问的菜单
+
+#### 设计文档
+- 完成设计文档：`docs/superpowers/specs/2026-04-27-role-menu-design.md`
+- 完成实现计划：`docs/superpowers/plans/2026-04-27-role-menu-plan.md`
+
+#### 规划文件同步
+- task_plan.md：添加 Phase 20 任务步骤
+- findings.md：添加角色菜单关联设计详情
+- progress.md：添加角色菜单关联实施记录
+
+### 实施计划
+
+#### Task 1: 新建 SysRoleMenu 实体类
+- [ ] Step 1: 编写实体类
+- [ ] Step 2: 提交
+
+#### Task 2: 新建 SysRoleMenuMapper
+- [ ] Step 1: 查看现有 SysRoleMapper 实现方式
+- [ ] Step 2: 创建 SysRoleMenuMapper
+- [ ] Step 3: 提交
+
+#### Task 3: 新建 RoleMenuService
+- [ ] Step 1: 创建 RoleMenuService
+- [ ] Step 2: 提交
+
+#### Task 4: 修改 RoleController 添加接口
+- [ ] Step 1: 查看 RoleController 是否存在
+- [ ] Step 2: 添加接口到 RoleController
+- [ ] Step 3: 提交
+
+#### Task 5: 编写测试用例
+- [ ] Step 1: 编写测试用例
+- [ ] Step 2: 运行测试
+- [ ] Step 3: 提交
+
+---
+
 ## Phase 15: 单地址维护接口实现
 
 ### Task 1: 创建 DTO

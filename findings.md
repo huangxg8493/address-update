@@ -756,3 +756,76 @@ Response:
 - `src/main/java/com/address/service/AuthService.java` (修改)
 - `src/main/java/com/address/common/ApiResponse.java` (修改)
 - `src/main/java/com/address/controller/AuthController.java` (修改)
+
+---
+
+## Phase 20: 角色菜单关联设计
+
+### 背景
+新增 `sys_role_menu` 表实现角色与菜单的关联，支持批量分配和查询。
+
+### 数据模型
+
+#### sys_role_menu（角色菜单关联表）
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| id | bigint | 主键ID，自增 |
+| role_id | bigint | 角色ID |
+| menu_id | bigint | 菜单ID |
+| create_time | datetime | 创建时间 |
+
+**唯一索引**: uk_role_menu(role_id, menu_id)
+
+### 实体类
+
+**文件**：`src/main/java/com/address/model/SysRoleMenu.java`
+
+```java
+package com.address.model;
+
+import java.time.LocalDateTime;
+
+/**
+ * 角色菜单关联实体
+ */
+public class SysRoleMenu {
+    private Long id;
+    private Long roleId;
+    private Long menuId;
+    private LocalDateTime createTime;
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public Long getRoleId() { return roleId; }
+    public void setRoleId(Long roleId) { this.roleId = roleId; }
+    public Long getMenuId() { return menuId; }
+    public void setMenuId(Long menuId) { this.menuId = menuId; }
+    public LocalDateTime getCreateTime() { return createTime; }
+    public void setCreateTime(LocalDateTime createTime) { this.createTime = createTime; }
+}
+```
+
+### 接口设计
+
+#### 批量分配菜单
+- **URL**: `POST /api/roles/{roleId}/menus`
+- **请求体**: `{"menuIds": [1, 2, 3]}`
+- **响应**: 成功返回 `000000`
+
+#### 查询角色菜单
+- **URL**: `GET /api/roles/{roleId}/menus`
+- **响应**: 返回菜单完整信息列表
+
+### 实现文件
+| 操作 | 文件路径 |
+|-----|---------|
+| 新建 | `src/main/java/com/address/model/SysRoleMenu.java` |
+| 新建 | `src/main/java/com/address/repository/SysRoleMenuMapper.java` |
+| 新建 | `src/main/java/com/address/service/RoleMenuService.java` |
+| 修改 | `src/main/java/com/address/controller/RoleController.java` |
+| 新建 | `src/test/java/com/address/service/RoleMenuServiceTest.java` |
+
+### 核心逻辑
+1. **批量分配**：先删后插（deleteByRoleId → insertBatch）
+2. **查询**：selectByRoleId + 关联 SysMenu 查询完整信息
+3. **防重复**：uk_role_menu 唯一索引保证不重复插入
