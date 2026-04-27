@@ -7,6 +7,7 @@ public class LoginResult {
     private String message;
     private String token;
     private String phone;
+    private LoginResponse loginResponse;
 
     private LoginResult(String code, String message, String token, String phone) {
         this.code = code;
@@ -15,13 +16,20 @@ public class LoginResult {
         this.phone = phone;
     }
 
+    private LoginResult(String code, String message, LoginResponse loginResponse) {
+        this.code = code;
+        this.message = message;
+        this.token = loginResponse != null ? loginResponse.getToken() : null;
+        this.phone = loginResponse != null ? loginResponse.getPhone() : null;
+        this.loginResponse = loginResponse;
+    }
+
     public static LoginResult success(String token, String phone) {
         return new LoginResult(ErrorCode.SUCCESS, "成功", token, phone);
     }
 
     public static LoginResult success(LoginResponse response) {
-        LoginResult result = new LoginResult(ErrorCode.SUCCESS, "成功", response.getToken(), response.getPhone());
-        return result;
+        return new LoginResult(ErrorCode.SUCCESS, "成功", response);
     }
 
     public static LoginResult error(String code, String message) {
@@ -33,6 +41,9 @@ public class LoginResult {
     }
 
     public LoginResponse toLoginResponse() {
+        if (this.loginResponse != null) {
+            return this.loginResponse;
+        }
         LoginResponse response = new LoginResponse();
         response.setToken(this.token);
         response.setPhone(this.phone);
@@ -43,4 +54,5 @@ public class LoginResult {
     public String getMessage() { return message; }
     public String getToken() { return token; }
     public String getPhone() { return phone; }
+    public LoginResponse getLoginResponse() { return loginResponse; }
 }
