@@ -6,17 +6,17 @@ import java.util.List;
 
 @Mapper
 public interface SysMenuMapper {
-    @Insert("INSERT INTO SYS_MENU(menu_id, menu_name, menu_url, icon, sort_order, status, is_leaf, level_depth, component, component_path, parent_id, del_flag, create_time) " +
-            "VALUES(#{menuId}, #{menuName}, #{menuUrl}, #{icon}, #{sortOrder}, #{status}, #{isLeaf}, #{levelDepth}, #{component}, #{componentPath}, #{parentId}, #{delFlag}, #{createTime})")
+    @Insert("INSERT INTO SYS_MENU(menu_id, menu_name, menu_url, icon, sort_order, status, is_leaf, level_depth, component, component_path, parent_id, del_flag, create_time, menu_type) " +
+            "VALUES(#{menuId}, #{menuName}, #{menuUrl}, #{icon}, #{sortOrder}, #{status}, #{isLeaf}, #{levelDepth}, #{component}, #{componentPath}, #{parentId}, #{delFlag}, #{createTime}, #{menuType})")
     void insert(SysMenu menu);
 
-    @Update("UPDATE SYS_MENU SET menu_name=#{menuName}, menu_url=#{menuUrl}, icon=#{icon}, sort_order=#{sortOrder}, status=#{status}, component=#{component}, component_path=#{componentPath}, parent_id=#{parentId}, is_leaf=#{isLeaf}, level_depth=#{levelDepth} WHERE menu_id=#{menuId}")
+    @Update("UPDATE SYS_MENU SET menu_name=#{menuName}, menu_url=#{menuUrl}, icon=#{icon}, sort_order=#{sortOrder}, status=#{status}, component=#{component}, component_path=#{componentPath}, parent_id=#{parentId}, is_leaf=#{isLeaf}, level_depth=#{levelDepth}, menu_type=#{menuType} WHERE menu_id=#{menuId}")
     void update(SysMenu menu);
 
     @Update("UPDATE SYS_MENU SET del_flag='Y' WHERE menu_id=#{menuId}")
     void deleteById(@Param("menuId") Long menuId);
 
-    @Select("SELECT menu_id, menu_name, menu_url, icon, sort_order, status, is_leaf, level_depth, component, component_path, parent_id, del_flag, create_time FROM SYS_MENU WHERE menu_id = #{menuId} AND del_flag='N'")
+    @Select("SELECT menu_id, menu_name, menu_url, icon, sort_order, status, is_leaf, level_depth, component, component_path, parent_id, del_flag, create_time, menu_type FROM SYS_MENU WHERE menu_id = #{menuId} AND del_flag='N'")
     @Results({
         @Result(property = "menuId", column = "menu_id"),
         @Result(property = "menuName", column = "menu_name"),
@@ -30,11 +30,12 @@ public interface SysMenuMapper {
         @Result(property = "componentPath", column = "component_path"),
         @Result(property = "parentId", column = "parent_id"),
         @Result(property = "delFlag", column = "del_flag"),
-        @Result(property = "createTime", column = "create_time")
+        @Result(property = "createTime", column = "create_time"),
+        @Result(property = "menuType", column = "menu_type")
     })
     SysMenu findById(@Param("menuId") Long menuId);
 
-    @Select("SELECT menu_id, menu_name, menu_url, icon, sort_order, status, is_leaf, level_depth, component, component_path, parent_id, del_flag, create_time FROM SYS_MENU WHERE del_flag='N'")
+    @Select("SELECT menu_id, menu_name, menu_url, icon, sort_order, status, is_leaf, level_depth, component, component_path, parent_id, del_flag, create_time, menu_type FROM SYS_MENU WHERE del_flag='N'")
     @Results({
         @Result(property = "menuId", column = "menu_id"),
         @Result(property = "menuName", column = "menu_name"),
@@ -48,11 +49,12 @@ public interface SysMenuMapper {
         @Result(property = "componentPath", column = "component_path"),
         @Result(property = "parentId", column = "parent_id"),
         @Result(property = "delFlag", column = "del_flag"),
-        @Result(property = "createTime", column = "create_time")
+        @Result(property = "createTime", column = "create_time"),
+        @Result(property = "menuType", column = "menu_type")
     })
     List<SysMenu> findAll();
 
-    @Select("SELECT menu_id, menu_name, menu_url, icon, sort_order, status, is_leaf, level_depth, component, component_path, parent_id, del_flag, create_time FROM SYS_MENU WHERE parent_id = #{parentId} AND del_flag='N'")
+    @Select("SELECT menu_id, menu_name, menu_url, icon, sort_order, status, is_leaf, level_depth, component, component_path, parent_id, del_flag, create_time, menu_type FROM SYS_MENU WHERE parent_id = #{parentId} AND del_flag='N'")
     @Results({
         @Result(property = "menuId", column = "menu_id"),
         @Result(property = "menuName", column = "menu_name"),
@@ -66,11 +68,12 @@ public interface SysMenuMapper {
         @Result(property = "componentPath", column = "component_path"),
         @Result(property = "parentId", column = "parent_id"),
         @Result(property = "delFlag", column = "del_flag"),
-        @Result(property = "createTime", column = "create_time")
+        @Result(property = "createTime", column = "create_time"),
+        @Result(property = "menuType", column = "menu_type")
     })
     List<SysMenu> findByParentId(@Param("parentId") Long parentId);
 
-    @Select("SELECT menu_id, menu_name, menu_url, icon, sort_order, status, is_leaf, level_depth, component, component_path, parent_id, del_flag, create_time FROM SYS_MENU WHERE parent_id IS NULL AND del_flag='N'")
+    @Select("SELECT menu_id, menu_name, menu_url, icon, sort_order, status, is_leaf, level_depth, component, component_path, parent_id, del_flag, create_time, menu_type FROM SYS_MENU WHERE parent_id IS NULL AND del_flag='N'")
     @Results({
         @Result(property = "menuId", column = "menu_id"),
         @Result(property = "menuName", column = "menu_name"),
@@ -84,12 +87,13 @@ public interface SysMenuMapper {
         @Result(property = "componentPath", column = "component_path"),
         @Result(property = "parentId", column = "parent_id"),
         @Result(property = "delFlag", column = "del_flag"),
-        @Result(property = "createTime", column = "create_time")
+        @Result(property = "createTime", column = "create_time"),
+        @Result(property = "menuType", column = "menu_type")
     })
     List<SysMenu> findRootMenus();
 
     @Select("<script>" +
-            "SELECT menu_id, menu_name, menu_url, icon, sort_order, status, is_leaf, level_depth, component, component_path, parent_id, del_flag, create_time " +
+            "SELECT menu_id, menu_name, menu_url, icon, sort_order, status, is_leaf, level_depth, component, component_path, parent_id, del_flag, create_time, menu_type " +
             "FROM SYS_MENU m WHERE menu_id IN (" +
             "  SELECT DISTINCT rm.menu_id FROM SYS_ROLE_MENU rm WHERE rm.role_id IN " +
             "<foreach collection='roleIds' item='id' open='(' separator=',' close=')'>" +
@@ -110,7 +114,8 @@ public interface SysMenuMapper {
         @Result(property = "componentPath", column = "component_path"),
         @Result(property = "parentId", column = "parent_id"),
         @Result(property = "delFlag", column = "del_flag"),
-        @Result(property = "createTime", column = "create_time")
+        @Result(property = "createTime", column = "create_time"),
+        @Result(property = "menuType", column = "menu_type")
     })
     List<SysMenu> findByRoleIds(@Param("roleIds") List<Long> roleIds);
 }

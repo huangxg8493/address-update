@@ -19,6 +19,7 @@ public class SysMenu {
     private Long parentId;
     private String delFlag;
     private LocalDateTime createTime;
+    private String menuType;  // 菜单类型：MENU-菜单，CATALOG-目录，BUTTON-按钮
 
     public Long getMenuId() { return menuId; }
     public void setMenuId(Long menuId) { this.menuId = menuId; }
@@ -46,4 +47,6 @@ public class SysMenu {
     public void setDelFlag(String delFlag) { this.delFlag = delFlag; }
     public LocalDateTime getCreateTime() { return createTime; }
     public void setCreateTime(LocalDateTime createTime) { this.createTime = createTime; }
+    public String getMenuType() { return menuType; }
+    public void setMenuType(String menuType) { this.menuType = menuType; }
 }

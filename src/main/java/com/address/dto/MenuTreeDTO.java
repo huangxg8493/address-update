@@ -10,6 +10,7 @@ public class MenuTreeDTO {
     private String icon;
     private Integer sortOrder;
     private String isLeaf;
+    private String menuType;  // 菜单类型：MENU-菜单，CATALOG-目录，BUTTON-按钮
     private List<MenuTreeDTO> children = new ArrayList<>();
 
     public Long getMenuId() { return menuId; }
@@ -24,6 +25,8 @@ public class MenuTreeDTO {
     public void setSortOrder(Integer sortOrder) { this.sortOrder = sortOrder; }
     public String getIsLeaf() { return isLeaf; }
     public void setIsLeaf(String isLeaf) { this.isLeaf = isLeaf; }
+    public String getMenuType() { return menuType; }
+    public void setMenuType(String menuType) { this.menuType = menuType; }
     public List<MenuTreeDTO> getChildren() { return children; }
     public void setChildren(List<MenuTreeDTO> children) { this.children = children; }
 }

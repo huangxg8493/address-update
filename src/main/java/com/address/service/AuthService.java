@@ -167,6 +167,7 @@ public class AuthService {
         node.setIcon(menu.getIcon());
         node.setSortOrder(menu.getSortOrder());
         node.setIsLeaf(menu.getIsLeaf());
+        node.setMenuType(menu.getMenuType());
         List<SysMenu> children = childrenMap.get(menu.getMenuId());
         if (children != null && !children.isEmpty()) {
             List<MenuTreeDTO> childNodes = new ArrayList<>();
