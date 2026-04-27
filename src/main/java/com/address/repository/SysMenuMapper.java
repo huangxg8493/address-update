@@ -87,4 +87,25 @@ public interface SysMenuMapper {
         @Result(property = "createTime", column = "create_time")
     })
     List<SysMenu> findRootMenus();
+
+    @Select("SELECT menu_id, menu_name, menu_url, icon, sort_order, status, is_leaf, level_depth, component, component_path, parent_id, del_flag, create_time " +
+            "FROM SYS_MENU m WHERE menu_id IN (" +
+            "  SELECT DISTINCT rm.menu_id FROM SYS_ROLE_MENU rm WHERE rm.role_id IN (#{roleIds})" +
+            ") AND del_flag='N' ORDER BY sort_order")
+    @Results({
+        @Result(property = "menuId", column = "menu_id"),
+        @Result(property = "menuName", column = "menu_name"),
+        @Result(property = "menuUrl", column = "menu_url"),
+        @Result(property = "icon", column = "icon"),
+        @Result(property = "sortOrder", column = "sort_order"),
+        @Result(property = "status", column = "status"),
+        @Result(property = "isLeaf", column = "is_leaf"),
+        @Result(property = "levelDepth", column = "level_depth"),
+        @Result(property = "component", column = "component"),
+        @Result(property = "componentPath", column = "component_path"),
+        @Result(property = "parentId", column = "parent_id"),
+        @Result(property = "delFlag", column = "del_flag"),
+        @Result(property = "createTime", column = "create_time")
+    })
+    List<SysMenu> findByRoleIds(@Param("roleIds") List<Long> roleIds);
 }
