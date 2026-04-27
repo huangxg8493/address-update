@@ -60,10 +60,11 @@ public class AuthServiceTest {
         request.setPhone("13900000002");
         request.setPassword("password123");
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            authService.register(request);
-        });
-        assertEquals("手机号已注册", exception.getMessage());
+        LoginResult result = authService.register(request);
+
+        assertFalse(result.isSuccess());
+        assertEquals(AuthErrorCode.PHONE_ALREADY_EXISTS, result.getCode());
+        assertEquals("手机号已注册", result.getMessage());
     }
 
     @Test

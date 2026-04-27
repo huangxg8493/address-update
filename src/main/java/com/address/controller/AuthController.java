@@ -17,8 +17,11 @@ public class AuthController {
 
     @PostMapping("/api/auth/register")
     public ApiResponse<Void> register(@RequestBody RegisterRequest request) {
-        authService.register(request);
-        return ApiResponse.success(null);
+        LoginResult result = authService.register(request);
+        if (result.isSuccess()) {
+            return ApiResponse.success(null);
+        }
+        return ApiResponse.error(result.getCode(), result.getMessage());
     }
 
     @PostMapping("/api/auth/login")

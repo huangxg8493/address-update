@@ -44,10 +44,16 @@ public class AuthService {
         return LoginResult.success(token, user.getPhone());
     }
 
-    public void register(RegisterRequest request) {
+    public LoginResult register(RegisterRequest request) {
         SysUser existUser = sysUserMapper.findByPhone(request.getPhone());
         if (existUser != null) {
-            throw new RuntimeException("手机号已注册");
+            return LoginResult.error(AuthErrorCode.PHONE_ALREADY_EXISTS, "手机号已注册");
+        }
+        if (!isValidPhone(request.getPhone())) {
+            return LoginResult.error(AuthErrorCode.PHONE_FORMAT_ERROR, "手机号格式错误");
+        }
+        if (!isValidPassword(request.getPassword())) {
+            return LoginResult.error(AuthErrorCode.PASSWORD_INVALID, "密码格式错误");
         }
         SysUser user = new SysUser();
         user.setUserId(SnowflakeIdGenerator.getInstance().nextId());
@@ -63,5 +69,14 @@ public class AuthService {
         user.setCreateTime(LocalDateTime.now());
         user.setUpdateTime(LocalDateTime.now());
         sysUserMapper.insert(user);
+        return LoginResult.success(null, request.getPhone());
+    }
+
+    private boolean isValidPhone(String phone) {
+        return phone != null && phone.matches("^1[3-9]\\d{9}$");
+    }
+
+    private boolean isValidPassword(String password) {
+        return password != null && password.length() >= 6;
     }
 }
