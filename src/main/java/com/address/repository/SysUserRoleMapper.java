@@ -11,6 +11,11 @@ public interface SysUserRoleMapper {
     @Delete("DELETE FROM SYS_USER_ROLE WHERE user_id = #{userId}")
     void deleteByUserId(@Param("userId") Long userId);
 
-    @Select("SELECT * FROM SYS_USER_ROLE WHERE user_id = #{userId}")
+    @Select("SELECT id, user_id, role_id FROM SYS_USER_ROLE WHERE user_id = #{userId}")
+    @Results({
+        @Result(property = "id", column = "id"),
+        @Result(property = "userId", column = "user_id"),
+        @Result(property = "roleId", column = "role_id")
+    })
     java.util.List<SysUserRole> findByUserId(@Param("userId") Long userId);
 }
