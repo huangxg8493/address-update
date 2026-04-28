@@ -706,51 +706,58 @@
 
 ### Task 1: 修改 SysUser 实体
 
-- [ ] Step 1: 修改实体类，添加新字段（userName, email, province, city, district, hobby）
-- [ ] Step 2: 添加 getter/setter 方法
-- [ ] Step 3: 提交
+- [x] Step 1: 修改实体类，添加新字段（userName, email, province, city, district, hobby）
+- [x] Step 2: 添加 getter/setter 方法
+- [x] Step 3: 提交
 
 ### Task 2: 修改 SysUserMapper
 
-- [ ] Step 1: 修改 insert 语句
-- [ ] Step 2: 修改 update 语句
-- [ ] Step 3: 修改 findById 查询，添加字段映射
-- [ ] Step 4: 修改 findByPhone 查询，添加字段映射
-- [ ] Step 5: 修改 findAll 查询，添加字段映射
-- [ ] Step 6: 提交
+- [x] Step 1: 修改 insert 语句
+- [x] Step 2: 修改 update 语句
+- [x] Step 3: 修改 findById 查询，添加字段映射
+- [x] Step 4: 修改 findByPhone 查询，添加字段映射
+- [x] Step 5: 修改 findAll 查询，添加字段映射
+- [x] Step 6: 提交
 
 ### Task 3: 修改 UserCreateRequest
 
-- [ ] Step 1: 添加新字段
-- [ ] Step 2: 添加 getter/setter
-- [ ] Step 3: 提交
+- [x] Step 1: 添加新字段
+- [x] Step 2: 添加 getter/setter
+- [x] Step 3: 提交
 
 ### Task 4: 修改 UserUpdateRequest
 
-- [ ] Step 1: 添加新字段
-- [ ] Step 2: 添加 getter/setter
-- [ ] Step 3: 提交
+- [x] Step 1: 添加新字段
+- [x] Step 2: 添加 getter/setter
+- [x] Step 3: 提交
 
 ### Task 5: 修改 UserResponse
 
-- [ ] Step 1: 添加新字段
-- [ ] Step 2: 添加 getter/setter
-- [ ] Step 3: 提交
+- [x] Step 1: 添加新字段
+- [x] Step 2: 添加 getter/setter
+- [x] Step 3: 提交
 
 ### Task 6: 修改 UserService
 
-- [ ] Step 1: 修改 toResponse 方法，添加新字段映射
-- [ ] Step 2: 提交
+- [x] Step 1: 修改 toResponse 方法，添加新字段映射
+- [x] Step 2: 提交
 
 ### Task 7: 修改 sql/sys_user.sql
 
-- [ ] Step 1: 更新建表语句，添加新字段
-- [ ] Step 2: 提交
+- [x] Step 1: 更新建表语句，添加新字段
+- [x] Step 2: 提交
 
 ### Task 8: 编译验证
 
-- [ ] Step 1: 运行编译
-- [ ] Step 2: 运行测试
+- [x] Step 1: 运行编译
+- [x] Step 2: 运行测试
+
+---
+
+## ✅ Phase 18 已完成
+
+- SysUser 实体已添加 userName, email, province, city, district, hobby 字段
+- 所有 Mapper、DTO、Service 均已完成修改
 
 ---
 
@@ -765,7 +772,7 @@
 **Files:**
 - Create: `src/main/java/com/address/common/AuthErrorCode.java`
 
-- [ ] Step 1: 创建文件
+- [x] Step 1: 创建文件
 
 ```java
 package com.address.common;
@@ -778,12 +785,12 @@ public class AuthErrorCode {
 }
 ```
 
-- [ ] Step 2: 验证编译
+- [x] Step 2: 验证编译
 
 Run: `mvn compile -q`
 Expected: BUILD SUCCESS
 
-- [ ] Step 3: 提交
+- [x] Step 3: 提交
 
 ```bash
 git add src/main/java/com/address/common/AuthErrorCode.java
@@ -797,7 +804,7 @@ git commit -m "feat: 添加认证模块错误码常量类 AuthErrorCode"
 **Files:**
 - Create: `src/main/java/com/address/dto/LoginResult.java`
 
-- [ ] Step 1: 创建文件
+- [x] Step 1: 创建文件
 
 ```java
 package com.address.dto;
@@ -1347,6 +1354,16 @@ git commit -m "test: 新增 RoleMenuService 测试"
 
 ---
 
+## ✅ Phase 20 已完成
+
+- SysRoleMenu 实体类已创建
+- SysRoleMenuMapper 已创建
+- RoleMenuService 已创建
+- RoleController 已添加菜单分配和查询接口
+- RoleMenuServiceTest 测试已通过
+
+---
+
 ### 依赖关系
 
 1. Task 1 → Task 2（实体类完成后创建 Mapper）
@@ -1645,23 +1662,37 @@ git commit -m "test: AuthServiceLoginTest 登录返回完整信息测试"
 
 ### Task 6: 验证
 
-- [ ] 运行完整测试套件
+- [x] 运行完整测试套件
 
 ```bash
 mvn test 2>&1 | grep -E "Tests run|BUILD"
 ```
 
-- [ ] 确保所有测试通过
+- [x] 确保所有测试通过
 
 ---
 
 ### 实施检查清单
 
-- [ ] UserInfo.java 创建
-- [ ] RoleInfo.java 创建
-- [ ] MenuTreeDTO.java 创建
-- [ ] LoginResponse.java 扩展
-- [ ] SysMenuMapper.findByRoleIds() 新增
-- [ ] AuthService.login() 扩展
-- [ ] AuthServiceLoginTest 测试通过
-- [ ] 所有测试通过
+- [x] UserInfo.java 创建
+- [x] RoleInfo.java 创建
+- [x] MenuTreeDTO.java 创建
+- [x] LoginResponse.java 扩展
+- [x] SysMenuMapper.findByRoleIds() 新增
+- [x] AuthService.login() 扩展
+- [x] AuthServiceLoginTest 测试通过
+- [x] 所有测试通过
+
+---
+
+## ✅ 所有 Phase 已完成
+
+| Phase | 名称 | 状态 |
+|-------|------|------|
+| Phase 1-17 | 地址管理 + 权限系统基础 | ✅ 已完成 |
+| Phase 18 | SysUser 字段扩展 | ✅ 已完成 |
+| Phase 19 | 登录接口返回码归类 | ✅ 已完成 |
+| Phase 20 | 角色菜单关联 | ✅ 已完成 |
+| Phase 21 | 登录接口返回完整信息 | ✅ 已完成 |
+
+**最后更新时间:** 2026-04-28
