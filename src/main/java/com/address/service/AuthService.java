@@ -162,12 +162,17 @@ public class AuthService {
     private MenuTreeDTO buildMenuTreeNode(SysMenu menu, Map<Long, List<SysMenu>> childrenMap) {
         MenuTreeDTO node = new MenuTreeDTO();
         node.setMenuId(menu.getMenuId());
+        node.setParentId(menu.getParentId());
+        node.setMenuType(menu.getMenuType());
         node.setMenuName(menu.getMenuName());
         node.setMenuUrl(menu.getMenuUrl());
         node.setIcon(menu.getIcon());
         node.setSortOrder(menu.getSortOrder());
+        node.setStatus(menu.getStatus());
         node.setIsLeaf(menu.getIsLeaf());
-        node.setMenuType(menu.getMenuType());
+        node.setLevelDepth(menu.getLevelDepth());
+        node.setComponent(menu.getComponent());
+        node.setComponentPath(menu.getComponentPath());
         List<SysMenu> children = childrenMap.get(menu.getMenuId());
         if (children != null && !children.isEmpty()) {
             List<MenuTreeDTO> childNodes = new ArrayList<>();
