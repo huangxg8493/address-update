@@ -1,5 +1,9 @@
 # 接口文档
 
+> **认证说明**: 除 `/api/auth/register` 和 `/api/auth/login` 外，所有接口需要在请求头中携带 Token：
+> - Header: `Authorization: Bearer {token}`
+> - token 来自登录接口的响应数据
+
 ## 认证接口
 
 ### 1. 用户注册
@@ -217,6 +221,213 @@
 **请求报文**: 无
 
 **响应报文**:
+```json
+{
+    "code": "000000",
+    "message": "成功",
+    "data": null
+}
+```
+
+---
+
+## 用户接口
+
+### 4. 查询用户列表
+
+- **接口 URL**: `POST /api/users/query`
+- **请求方法**: POST
+- **Content-Type**: `application/json`
+- **描述**: 查询用户列表，支持按手机号和状态筛选
+
+**请求体**:
+```json
+{
+    "phone": "13900000001",
+    "status": "Y",
+    "pageNum": 1,
+    "pageSize": 10
+}
+```
+
+**字段说明**:
+
+| 字段 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| phone | String | 否 | 手机号，精确匹配 |
+| status | String | 否 | 状态 (Y=正常, N=禁用) |
+| pageNum | Integer | 否 | 页码，默认 1 |
+| pageSize | Integer | 否 | 每页条数，默认 10 |
+
+**成功响应** (HTTP 200):
+```json
+{
+    "code": "000000",
+    "message": "成功",
+    "data": [
+        {
+            "userId": 704134058694807552,
+            "phone": "18658127206",
+            "status": "Y",
+            "userName": "黄小刚",
+            "email": "",
+            "province": "",
+            "city": "",
+            "district": "",
+            "hobby": "",
+            "createTime": "2026-04-28T10:37:30",
+            "updateTime": null
+        }
+    ]
+}
+```
+
+**响应字段说明**:
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| userId | Long | 用户ID |
+| phone | String | 手机号 |
+| status | String | 状态 (Y=正常, N=禁用) |
+| userName | String | 用户名 |
+| email | String | 邮箱 |
+| province | String | 省份 |
+| city | String | 城市 |
+| district | String | 区县 |
+| hobby | String | 爱好 |
+| createTime | LocalDateTime | 创建时间 |
+| updateTime | LocalDateTime | 更新时间 |
+
+---
+
+### 5. 创建用户
+
+- **接口 URL**: `POST /api/users/create`
+- **请求方法**: POST
+- **Content-Type**: `application/json`
+- **描述**: 创建新用户
+
+**请求体**:
+```json
+{
+    "phone": "13900000002",
+    "password": "password123",
+    "status": "Y"
+}
+```
+
+**字段说明**:
+
+| 字段 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| phone | String | 是 | 手机号，11位，1开头 |
+| password | String | 是 | 密码，最少6位 |
+| status | String | 否 | 状态，默认 Y |
+
+**成功响应** (HTTP 200):
+```json
+{
+    "code": "000000",
+    "message": "成功",
+    "data": {
+        "userId": 1234567890,
+        "phone": "13900000002",
+        "status": "Y",
+        "userName": null,
+        "email": null,
+        "province": null,
+        "city": null,
+        "district": null,
+        "hobby": null,
+        "createTime": "2026-04-28T10:37:30",
+        "updateTime": null
+    }
+}
+```
+
+---
+
+### 6. 更新用户
+
+- **接口 URL**: `POST /api/users/update`
+- **请求方法**: POST
+- **Content-Type**: `application/json`
+- **描述**: 更新用户信息
+
+**请求体**:
+```json
+{
+    "userId": 1234567890,
+    "phone": "13900000002",
+    "password": "newpassword123",
+    "status": "Y"
+}
+```
+
+**字段说明**:
+
+| 字段 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| userId | Long | 是 | 用户ID |
+| phone | String | 否 | 手机号 |
+| password | String | 否 | 新密码 |
+| status | String | 否 | 状态 |
+
+**成功响应** (HTTP 200): 同创建用户
+
+---
+
+### 7. 删除用户
+
+- **接口 URL**: `POST /api/users/delete`
+- **请求方法**: POST
+- **描述**: 删除用户
+
+**请求参数**: `userId` (Long)
+
+**成功响应** (HTTP 200):
+```json
+{
+    "code": "000000",
+    "message": "成功",
+    "data": null
+}
+```
+
+---
+
+### 8. 分配用户角色
+
+- **接口 URL**: `POST /api/users/{userId}/roles/assign`
+- **请求方法**: POST
+- **描述**: 为用户分配角色
+- **路径参数**: `userId` (Long)
+
+**请求体**:
+```json
+[1, 2, 3]
+```
+
+**成功响应** (HTTP 200):
+```json
+{
+    "code": "000000",
+    "message": "成功",
+    "data": null
+}
+```
+
+---
+
+### 9. 获取当前用户信息
+
+- **接口 URL**: `POST /api/users/me/get`
+- **请求方法**: POST
+- **描述**: 获取当前登录用户信息
+
+**请求报文**: 无
+
+**成功响应** (HTTP 200):
 ```json
 {
     "code": "000000",
