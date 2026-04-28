@@ -16,10 +16,24 @@ public interface SysPermissionMapper {
     @Select("SELECT permission_id AS permissionId, permission_code AS permissionCode, permission_name AS permissionName, menu_url AS menuUrl, create_time AS createTime FROM SYS_PERMISSION WHERE permission_id = #{permissionId}")
     SysPermission findById(@Param("permissionId") Long permissionId);
 
-    @Select("SELECT * FROM SYS_PERMISSION WHERE permission_code = #{permissionCode}")
+    @Select("SELECT permission_id, permission_code, permission_name, menu_url, create_time FROM SYS_PERMISSION WHERE permission_code = #{permissionCode}")
+    @Results({
+        @Result(property = "permissionId", column = "permission_id"),
+        @Result(property = "permissionCode", column = "permission_code"),
+        @Result(property = "permissionName", column = "permission_name"),
+        @Result(property = "menuUrl", column = "menu_url"),
+        @Result(property = "createTime", column = "create_time")
+    })
     SysPermission findByCode(@Param("permissionCode") String permissionCode);
 
-    @Select("SELECT * FROM SYS_PERMISSION")
+    @Select("SELECT permission_id, permission_code, permission_name, menu_url, create_time FROM SYS_PERMISSION")
+    @Results({
+        @Result(property = "permissionId", column = "permission_id"),
+        @Result(property = "permissionCode", column = "permission_code"),
+        @Result(property = "permissionName", column = "permission_name"),
+        @Result(property = "menuUrl", column = "menu_url"),
+        @Result(property = "createTime", column = "create_time")
+    })
     java.util.List<SysPermission> findAll();
 
     @Delete("DELETE FROM SYS_PERMISSION WHERE permission_id = #{permissionId}")

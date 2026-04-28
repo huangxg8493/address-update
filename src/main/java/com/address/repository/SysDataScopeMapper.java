@@ -16,7 +16,14 @@ public interface SysDataScopeMapper {
     @Select("SELECT scope_id AS scopeId, scope_code AS scopeCode, scope_name AS scopeName, scope_type AS scopeType, create_time AS createTime FROM SYS_DATA_SCOPE WHERE scope_id = #{scopeId}")
     SysDataScope findById(@Param("scopeId") Long scopeId);
 
-    @Select("SELECT * FROM SYS_DATA_SCOPE")
+    @Select("SELECT scope_id, scope_code, scope_name, scope_type, create_time FROM SYS_DATA_SCOPE")
+    @Results({
+        @Result(property = "scopeId", column = "scope_id"),
+        @Result(property = "scopeCode", column = "scope_code"),
+        @Result(property = "scopeName", column = "scope_name"),
+        @Result(property = "scopeType", column = "scope_type"),
+        @Result(property = "createTime", column = "create_time")
+    })
     java.util.List<SysDataScope> findAll();
 
     @Delete("DELETE FROM SYS_DATA_SCOPE WHERE scope_id = #{scopeId}")

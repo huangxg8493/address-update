@@ -11,6 +11,11 @@ public interface SysRoleDataScopeMapper {
     @Delete("DELETE FROM SYS_ROLE_DATA_SCOPE WHERE role_id = #{roleId}")
     void deleteByRoleId(@Param("roleId") Long roleId);
 
-    @Select("SELECT * FROM SYS_ROLE_DATA_SCOPE WHERE role_id = #{roleId}")
+    @Select("SELECT id, role_id, scope_id FROM SYS_ROLE_DATA_SCOPE WHERE role_id = #{roleId}")
+    @Results({
+        @Result(property = "id", column = "id"),
+        @Result(property = "roleId", column = "role_id"),
+        @Result(property = "scopeId", column = "scope_id")
+    })
     java.util.List<SysRoleDataScope> findByRoleId(@Param("roleId") Long roleId);
 }
