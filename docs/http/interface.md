@@ -21,7 +21,7 @@
     "userName": "张三",
     "email": "zhangsan@example.com",
     "city": "深圳市",
-    "addr_detail": "南山区xxx街道xxx号",
+    "addrDetail": "南山区xxx街道xxx号",
     "hobby": "篮球"
 }
 ```
@@ -35,7 +35,7 @@
 | userName | String | 否 | 用户名 |
 | email | String | 否 | 邮箱 |
 | city | String | 否 | 城市 |
-| addr_detail | String | 否 | 地址详情 |
+| addrDetail | String | 否 | 地址详情 |
 | hobby | String | 否 | 爱好 |
 
 **成功响应** (HTTP 200):
@@ -102,7 +102,7 @@
             "userName": "张三",
             "email": "zhangsan@example.com",
             "city": "深圳市",
-            "addr_detail": "南山区xxx街道xxx号",
+            "addrDetail": "南山区xxx街道xxx号",
             "hobby": "篮球",
             "status": "Y"
         },
@@ -152,7 +152,7 @@
 | user.userName | String | 用户名 |
 | user.email | String | 邮箱 |
 | user.city | String | 城市 |
-| user.addr_detail | String | 地址详情 |
+| user.addrDetail | String | 地址详情 |
 | user.hobby | String | 爱好 |
 | user.status | String | 状态 (Y=正常, N=禁用) |
 | roles | Array | 用户角色列表 |
@@ -268,7 +268,7 @@
             "userName": "黄小刚",
             "email": "",
             "city": "",
-            "addr_detail": "",
+            "addrDetail": "",
             "hobby": "",
             "createTime": "2026-04-28T10:37:30",
             "updateTime": null
@@ -287,7 +287,7 @@
 | userName | String | 用户名 |
 | email | String | 邮箱 |
 | city | String | 城市 |
-| addr_detail | String | 地址详情 |
+| addrDetail | String | 地址详情 |
 | hobby | String | 爱好 |
 | createTime | LocalDateTime | 创建时间 |
 | updateTime | LocalDateTime | 更新时间 |
@@ -330,7 +330,7 @@
         "userName": null,
         "email": null,
         "city": null,
-        "addr_detail": null,
+        "addrDetail": null,
         "hobby": null,
         "createTime": "2026-04-28T10:37:30",
         "updateTime": null
