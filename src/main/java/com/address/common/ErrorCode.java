@@ -15,6 +15,12 @@ public class ErrorCode {
     public static final String PHONE_FORMAT_ERROR = "101005";
     /** 密码格式错误 */
     public static final String PASSWORD_INVALID = "101006";
+    /** 旧密码错误 */
+    public static final String OLD_PASSWORD_ERROR = "101007";
+    /** 用户不存在 */
+    public static final String USER_NOT_EXIST = "101008";
+    /** 无权限操作 */
+    public static final String NO_PERMISSION = "101009";
 
     /** 参数错误 */
     public static final String BAD_REQUEST = "400";
