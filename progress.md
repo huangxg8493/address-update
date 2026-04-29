@@ -707,40 +707,40 @@
 ### 实施计划
 
 #### Task 1: 修改 SysUser.java
-- [ ] Step 1: 修改实体类，删除 province/city/district，新增 city/addrDetail
-- [ ] Step 2: 提交
+- [x] Step 1: 修改实体类，删除 province/city/district，新增 city/addrDetail
+- [x] Step 2: 提交
 
 #### Task 2: 修改 SysUserMapper.java
-- [ ] Step 1: 修改 insert/update/select 语句和 @Results 映射
-- [ ] Step 2: 提交
+- [x] Step 1: 修改 insert/update/select 语句和 @Results 映射
+- [x] Step 2: 提交
 
 #### Task 3: 修改 DTO 文件
-- [ ] Step 1: 修改 UserInfo.java
-- [ ] Step 2: 修改 UserResponse.java
-- [ ] Step 3: 修改 UserCreateRequest.java
-- [ ] Step 4: 修改 UserUpdateRequest.java
-- [ ] Step 5: 提交
+- [x] Step 1: 修改 UserInfo.java
+- [x] Step 2: 修改 UserResponse.java
+- [x] Step 3: 修改 UserCreateRequest.java
+- [x] Step 4: 修改 UserUpdateRequest.java
+- [x] Step 5: 提交
 
 #### Task 4: 修改 AuthService.java
-- [ ] Step 1: 修改 register() 方法中的字段映射
-- [ ] Step 2: 修改 buildUserInfo() 方法中的字段映射
-- [ ] Step 3: 提交
+- [x] Step 1: 修改 register() 方法中的字段映射
+- [x] Step 2: 修改 buildUserInfo() 方法中的字段映射
+- [x] Step 3: 提交
 
 #### Task 5: 修改 UserService.java
-- [ ] Step 1: 修改 create() 方法
-- [ ] Step 2: 修改 update() 方法
-- [ ] Step 3: 修改 toResponse() 方法
-- [ ] Step 4: 提交
+- [x] Step 1: 修改 create() 方法
+- [x] Step 2: 修改 update() 方法
+- [x] Step 3: 修改 toResponse() 方法
+- [x] Step 4: 提交
 
 #### Task 6: 更新 schema.sql
-- [ ] Step 1: 更新建表语句
-- [ ] Step 2: 提交
+- [x] Step 1: 更新建表语句
+- [x] Step 2: 提交
 
 #### Task 7: 更新接口文档
-- [ ] Step 1: 更新接口文档中所有涉及 province/city/district 的描述
-- [ ] Step 2: 提交
+- [x] Step 1: 更新接口文档中所有涉及 province/city/district 的描述
+- [x] Step 2: 提交
 
 #### Task 8: 运行测试验证
-- [ ] Step 1: 编译项目
-- [ ] Step 2: 运行测试
-- [ ] Step 3: 提交
+- [x] Step 1: 编译项目
+- [x] Step 2: 运行测试
+- [x] Step 3: 提交
