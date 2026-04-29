@@ -114,6 +114,35 @@ public class UserService {
         }
     }
 
+    public void changePassword(String phone, String oldPassword, String newPassword) {
+        SysUser user = sysUserMapper.findActiveByPhone(phone);
+        if (user == null) {
+            throw new RuntimeException("用户不存在或已禁用");
+        }
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+            throw new RuntimeException("旧密码错误");
+        }
+        if (newPassword == null || newPassword.length() < 6) {
+            throw new RuntimeException("密码格式错误，至少6位");
+        }
+        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setUpdateTime(LocalDateTime.now());
+        sysUserMapper.update(user);
+    }
+
+    public void resetPassword(Long userId, String newPassword) {
+        SysUser user = sysUserMapper.findById(userId);
+        if (user == null) {
+            throw new RuntimeException("用户不存在");
+        }
+        if (newPassword == null || newPassword.length() < 6) {
+            throw new RuntimeException("密码格式错误，至少6位");
+        }
+        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setUpdateTime(LocalDateTime.now());
+        sysUserMapper.update(user);
+    }
+
     private UserResponse toResponse(SysUser user) {
         UserResponse response = new UserResponse();
         response.setUserId(user.getUserId());
