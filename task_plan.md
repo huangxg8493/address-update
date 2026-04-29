@@ -1,1832 +1,292 @@
 # Task Plan
 
-> 项目：客户地址信息维护类库
-> 目标：实现客户地址信息维护功能（地址合并、通讯地址选择、最新地址选择）
-> 架构：Model → Repository → Strategy → Service 分层设计
-> 技术栈：Java8 + Maven
+> 项目：用户密码修改接口实现
+> 目标：实现两个密码管理接口——用户修改密码（change）和管理员重置密码（reset）
+> 架构：DTO → Service → Controller 三层架构
+> 技术栈：Java8 + Maven + Spring Boot + MyBatis + BCrypt
 
 ---
 
-## 阶段与进度
+## 文件变更概览
 
-### Phase 1: 基础设施
-- [x] Task 1: Maven 项目初始化
-  - [x] 创建 pom.xml
-  - [x] 创建 CifAddress.java
-  - [x] 创建 CifAddressTest.java
-  - [x] 运行测试验证
-  - [x] 提交
-
-- [x] Task 2: AddressType 枚举
-  - [x] 创建 AddressType.java
-  - [x] 创建 AddressTypeTest.java
-  - [x] 运行测试验证
-  - [x] 提交
-
-### Phase 2: 存储层
-- [x] Task 3: Repository 层
-  - [x] 创建 ClientAddressRepository.java
-  - [x] 创建 MemoryClientAddressRepository.java
-  - [x] 创建 MemoryClientAddressRepositoryTest.java
-  - [x] 运行测试验证
-  - [x] 提交
-
-### Phase 3: 策略层
-- [x] Task 4: 地址选择策略
-  - [x] 创建 MailingAddressStrategy.java
-  - [x] 创建 NewestAddressStrategy.java
-  - [x] 创建 PriorityMailingAddressStrategy.java
-  - [x] 创建 PriorityNewestAddressStrategy.java
-  - [x] 创建 PriorityMailingAddressStrategyTest.java
-  - [x] 创建 PriorityNewestAddressStrategyTest.java
-  - [x] 运行测试验证
-  - [x] 提交
-
-### Phase 4: 业务层
-- [x] Task 5: 地址合并逻辑
-  - [x] 创建 AddressMerger.java
-  - [x] 创建 AddressMergerTest.java
-  - [x] 运行测试验证
-  - [x] 提交
-
-- [x] Task 6: ClientAddressService 核心服务
-  - [x] 创建 ClientAddressService.java
-  - [x] 创建 ClientAddressServiceTest.java
-  - [x] 创建 ClientAddressServiceIntegrationTest.java
-  - [x] 运行测试验证
-  - [x] 提交
-
-### Phase 5: 收尾
-- [x] Task 7: 异常处理
-  - [x] 创建 AddressBusinessException.java
-  - [x] 运行测试验证
-  - [x] 提交
-
-- [x] Task 8: Maven 打包验证
-  - [x] 更新 pom.xml
-  - [x] 运行打包验证
-  - [x] 运行全部测试
-  - [x] 提交
+| 操作 | 文件路径 | 说明 |
+|------|----------|------|
+| Create | `src/main/java/com/address/dto/PasswordChangeRequest.java` | 用户修改密码请求 |
+| Create | `src/main/java/com/address/dto/PasswordResetRequest.java` | 管理员重置密码请求 |
+| Modify | `src/main/java/com/address/common/ErrorCode.java` | 添加错误码常量 |
+| Modify | `src/main/java/com/address/service/UserService.java` | 添加 changePassword/resetPassword 方法 |
+| Modify | `src/main/java/com/address/controller/UserController.java` | 添加两个接口端点 |
+| Create | `src/test/java/com/address/service/UserPasswordServiceTest.java` | 密码业务测试 |
 
 ---
 
-## 实施检查清单
-
-- [x] Task 1: Maven 项目初始化
-- [x] Task 2: AddressType 枚举
-- [x] Task 3: Repository 层
-- [x] Task 4: 地址选择策略
-- [x] Task 5: 地址合并逻辑
-- [x] Task 6: ClientAddressService 核心服务
-- [x] Task 7: 异常处理
-- [x] Task 8: Maven 打包验证
-
----
-
-## 重构阶段
-
-### Task 9: 删除并重写 ClientAddressService
-
-- [x] Step 1: 删除现有 ClientAddressService.java
-- [x] Step 2: 按设计 11 步流程重写
-
-### Task 10: 修改 AddressMerger 支持标记删除
-
-- [x] Step 1: 确保 mergeStock 支持 del_flag 标记删除
-
-### Task 11: 验证和测试
-
-- [x] Step 1: 运行 Maven 测试
-- [x] Step 2: 检查所有测试是否通过
-- [x] Step 3: 提交变更
-
----
-
-## 当前阶段
-
-### ✅ 所有 Phase 已完成
-
-#### Task 12: 创建 SnowflakeIdGenerator 工具类
-
-- [x] Step 1: 编写测试用例
-- [x] Step 2: 运行测试确认失败
-- [x] Step 3: 实现 SnowflakeIdGenerator
-- [x] Step 4: 运行测试确认通过
-- [x] Step 5: 提交
-
-#### Task 13: 修改 ClientAddressService 使用 SnowflakeIdGenerator
-
-- [x] Step 1: 添加 import
-- [x] Step 2: 修改 generateId 方法
-- [x] Step 3: 运行所有测试确认通过
-- [x] Step 4: 提交
-
----
-
----
-
-## Phase 7: MySQL 持久层实现
-
-#### Task 14: 添加 Maven 依赖
-
-- [x] Step 1: 添加 MySQL 和 YAML 依赖
-- [x] Step 2: 验证依赖下载
-- [x] Step 3: 提交
-
-#### Task 15: 创建配置文件和加载工具
-
-- [x] Step 1: 创建 config.yaml
-- [x] Step 2: 创建 DbConfig.java
-- [x] Step 3: 验证配置加载
-- [x] Step 4: 提交
-
-#### Task 16: 创建 JdbcClientAddressRepository
-
-- [x] Step 1: 实现 JdbcClientAddressRepository
-- [x] Step 2: 验证编译
-- [x] Step 3: 提交
-
-#### Task 17: 添加自动建表逻辑
-
-- [x] Step 1: 在 JdbcClientAddressRepository 中添加建表逻辑
-- [x] Step 2: 验证编译
-- [x] Step 3: 提交
-
-#### Task 18: 修改 ClientAddressService 使用 JdbcClientAddressRepository
-
-- [x] Step 1: 修改构造函数注入
-- [x] Step 2: 验证编译
-- [x] Step 3: 提交
-
-#### Task 19: 创建 JdbcClientAddressRepositoryTest
-
-- [x] Step 1: 编写测试用例
-- [x] Step 2: 运行测试
-- [x] Step 3: 提交
-
----
-
----
-
-## Phase 8: HikariCP 连接池实现
-
-#### Task 20: 添加 HikariCP Maven 依赖
-
-- [x] Step 1: 添加 HikariCP 依赖
-- [x] Step 2: 验证依赖下载
-- [x] Step 3: 提交
-
-#### Task 21: 更新配置文件
-
-- [x] Step 1: 添加 HikariCP 连接池配置
-- [x] Step 2: 提交
-
-#### Task 22: 修改 DbConfig 添加 DataSource
-
-- [x] Step 1: 添加 HikariCP import 和 DataSource
-- [x] Step 2: 验证编译
-- [x] Step 3: 提交
-
-#### Task 23: 修改 JdbcClientAddressRepository 使用 DataSource
-
-- [x] Step 1: 修改 getConnection 方法
-- [x] Step 2: 修改 createTableIfNotExists 中的连接获取
-- [x] Step 3: 验证编译
-- [x] Step 4: 运行测试
-- [x] Step 5: 提交
-
----
-
-所有任务已完成 ✅
-
----
-
-## Phase 9: MyBatis 迁移实现
-
-### Task 1: 添加 MyBatis Maven 依赖
-
-- [x] Step 1: 在 pom.xml 添加 mybatis 和 mybatis-spring 依赖
-- [x] Step 2: 验证依赖添加成功
-- [x] Step 3: 提交
-
-### Task 2: 创建 mybatis-config.xml
-
-- [x] Step 1: 创建 mybatis-config.xml
-- [x] Step 2: 验证配置文件格式
-- [x] Step 3: 提交
-
-### Task 3: 创建 CifAddressMapper.xml
-
-- [x] Step 1: 创建 mapper 目录
-- [x] Step 2: 创建 CifAddressMapper.xml
-- [x] Step 3: 验证 XML 格式
-- [x] Step 4: 提交
-
-### Task 4: 创建 CifAddressMapper.java
-
-- [x] Step 1: 创建 CifAddressMapper.java（使用 @Update 注解实现 delete）
-- [x] Step 2: 编译验证
-- [x] Step 3: 提交
-
-### Task 5: 创建 MyBatisConfig.java
-
-- [x] Step 1: 创建 MyBatisConfig.java（初始化 SqlSessionFactory）
-- [x] Step 2: 编译验证
-- [x] Step 3: 提交
-
-### Task 6: 创建 MyBatisClientAddressRepository.java
-
-- [x] Step 1: 创建 MyBatisClientAddressRepository.java
-- [x] Step 2: 编译验证
-- [x] Step 3: 提交
-
-### Task 7: 创建 MyBatisClientAddressRepositoryTest
-
-- [x] Step 1: 查看 JdbcClientAddressRepositoryTest 作为参考
-- [x] Step 2: 创建 MyBatisClientAddressRepositoryTest
-- [x] Step 3: 运行测试验证
-- [x] Step 4: 提交
-
-### Task 8: 完整测试验证
-
-- [x] Step 1: 运行所有测试
-- [x] Step 2: 提交
-
----
-
-## Phase 10: 日志记录功能实现
-
-### Task 1: 添加 Maven 依赖
-
-- [x] Step 1: 在 pom.xml 添加 slf4j-api 和 logback-classic 依赖
-- [x] Step 2: 验证依赖下载
-- [x] Step 3: 提交
-
-### Task 2: 创建 logback.xml
-
-- [x] Step 1: 创建 src/main/resources/logback.xml
-- [x] Step 2: 提交
-
-### Task 3: 修改 MyBatisClientAddressRepository 添加日志
-
-- [x] Step 1: 添加 Logger 和日志语句
-- [x] Step 2: 编译验证
-- [x] Step 3: 提交
-
-### Task 4: 修改 JdbcClientAddressRepository 添加日志
-
-- [x] Step 1: 添加 Logger 和日志语句
-- [x] Step 2: 编译验证
-- [x] Step 3: 提交
-
-### Task 5: 验证日志输出
-
-- [x] Step 1: 运行测试
-- [x] Step 2: 检查日志文件
-- [x] Step 3: 提交
-
----
-
-## Phase 11: Spring Boot 集成实现
-
-### Task 1: pom.xml 添加 Spring Boot 依赖
-
-- [x] Step 1: 修改 pom.xml，添加 Spring Boot 2.7.18 parent 和依赖
-- [x] Step 2: mvn compile 验证编译
-- [x] Step 3: git commit
-
-### Task 2: 创建 Spring Boot 启动类
-
-- [x] Step 1: 创建 Application.java（@SpringBootApplication, @MapperScan）
-- [x] Step 2: mvn compile 验证编译
-- [x] Step 3: git commit
-
-### Task 3: 创建 application.yml 配置
-
-- [x] Step 1: 创建 application.yml（DataSource + MyBatis 配置）
-- [x] Step 2: mvn compile 验证编译
-- [x] Step 3: git commit
-
-### Task 4: 创建 JdbcTemplateClientAddressRepository
-
-- [x] Step 1: 创建 JdbcTemplateClientAddressRepository.java
-- [x] Step 2: mvn compile 验证编译
-- [x] Step 3: git commit
-
-### Task 5: 创建 JdbcClientClientAddressRepository
-
-- [x] Step 1: 创建 JdbcClientClientAddressRepository.java（跳过 - JdbcClient 需要 Spring Boot 3.x + Java 17）
-- [x] Step 2: mvn compile 验证编译
-- [x] Step 3: git commit
-
-### Task 6: 配置 @Primary 并更新 ClientAddressService
-
-- [x] Step 1: 在 JdbcTemplateClientAddressRepository 添加 @Primary
-- [x] Step 2: 更新 ClientAddressService 使用 @Autowired 注入
-- [x] Step 3: mvn compile 验证编译
-- [x] Step 4: git commit
-
-### Task 7: 验证测试
-
-- [x] Step 1: mvn test 运行所有测试
-- [x] Step 2: git commit
-
----
-
-## Phase 12: RESTful 接口实现
-
-### Task 1: 新建 ApiResponse 统一响应类
-
-- [x] Step 1: 编写测试（ApiResponseTest）
-- [x] Step 2: 运行测试验证失败（class not found）
-- [x] Step 3: 编写最小实现（ApiResponse.java）
-- [x] Step 4: 运行测试验证通过
-- [x] Step 5: 提交
-
-### Task 2: 新建 ErrorCode 错误码枚举
-
-- [x] Step 1: 编写最小实现（ErrorCode.java）
-- [x] Step 2: 提交
-
-### Task 3: 新建 AddressUpdateRequest 请求 DTO
-
-- [x] Step 1: 编写最小实现（AddressUpdateRequest.java）
-- [x] Step 2: 提交
-
-### Task 4: 新建 ClientAddressController
-
-- [x] Step 1: 编写测试（ClientAddressControllerTest）
-- [x] Step 2: 运行测试验证通过
-- [x] Step 3: 编写 Controller 实现
-- [x] Step 4: 运行测试验证通过
-- [x] Step 5: 提交
-
-### Task 5: 修改 Application 添加 Controller 扫描
-
-- [x] Step 1: 添加 @ComponentScan
-- [x] Step 2: 运行测试验证
-- [x] Step 3: 提交
-
-### Task 6: 端到端集成测试（可选）
-
-- [ ] Step 1: 创建 ClientAddressControllerIntegrationTest（如需要）
-
----
-
-## Phase 13: 地址查询接口实现
-
-### Task 1: 创建 AddressQueryRequest DTO
-
-- [x] Step 1: 创建 AddressQueryRequest.java
-- [x] Step 2: 编译验证
-- [x] Step 3: 提交
-
-### Task 2: 创建 PageResult DTO
-
-- [x] Step 1: 创建 PageResult.java
-- [x] Step 2: 编译验证
-- [x] Step 3: 提交
-
-### Task 3: 创建 AddressQueryResponse DTO
-
-- [x] Step 1: 创建 AddressQueryResponse.java
-- [x] Step 2: 编译验证
-- [x] Step 3: 提交
-
-### Task 4: 创建 AddressQueryRepository 接口
-
-- [x] Step 1: 创建 AddressQueryRepository.java
-- [x] Step 2: 编译验证
-- [x] Step 3: 提交
-
-### Task 5: 修改 CifAddressMapper 添加分页方法
-
-- [x] Step 1: 添加 findPage 和 countPage 方法
-- [x] Step 2: 编译验证
-- [x] Step 3: 提交
-
-### Task 6: 修改 CifAddressMapper.xml 添加分页 SQL
-
-- [x] Step 1: 添加 findPage 和 countPage SQL
-- [x] Step 2: 编译验证
-- [x] Step 3: 提交
-
-### Task 7: 创建 MyBatisAddressQueryRepository 实现
-
-- [x] Step 1: 创建 MyBatisAddressQueryRepository.java
-- [x] Step 2: 编译验证
-- [x] Step 3: 提交
-
-### Task 8: 创建 ClientAddressQueryService
-
-- [x] Step 1: 创建 ClientAddressQueryService.java
-- [x] Step 2: 编译验证
-- [x] Step 3: 提交
-
-### Task 9: 创建 ClientAddressQueryController
-
-- [x] Step 1: 创建 ClientAddressQueryController.java
-- [x] Step 2: 编译验证
-- [x] Step 3: 提交
-
-### Task 10: 创建 ClientAddressQueryControllerTest
-
-- [x] Step 1: 创建 ClientAddressQueryControllerTest.java
-- [x] Step 2: 运行测试
-- [x] Step 3: 提交
-
-### Task 11: 创建 ClientAddressQueryServiceTest
-
-- [x] Step 1: 创建 ClientAddressQueryServiceTest.java
-- [x] Step 2: 运行测试
-- [x] Step 3: 提交
-
-### Task 12: 最终验证
-
-- [x] Step 1: 运行全部测试
-- [x] Step 2: 检查 git 状态
-
----
-
-## 遇到的问题
-
-| 问题 | 解决方案 |
-|------|---------|
-| Maven surefire 插件版本过旧导致 JUnit5 测试不执行 | 升级 maven-surefire-plugin 至 3.1.2 |
-| PriorityMailingAddressStrategy 使用 type.name() 而非 type.getCode() | 修改为使用 getCode() 匹配 addressType |
-| 测试数据中修改时间与预期优先级不匹配 | 调整测试数据使时间与优先级顺序一致 |
-| testUpdateExistingAddress 失败：返回2条而非1条 | 给已存在的地址设置 seqNo 以便识别 |
-| logback 1.4.11 与 Spring Boot 2.7.18 冲突 | 移除显式版本，使用 Spring Boot 管理的版本 |
-| JdbcClient API 仅在 Spring Boot 3.x 支持 | 跳过 JdbcClient 实现 |
-
----
-
-## Phase 14: UI 页面实现
-
-### Task 1: 创建基础 HTML 结构和样式
-
-- [x] Step 1: 创建 HTML 基础结构
-- [x] Step 2: 添加 CSS 样式
-- [x] Step 3: 提交
-
-### Task 2: 实现 JavaScript 变量和 DOM 元素定义
-
-- [x] Step 1: 在 `<script>` 标签开头添加变量定义和元素获取
-- [x] Step 2: 提交
-
-### Task 3: 实现 API 调用函数
-
-- [x] Step 1: 在变量定义后添加 API 调用函数
-- [x] Step 2: 提交
-
-### Task 4: 实现渲染和分页逻辑
-
-- [x] Step 1: 添加渲染和分页函数
-- [x] Step 2: 提交
-
-### Task 5: 实现事件绑定
-
-- [x] Step 1: 添加事件绑定函数
-- [x] Step 2: 在文件末尾添加初始化调用
-- [x] Step 3: 提交
-
-### Task 6: 最终验证
-
-- [x] Step 1: 检查文件完整性
-- [x] Step 2: 提交
-
----
-
-## Phase 15: 单地址维护接口实现
-
-### Task 1: 创建 DTO
-
-- [x] Step 1: 创建 SingleAddressRequest.java
-- [x] Step 2: 创建 SingleAddressResponse.java
-- [x] Step 3: 提交
-
-### Task 2: Service 层添加业务方法
-
-- [x] Step 1: 添加 updateSingleAddress 方法到 ClientAddressService.java
-- [x] Step 2: 添加 import
-- [x] Step 3: 提交
-
-### Task 3: Controller 层添加接口
-
-- [x] Step 1: 添加 import
-- [x] Step 2: 添加 /client/address/single/update 接口方法
-- [x] Step 3: 提交
-
-### Task 4: 编译验证
-
-- [x] Step 1: mvn compile 编译项目
-- [x] Step 2: mvn test 运行测试
-
----
-
-## ✅ Phase 15 已完成
-
-- 单地址更新接口 `/client/address/single/update` 已实现
-- 前端编辑和删除功能已对接新接口
-
----
-
-## Phase 16: 手机号登录功能实现
-
-> 目标：为客户地址管理系统增加基于手机号+密码的登录认证功能，支持角色+权限控制+数据范围配置
-> 架构：采用 JWT 无状态认证，复用项目已有的 SnowflakeIdGenerator 生成 ID，密码 BCrypt 加密存储，数据模型基于 7 张表实现用户、角色、权限、数据范围的关联配置
-> 技术栈：Spring Boot 2.7.18 + MyBatis + MySQL + JJWT + BCrypt
-
-### Task 1: 添加项目依赖
-
-- [x] Step 1: 添加 JJWT 和 Spring Security 依赖到 pom.xml
-- [x] Step 2: 提交
-
-### Task 2: 创建用户相关实体和 Mapper
-
-- [x] Step 1: 创建 SysUser.java 实体
-- [x] Step 2: 创建 SysRole.java 实体
-- [x] Step 3: 创建 SysUserRole.java 实体
-- [x] Step 4: 创建 SysUserMapper.java 接口
-- [x] Step 5: 创建 SysRoleMapper.java 接口
-- [x] Step 6: 创建 SysUserRoleMapper.java 接口
-- [x] Step 7: 提交
-
-### Task 3: 创建权限和数据范围相关实体和 Mapper
-
-- [x] Step 1: 创建 SysPermission.java 实体
-- [x] Step 2: 创建 SysRolePermission.java 实体
-- [x] Step 3: 创建 SysDataScope.java 实体
-- [x] Step 4: 创建 SysRoleDataScope.java 实体
-- [x] Step 5: 创建 SysPermissionMapper.java 接口
-- [x] Step 6: 创建 SysRolePermissionMapper.java 接口
-- [x] Step 7: 创建 SysDataScopeMapper.java 接口
-- [x] Step 8: 创建 SysRoleDataScopeMapper.java 接口
-- [x] Step 9: 提交
-
-### Task 4: 创建 JWT 工具类和安全配置
-
-- [x] Step 1: 创建 JwtUtil.java 工具类
-- [x] Step 2: 创建 JwtAuthenticationFilter.java 过滤器
-- [x] Step 3: 创建 UserDetailsServiceImpl.java 用户服务
-- [x] Step 4: 创建 SecurityConfig.java 安全配置
-- [x] Step 5: 提交
-
-### Task 5: 创建认证 DTO 和 Service
-
-- [x] Step 1: 创建 LoginRequest.java
-- [x] Step 2: 创建 LoginResponse.java
-- [x] Step 3: 创建 RegisterRequest.java
-- [x] Step 4: 创建 AuthService.java
-- [x] Step 5: 提交
-
-### Task 6: 创建用户管理 DTO、Service、Controller
-
-- [x] Step 1: 创建 UserQueryRequest.java
-- [x] Step 2: 创建 UserCreateRequest.java
-- [x] Step 3: 创建 UserUpdateRequest.java
-- [x] Step 4: 创建 UserResponse.java
-- [x] Step 5: 创建 UserService.java
-- [x] Step 6: 创建 UserController.java
-- [x] Step 7: 提交
-
-### Task 7: 创建角色管理 DTO、Service、Controller
-
-- [x] Step 1: 创建 RoleQueryRequest.java
-- [x] Step 2: 创建 RoleCreateRequest.java
-- [x] Step 3: 创建 RoleUpdateRequest.java
-- [x] Step 4: 创建 RoleResponse.java
-- [x] Step 5: 创建 RoleService.java
-- [x] Step 6: 创建 RoleController.java
-- [x] Step 7: 提交
-
-### Task 8: 创建权限和数据范围管理 DTO、Service、Controller
-
-- [x] Step 1: 创建 PermissionCreateRequest.java
-- [x] Step 2: 创建 PermissionUpdateRequest.java
-- [x] Step 3: 创建 PermissionResponse.java
-- [x] Step 4: 创建 DataScopeCreateRequest.java
-- [x] Step 5: 创建 DataScopeUpdateRequest.java
-- [x] Step 6: 创建 DataScopeResponse.java
-- [x] Step 7: 创建 PermissionService.java
-- [x] Step 8: 创建 DataScopeService.java
-- [x] Step 9: 创建 PermissionController.java
-- [x] Step 10: 创建 DataScopeController.java
-- [x] Step 11: 提交
-
-### Task 9: 创建 AuthController 和配置
-
-- [x] Step 1: 创建 AuthController.java
-- [x] Step 2: 添加认证错误码到 ErrorCode.java
-- [x] Step 3: 添加 JWT 配置到 application.yml
-- [x] Step 4: 提交
-
-### Task 10: 创建数据库表结构 SQL
-
-- [x] Step 1: 创建 sql/sys_user.sql
-- [x] Step 2: 创建 sql/sys_role.sql
-- [x] Step 3: 创建 sql/sys_user_role.sql
-- [x] Step 4: 创建 sql/sys_permission.sql
-- [x] Step 5: 创建 sql/sys_role_permission.sql
-- [x] Step 6: 创建 sql/sys_data_scope.sql
-- [x] Step 7: 创建 sql/sys_role_data_scope.sql
-- [x] Step 8: 提交
-
----
-
-## ✅ Phase 16 已完成
-
-- 手机号登录功能已实现
-- JWT 无状态认证已配置
-- 角色+权限+数据范围管理已实现
-
----
-
-## Phase 17: 菜单管理模块实现
-
-> 目标：实现菜单管理模块的增删改查功能，支持无限级层级结构
-> 架构：四层架构 Controller + Service + Mapper + Model
-> 技术栈：Java8 + Maven + MyBatis + Spring Boot
-
-### Task 1: 创建菜单实体 SysMenu
-
-- [x] Step 1: 创建 src/main/java/com/address/model/SysMenu.java
-- [x] Step 2: 提交
-
-### Task 2: 创建菜单相关 DTO
-
-- [x] Step 1: 创建 MenuCreateRequest.java
-- [x] Step 2: 创建 MenuUpdateRequest.java
-- [x] Step 3: 创建 MenuQueryRequest.java
-- [x] Step 4: 创建 MenuResponse.java
-- [x] Step 5: 创建 MenuTreeResponse.java
-- [x] Step 6: 提交
-
-### Task 3: 创建菜单 Mapper
-
-- [x] Step 1: 创建 src/main/java/com/address/repository/SysMenuMapper.java
-- [x] Step 2: 提交
-
-### Task 4: 创建菜单 Service
-
-- [x] Step 1: 创建 src/main/java/com/address/service/MenuService.java
-- [x] Step 2: 提交
-
-### Task 5: 创建菜单 Controller
-
-- [x] Step 1: 创建 src/main/java/com/address/controller/MenuController.java
-- [x] Step 2: 提交
-
-### Task 6: 创建菜单单元测试
-
-- [x] Step 1: 创建 src/test/java/com/address/controller/MenuControllerTest.java
-- [x] Step 2: 提交
-
-### Task 7: 更新接口文档
-
-- [x] Step 1: 在 http/interface.md 中添加菜单接口
-- [x] Step 2: 提交
-
----
-
-## ✅ Phase 17 已完成
-
-- 菜单管理模块已实现
-- 支持无限级层级结构（parentId 自引用）
-- 软删除机制（del_flag='Y'）
-- 7 个接口：查询、详情、创建、更新、删除、菜单树、角色分配菜单
-
----
-
-## Phase 18: SysUser 字段扩展实现
-
-> **目标:** 为 sys_user 表新增 6 个字段（userName, email, province, city, district, hobby）
-> **架构:** 修改现有实体类和 DTO，新增字段映射，保持接口兼容
-> **技术栈:** Java8 + Maven + MyBatis + Spring Boot
-
-### Task 1: 修改 SysUser 实体
-
-- [x] Step 1: 修改实体类，添加新字段（userName, email, province, city, district, hobby）
-- [x] Step 2: 添加 getter/setter 方法
-- [x] Step 3: 提交
-
-### Task 2: 修改 SysUserMapper
-
-- [x] Step 1: 修改 insert 语句
-- [x] Step 2: 修改 update 语句
-- [x] Step 3: 修改 findById 查询，添加字段映射
-- [x] Step 4: 修改 findByPhone 查询，添加字段映射
-- [x] Step 5: 修改 findAll 查询，添加字段映射
-- [x] Step 6: 提交
-
-### Task 3: 修改 UserCreateRequest
-
-- [x] Step 1: 添加新字段
-- [x] Step 2: 添加 getter/setter
-- [x] Step 3: 提交
-
-### Task 4: 修改 UserUpdateRequest
-
-- [x] Step 1: 添加新字段
-- [x] Step 2: 添加 getter/setter
-- [x] Step 3: 提交
-
-### Task 5: 修改 UserResponse
-
-- [x] Step 1: 添加新字段
-- [x] Step 2: 添加 getter/setter
-- [x] Step 3: 提交
-
-### Task 6: 修改 UserService
-
-- [x] Step 1: 修改 toResponse 方法，添加新字段映射
-- [x] Step 2: 提交
-
-### Task 7: 修改 sql/sys_user.sql
-
-- [x] Step 1: 更新建表语句，添加新字段
-- [x] Step 2: 提交
-
-### Task 8: 编译验证
-
-- [x] Step 1: 运行编译
-- [x] Step 2: 运行测试
-
----
-
-## ✅ Phase 18 已完成
-
-- SysUser 实体已添加 userName, email, province, city, district, hobby 字段
-- 所有 Mapper、DTO、Service 均已完成修改
-
----
-
-## Phase 19: 登录接口返回码归类实现
-
-> **目标:** 为 `/api/auth/login` 接口建立结构化错误码体系，区分用户未注册、用户已禁用、密码错误三种场景
-> **架构:** 通过 LoginResult 封装认证结果（不再抛异常），Controller 根据结果构造 ApiResponse 返回对应错误码
-> **技术栈:** Java8 + Maven + Spring Boot + MyBatis
-
-### Task 1: 创建 AuthErrorCode 错误码常量类
+## Task 1: 创建密码修改请求 DTO
 
 **Files:**
-- Create: `src/main/java/com/address/common/AuthErrorCode.java`
+- Create: `src/main/java/com/address/dto/PasswordChangeRequest.java`
 
-- [x] Step 1: 创建文件
-
-```java
-package com.address.common;
-
-public class AuthErrorCode {
-    public static final String SUCCESS = "000000";
-    public static final String USER_NOT_FOUND = "101001";
-    public static final String USER_DISABLED = "101002";
-    public static final String PASSWORD_ERROR = "101003";
-}
-```
-
-- [x] Step 2: 验证编译
-
-Run: `mvn compile -q`
-Expected: BUILD SUCCESS
-
-- [x] Step 3: 提交
-
-```bash
-git add src/main/java/com/address/common/AuthErrorCode.java
-git commit -m "feat: 添加认证模块错误码常量类 AuthErrorCode"
-```
-
----
-
-### Task 2: 创建 LoginResult 认证结果封装类
-
-**Files:**
-- Create: `src/main/java/com/address/dto/LoginResult.java`
-
-- [x] Step 1: 创建文件
+- [ ] **Step 1: 创建 PasswordChangeRequest.java**
 
 ```java
 package com.address.dto;
 
-import com.address.common.AuthErrorCode;
+public class PasswordChangeRequest {
+    private String oldPassword;
+    private String newPassword;
 
-public class LoginResult {
-    private String code;
-    private String message;
-    private String token;
-    private String phone;
-
-    private LoginResult(String code, String message, String token, String phone) {
-        this.code = code;
-        this.message = message;
-        this.token = token;
-        this.phone = phone;
-    }
-
-    public static LoginResult success(String token, String phone) {
-        return new LoginResult(AuthErrorCode.SUCCESS, "成功", token, phone);
-    }
-
-    public static LoginResult error(String code, String message) {
-        return new LoginResult(code, message, null, null);
-    }
-
-    public boolean isSuccess() {
-        return AuthErrorCode.SUCCESS.equals(code);
-    }
-
-    public LoginResponse toLoginResponse() {
-        LoginResponse response = new LoginResponse();
-        response.setToken(this.token);
-        response.setPhone(this.phone);
-        return response;
-    }
-
-    public String getCode() { return code; }
-    public String getMessage() { return message; }
-    public String getToken() { return token; }
-    public String getPhone() { return phone; }
+    public String getOldPassword() { return oldPassword; }
+    public void setOldPassword(String oldPassword) { this.oldPassword = oldPassword; }
+    public String getNewPassword() { return newPassword; }
+    public void setNewPassword(String newPassword) { this.newPassword = newPassword; }
 }
 ```
 
-- [ ] Step 2: 验证编译
-
-Run: `mvn compile -q`
-Expected: BUILD SUCCESS
-
-- [ ] Step 3: 提交
-
-```bash
-git add src/main/java/com/address/dto/LoginResult.java
-git commit -m "feat: 添加 LoginResult 认证结果封装类"
-```
+- [ ] **Step 2: 提交**
 
 ---
 
-### Task 3: 修改 ApiResponse 支持自定义成功码
+## Task 2: 创建密码重置请求 DTO
 
 **Files:**
-- Modify: `src/main/java/com/address/common/ApiResponse.java`
+- Create: `src/main/java/com/address/dto/PasswordResetRequest.java`
 
-- [ ] Step 1: 添加 success(data, code) 方法
-
-在 ApiResponse.java 第 18 行 `success(T data)` 方法后添加：
+- [ ] **Step 1: 创建 PasswordResetRequest.java**
 
 ```java
-public static <T> ApiResponse<T> success(T data, String code) {
-    return new ApiResponse<>(code, "成功", data);
+package com.address.dto;
+
+public class PasswordResetRequest {
+    private String newPassword;
+
+    public String getNewPassword() { return newPassword; }
+    public void setNewPassword(String newPassword) { this.newPassword = newPassword; }
 }
 ```
 
-- [ ] Step 2: 验证编译
-
-Run: `mvn compile -q`
-Expected: BUILD SUCCESS
-
-- [ ] Step 3: 提交
-
-```bash
-git add src/main/java/com/address/common/ApiResponse.java
-git commit -m "feat: ApiResponse 添加支持自定义成功码的 success(data, code) 方法"
-```
+- [ ] **Step 2: 提交**
 
 ---
 
-### Task 4: 修改 AuthService.login() 返回 LoginResult
+## Task 3: 添加错误码常量
 
 **Files:**
-- Modify: `src/main/java/com/address/service/AuthService.java`
+- Modify: `src/main/java/com/address/common/ErrorCode.java:14-17`
 
-- [ ] Step 1: 修改 login 方法返回类型和实现
-
-将 login 方法：
+- [ ] **Step 1: 在 ErrorCode.java 第 17 行后添加新错误码**
 
 ```java
-public LoginResponse login(LoginRequest request) {
-    SysUser user = sysUserMapper.findActiveByPhone(request.getPhone());
+/** 旧密码错误 */
+public static final String OLD_PASSWORD_ERROR = "101007";
+/** 用户不存在 */
+public static final String USER_NOT_EXIST = "101008";
+/** 无权限操作 */
+public static final String NO_PERMISSION = "101009";
+```
+
+- [ ] **Step 2: 验证编译**
+- [ ] **Step 3: 提交**
+
+---
+
+## Task 4: 添加密码业务方法到 UserService
+
+**Files:**
+- Modify: `src/main/java/com/address/service/UserService.java:131`
+
+- [ ] **Step 1: 在 assignRoles 方法之后添加两个业务方法**
+
+```java
+public void changePassword(String phone, String oldPassword, String newPassword) {
+    SysUser user = sysUserMapper.findActiveByPhone(phone);
     if (user == null) {
         throw new RuntimeException("用户不存在或已禁用");
     }
-    if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-        throw new RuntimeException("密码错误");
+    if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+        throw new RuntimeException("旧密码错误");
     }
-    String token = jwtUtil.generateToken(user.getUserId(), user.getPhone());
-    LoginResponse response = new LoginResponse();
-    response.setToken(token);
-    response.setPhone(user.getPhone());
-    return response;
+    if (newPassword == null || newPassword.length() < 6) {
+        throw new RuntimeException("密码格式错误，至少6位");
+    }
+    user.setPassword(passwordEncoder.encode(newPassword));
+    user.setUpdateTime(LocalDateTime.now());
+    sysUserMapper.update(user);
 }
-```
 
-替换为：
-
-```java
-public LoginResult login(LoginRequest request) {
-    SysUser user = sysUserMapper.findActiveByPhone(request.getPhone());
+public void resetPassword(Long userId, String newPassword) {
+    SysUser user = sysUserMapper.findById(userId);
     if (user == null) {
-        SysUser existUser = sysUserMapper.findByPhone(request.getPhone());
-        if (existUser == null) {
-            return LoginResult.error(AuthErrorCode.USER_NOT_FOUND, "用户未注册");
-        } else {
-            return LoginResult.error(AuthErrorCode.USER_DISABLED, "用户已禁用");
-        }
+        throw new RuntimeException("用户不存在");
     }
-    if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-        return LoginResult.error(AuthErrorCode.PASSWORD_ERROR, "密码错误");
+    if (newPassword == null || newPassword.length() < 6) {
+        throw new RuntimeException("密码格式错误，至少6位");
     }
-    String token = jwtUtil.generateToken(user.getUserId(), user.getPhone());
-    return LoginResult.success(token, user.getPhone());
+    user.setPassword(passwordEncoder.encode(newPassword));
+    user.setUpdateTime(LocalDateTime.now());
+    sysUserMapper.update(user);
 }
 ```
 
-- [ ] Step 2: 添加必要的 import
-
-文件头部添加：
-```java
-import com.address.common.AuthErrorCode;
-import com.address.dto.LoginResult;
-```
-
-- [ ] Step 3: 验证编译
-
-Run: `mvn compile -q`
-Expected: BUILD SUCCESS
-
-- [ ] Step 4: 提交
-
-```bash
-git add src/main/java/com/address/service/AuthService.java
-git commit -m "feat: AuthService.login() 改为返回 LoginResult，支持细粒度错误码"
-```
+- [ ] **Step 2: 验证编译**
+- [ ] **Step 3: 提交**
 
 ---
 
-### Task 5: 修改 AuthController.login() 处理 LoginResult
+## Task 5: 添加接口端点到 UserController
 
 **Files:**
-- Modify: `src/main/java/com/address/controller/AuthController.java`
+- Modify: `src/main/java/com/address/controller/UserController.java`
 
-- [ ] Step 1: 修改 login 方法
-
-将：
+- [ ] **Step 1: 在 getCurrentUser 方法后添加两个接口**
 
 ```java
-@PostMapping("/api/auth/login")
-public ApiResponse<LoginResponse> login(@RequestBody LoginRequest request) {
-    return ApiResponse.success(authService.login(request));
-}
-```
-
-替换为：
-
-```java
-@PostMapping("/api/auth/login")
-public ApiResponse<LoginResponse> login(@RequestBody LoginRequest request) {
-    LoginResult result = authService.login(request);
-    if (result.isSuccess()) {
-        return ApiResponse.success(result.toLoginResponse(), result.getCode());
-    }
-    return ApiResponse.error(result.getCode(), result.getMessage());
-}
-```
-
-- [ ] Step 2: 添加必要的 import
-
-```java
-import com.address.dto.LoginResult;
-```
-
-- [ ] Step 3: 验证编译
-
-Run: `mvn compile -q`
-Expected: BUILD SUCCESS
-
-- [ ] Step 4: 提交
-
-```bash
-git add src/main/java/com/address/controller/AuthController.java
-git commit -m "feat: AuthController.login() 根据 LoginResult 返回对应错误码"
-```
-
----
-
-### Task 6: 运行测试验证
-
-**Files:**
-- Test: `src/test/java/com/address/service/AuthServiceTest.java`
-
-- [ ] Step 1: 运行 AuthServiceTest
-
-Run: `mvn test -Dtest=AuthServiceTest`
-Expected: 所有测试通过
-
-- [ ] Step 2: 运行完整测试套件
-
-Run: `mvn test 2>&1 | grep -E "Tests run|BUILD"`
-Expected: BUILD SUCCESS，无测试失败
-
-- [ ] Step 3: 提交测试相关修改（如有）
-
-```bash
-git add .
-git commit -m "test: 验证登录错误码功能"
-```
-
----
-
-### 自检清单
-
-- [ ] 所有错误码（101001、101002、101003）和成功码（000000）与设计一致
-- [ ] LoginResult 正确实现 isSuccess()、toLoginResponse() 方法
-- [ ] ApiResponse.success(data, code) 可正确调用
-- [ ] AuthService.login() 不再抛出 RuntimeException
-- [ ] SysUserMapper 无需修改（已有 findByPhone 和 findActiveByPhone）
-- [ ] 测试覆盖用户未注册、用户已禁用、密码错误、登录成功四种场景
-
----
-
-## Phase 20: 角色菜单关联实现
-
-> **目标:** 新增 sys_role_menu 表和相关接口，实现角色菜单的批量分配与查询
-> **架构:** 新建关联表 + Mapper + Service，复用现有 SysMenu 查询完整菜单信息，批量分配采用先删后插模式
-> **技术栈:** Java8 + Maven + MyBatis + Spring Boot
-
-### Task 1: 新建 SysRoleMenu 实体类
-
-**Files:**
-- Create: `src/main/java/com/address/model/SysRoleMenu.java`
-
-- [ ] Step 1: 编写实体类
-
-```java
-package com.address.model;
-
-import java.time.LocalDateTime;
-
-/**
- * 角色菜单关联实体
- */
-public class SysRoleMenu {
-    private Long id;
-    private Long roleId;
-    private Long menuId;
-    private LocalDateTime createTime;
-
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public Long getRoleId() { return roleId; }
-    public void setRoleId(Long roleId) { this.roleId = roleId; }
-    public Long getMenuId() { return menuId; }
-    public void setMenuId(Long menuId) { this.menuId = menuId; }
-    public LocalDateTime getCreateTime() { return createTime; }
-    public void setCreateTime(LocalDateTime createTime) { this.createTime = createTime; }
-}
-```
-
-- [ ] Step 2: 提交
-
-```bash
-git add src/main/java/com/address/model/SysRoleMenu.java
-git commit -m "feat: 新增 SysRoleMenu 实体类"
-```
-
----
-
-### Task 2: 新建 SysRoleMenuMapper
-
-**Files:**
-- Create: `src/main/java/com/address/repository/SysRoleMenuMapper.java`
-
-- [ ] Step 1: 查看现有 SysRoleMapper 实现方式
-
-```bash
-cat src/main/java/com/address/repository/SysRoleMapper.java
-```
-
-- [ ] Step 2: 创建 SysRoleMenuMapper
-
-```java
-package com.address.repository;
-
-import com.address.model.SysRoleMenu;
-import org.apache.ibatis.annotations.*;
-
-import java.util.List;
-
-@Mapper
-public interface SysRoleMenuMapper {
-
-    @Delete("DELETE FROM sys_role_menu WHERE role_id = #{roleId}")
-    void deleteByRoleId(Long roleId);
-
-    @Insert("<script>" +
-            "INSERT INTO sys_role_menu (role_id, menu_id, create_time) VALUES " +
-            "<foreach collection='list' item='item' separator=','>" +
-            "(#{item.roleId}, #{item.menuId}, NOW())" +
-            "</foreach>" +
-            "</script>")
-    void insertBatch(@Param("list") List<SysRoleMenu> roleMenus);
-
-    @Select("SELECT menu_id FROM sys_role_menu WHERE role_id = #{roleId}")
-    List<Long> selectMenuIdsByRoleId(Long roleId);
-}
-```
-
-- [ ] Step 3: 提交
-
-```bash
-git add src/main/java/com/address/repository/SysRoleMenuMapper.java
-git commit -m "feat: 新增 SysRoleMenuMapper"
-```
-
----
-
-### Task 3: 新建 RoleMenuService
-
-**Files:**
-- Create: `src/main/java/com/address/service/RoleMenuService.java`
-
-- [ ] Step 1: 创建 RoleMenuService
-
-```java
-package com.address.service;
-
-import com.address.model.SysMenu;
-import com.address.model.SysRoleMenu;
-import com.address.repository.SysRoleMenuMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
-@Service
-public class RoleMenuService {
-
-    @Autowired
-    private SysRoleMenuMapper sysRoleMenuMapper;
-
-    @Autowired
-    private MenuService menuService;
-
-    @Transactional
-    public void assignMenus(Long roleId, List<Long> menuIds) {
-        sysRoleMenuMapper.deleteByRoleId(roleId);
-        if (menuIds == null || menuIds.isEmpty()) {
-            return;
-        }
-        List<SysRoleMenu> roleMenus = new ArrayList<>();
-        for (Long menuId : menuIds) {
-            SysRoleMenu rm = new SysRoleMenu();
-            rm.setRoleId(roleId);
-            rm.setMenuId(menuId);
-            rm.setCreateTime(LocalDateTime.now());
-            roleMenus.add(rm);
-        }
-        sysRoleMenuMapper.insertBatch(roleMenus);
-    }
-
-    public List<SysMenu> getMenusByRoleId(Long roleId) {
-        List<Long> menuIds = sysRoleMenuMapper.selectMenuIdsByRoleId(roleId);
-        if (menuIds == null || menuIds.isEmpty()) {
-            return new ArrayList<>();
-        }
-        List<SysMenu> menus = new ArrayList<>();
-        for (Long menuId : menuIds) {
-            SysMenu menu = menuService.getById(menuId);
-            if (menu != null && !"Y".equals(menu.getDelFlag())) {
-                menus.add(menu);
-            }
-        }
-        return menus;
-    }
-}
-```
-
-- [ ] Step 2: 提交
-
-```bash
-git add src/main/java/com/address/service/RoleMenuService.java
-git commit -m "feat: 新增 RoleMenuService"
-```
-
----
-
-### Task 4: 修改 RoleController 添加接口
-
-**Files:**
-- Modify: `src/main/java/com/address/controller/RoleController.java`
-
-- [ ] Step 1: 查看 RoleController 是否存在
-
-```bash
-ls src/main/java/com/address/controller/Role*.java
-```
-
-- [ ] Step 2: 添加接口到 RoleController
-
-在 RoleController.java 中添加：
-
-```java
-@Autowired
-private RoleMenuService roleMenuService;
-
-@PostMapping("/api/roles/{roleId}/menus")
-public ApiResponse<Void> assignMenus(@PathVariable Long roleId, @RequestBody List<Long> menuIds) {
-    roleMenuService.assignMenus(roleId, menuIds);
+@PostMapping("/api/users/password/change")
+public ApiResponse<Void> changePassword(@RequestBody PasswordChangeRequest request, @AuthenticationPrincipal UserDetails userDetails) {
+    String phone = userDetails.getUsername();
+    userService.changePassword(phone, request.getOldPassword(), request.getNewPassword());
     return ApiResponse.success(null);
 }
 
-@GetMapping("/api/roles/{roleId}/menus")
-public ApiResponse<List<MenuResponse>> getMenus(@PathVariable Long roleId) {
-    List<SysMenu> menus = roleMenuService.getMenusByRoleId(roleId);
-    List<MenuResponse> responses = menus.stream().map(menu -> {
-        MenuResponse r = new MenuResponse();
-        r.setMenuId(menu.getMenuId());
-        r.setMenuName(menu.getMenuName());
-        r.setMenuUrl(menu.getMenuUrl());
-        r.setIcon(menu.getIcon());
-        r.setParentId(menu.getParentId());
-        return r;
-    }).collect(Collectors.toList());
-    return ApiResponse.success(responses);
+@PostMapping("/api/users/{userId}/password/reset")
+public ApiResponse<Void> resetPassword(@PathVariable Long userId, @RequestBody PasswordResetRequest request) {
+    // TODO: 管理员权限校验（当前实现暂不校验，后续 Phase 添加角色权限校验）
+    userService.resetPassword(userId, request.getNewPassword());
+    return ApiResponse.success(null);
 }
 ```
 
-- [ ] Step 3: 提交
-
-```bash
-git add src/main/java/com/address/controller/RoleController.java
-git commit -m "feat: RoleController 添加菜单分配和查询接口"
-```
+- [ ] **Step 2: 添加必要的 import**
+- [ ] **Step 3: 验证编译**
+- [ ] **Step 4: 提交**
 
 ---
 
-### Task 5: 编写测试用例
+## Task 6: 编写密码业务测试
 
 **Files:**
-- Create: `src/test/java/com/address/service/RoleMenuServiceTest.java`
+- Create: `src/test/java/com/address/service/UserPasswordServiceTest.java`
 
-- [ ] Step 1: 编写测试用例
+- [ ] **Step 1: 创建测试文件**
 
 ```java
 package com.address.service;
 
-import com.address.model.SysMenu;
-import com.address.repository.SysRoleMenuMapper;
+import com.address.dto.PasswordChangeRequest;
+import com.address.dto.PasswordResetRequest;
+import com.address.model.SysUser;
+import com.address.repository.SysUserMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Arrays;
-import java.util.List;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class RoleMenuServiceTest {
+public class UserPasswordServiceTest {
 
     @Autowired
-    private RoleMenuService roleMenuService;
+    private UserService userService;
 
     @Autowired
-    private SysRoleMenuMapper sysRoleMenuMapper;
+    private SysUserMapper sysUserMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Test
-    @Transactional
-    public void testAssignMenus() {
-        Long roleId = 1L;
-        List<Long> menuIds = Arrays.asList(1L, 2L, 3L);
+    public void testChangePassword_success() {
+        String testPhone = "13800138000";
+        String oldPassword = "123456";
+        String newPassword = "654321";
 
-        roleMenuService.assignMenus(roleId, menuIds);
+        SysUser existUser = sysUserMapper.findByPhone(testPhone);
+        if (existUser == null) {
+            return;
+        }
 
-        List<Long> result = sysRoleMenuMapper.selectMenuIdsByRoleId(roleId);
-        assertEquals(3, result.size());
-        assertTrue(result.contains(1L));
-        assertTrue(result.contains(2L));
-        assertTrue(result.contains(3L));
+        userService.changePassword(testPhone, oldPassword, newPassword);
+
+        SysUser updatedUser = sysUserMapper.findByPhone(testPhone);
+        assertTrue(passwordEncoder.matches(newPassword, updatedUser.getPassword()));
     }
 
     @Test
-    @Transactional
-    public void testAssignMenus_EmptyList() {
-        Long roleId = 1L;
+    public void testChangePassword_oldPasswordError() {
+        String testPhone = "13800138000";
+        String wrongOldPassword = "wrong";
+        String newPassword = "654321";
 
-        roleMenuService.assignMenus(roleId, Arrays.asList());
+        SysUser existUser = sysUserMapper.findByPhone(testPhone);
+        if (existUser == null) {
+            return;
+        }
 
-        List<Long> result = sysRoleMenuMapper.selectMenuIdsByRoleId(roleId);
-        assertEquals(0, result.size());
+        assertThrows(RuntimeException.class, () -> {
+            userService.changePassword(testPhone, wrongOldPassword, newPassword);
+        });
     }
 
     @Test
-    @Transactional
-    public void testAssignMenus_ClearOldMenus() {
-        Long roleId = 1L;
-        roleMenuService.assignMenus(roleId, Arrays.asList(1L, 2L));
+    public void testChangePassword_invalidNewPassword() {
+        String testPhone = "13800138000";
+        String oldPassword = "123456";
+        String invalidNewPassword = "123";
 
-        roleMenuService.assignMenus(roleId, Arrays.asList(3L));
+        SysUser existUser = sysUserMapper.findByPhone(testPhone);
+        if (existUser == null) {
+            return;
+        }
 
-        List<Long> result = sysRoleMenuMapper.selectMenuIdsByRoleId(roleId);
-        assertEquals(1, result.size());
-        assertTrue(result.contains(3L));
-        assertFalse(result.contains(1L));
-        assertFalse(result.contains(2L));
+        assertThrows(RuntimeException.class, () -> {
+            userService.changePassword(testPhone, oldPassword, invalidNewPassword);
+        });
+    }
+
+    @Test
+    public void testResetPassword_success() {
+        Long testUserId = 1L;
+        String newPassword = "reset123";
+
+        SysUser existUser = sysUserMapper.findById(testUserId);
+        if (existUser == null) {
+            return;
+        }
+
+        userService.resetPassword(testUserId, newPassword);
+
+        SysUser updatedUser = sysUserMapper.findById(testUserId);
+        assertTrue(passwordEncoder.matches(newPassword, updatedUser.getPassword()));
+    }
+
+    @Test
+    public void testResetPassword_userNotExist() {
+        Long nonExistUserId = 999999L;
+
+        assertThrows(RuntimeException.class, () -> {
+            userService.resetPassword(nonExistUserId, "123456");
+        });
     }
 }
 ```
 
-- [ ] Step 2: 运行测试
-
-```bash
-mvn test -Dtest=RoleMenuServiceTest
-```
-
-- [ ] Step 3: 提交
-
-```bash
-git add src/test/java/com/address/service/RoleMenuServiceTest.java
-git commit -m "test: 新增 RoleMenuService 测试"
-```
+- [ ] **Step 2: 运行测试**
+- [ ] **Step 3: 提交**
 
 ---
 
-## ✅ Phase 20 已完成
+## Task 7: 最终验证
 
-- SysRoleMenu 实体类已创建
-- SysRoleMenuMapper 已创建
-- RoleMenuService 已创建
-- RoleController 已添加菜单分配和查询接口
-- RoleMenuServiceTest 测试已通过
+- [ ] **Step 1: 运行完整测试套件**
+- [ ] **Step 2: 检查 git 状态**
 
 ---
 
-### 依赖关系
-
-1. Task 1 → Task 2（实体类完成后创建 Mapper）
-2. Task 2 → Task 3（Mapper 完成后创建 Service）
-3. Task 3 → Task 4（Service 完成后添加 Controller 接口）
-4. Task 4 → Task 5（接口完成后编写测试）
-
----
-
-## Phase 21: 登录接口返回完整信息实现
-
-> **目标:** 登录成功返回 token + 用户基本信息 + 角色列表 + 菜单树（含按钮叶子节点）
-> **架构:** 扩展 LoginResponse DTO，新增 UserInfo/RoleInfo/MenuTreeDTO 三个内部类，扩展 SysMenuMapper 支持多角色菜单合并查询，AuthService.login() 组装完整响应
-> **技术栈:** Java8 + Maven + MyBatis + Spring Boot + JWT
-
-### Task 1: 创建 DTO 内部类
-
-**Files:**
-- Create: `src/main/java/com/address/dto/UserInfo.java`
-- Create: `src/main/java/com/address/dto/RoleInfo.java`
-- Create: `src/main/java/com/address/dto/MenuTreeDTO.java`
-
-#### Task 1.1: 创建 UserInfo.java
-
-- [ ] Step 1: 创建文件
-
-```java
-package com.address.dto;
-
-public class UserInfo {
-    private Long userId;
-    private String userName;
-    private String email;
-    private String province;
-    private String city;
-    private String district;
-    private String hobby;
-    private String status;
-
-    public Long getUserId() { return userId; }
-    public void setUserId(Long userId) { this.userId = userId; }
-    public String getUserName() { return userName; }
-    public void setUserName(String userName) { this.userName = userName; }
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-    public String getProvince() { return province; }
-    public void setProvince(String province) { this.province = province; }
-    public String getCity() { return city; }
-    public void setCity(String city) { this.city = city; }
-    public String getDistrict() { return district; }
-    public void setDistrict(String district) { this.district = district; }
-    public String getHobby() { return hobby; }
-    public void setHobby(String hobby) { this.hobby = hobby; }
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
-}
-```
-
-- [ ] Step 2: 提交
-
-```bash
-git add src/main/java/com/address/dto/UserInfo.java
-git commit -m "feat: 新增 UserInfo DTO"
-```
-
-#### Task 1.2: 创建 RoleInfo.java
-
-- [ ] Step 1: 创建文件
-
-```java
-package com.address.dto;
-
-public class RoleInfo {
-    private Long roleId;
-    private String roleCode;
-    private String roleName;
-    private String status;
-
-    public Long getRoleId() { return roleId; }
-    public void setRoleId(Long roleId) { this.roleId = roleId; }
-    public String getRoleCode() { return roleCode; }
-    public void setRoleCode(String roleCode) { this.roleCode = roleCode; }
-    public String getRoleName() { return roleName; }
-    public void setRoleName(String roleName) { this.roleName = roleName; }
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
-}
-```
-
-- [ ] Step 2: 提交
-
-```bash
-git add src/main/java/com/address/dto/RoleInfo.java
-git commit -m "feat: 新增 RoleInfo DTO"
-```
-
-#### Task 1.3: 创建 MenuTreeDTO.java
-
-- [ ] Step 1: 创建文件
-
-```java
-package com.address.dto;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class MenuTreeDTO {
-    private Long menuId;
-    private String menuName;
-    private String menuUrl;
-    private String icon;
-    private Integer sortOrder;
-    private String isLeaf;
-    private List<MenuTreeDTO> children = new ArrayList<>();
-
-    public Long getMenuId() { return menuId; }
-    public void setMenuId(Long menuId) { this.menuId = menuId; }
-    public String getMenuName() { return menuName; }
-    public void setMenuName(String menuName) { this.menuName = menuName; }
-    public String getMenuUrl() { return menuUrl; }
-    public void setMenuUrl(String menuUrl) { this.menuUrl = menuUrl; }
-    public String getIcon() { return icon; }
-    public void setIcon(String icon) { this.icon = icon; }
-    public Integer getSortOrder() { return sortOrder; }
-    public void setSortOrder(Integer sortOrder) { this.sortOrder = sortOrder; }
-    public String getIsLeaf() { return isLeaf; }
-    public void setIsLeaf(String isLeaf) { this.isLeaf = isLeaf; }
-    public List<MenuTreeDTO> getChildren() { return children; }
-    public void setChildren(List<MenuTreeDTO> children) { this.children = children; }
-}
-```
-
-- [ ] Step 2: 提交
-
-```bash
-git add src/main/java/com/address/dto/MenuTreeDTO.java
-git commit -m "feat: 新增 MenuTreeDTO"
-```
-
----
-
-### Task 2: 扩展 LoginResponse
-
-**Files:**
-- Modify: `src/main/java/com/address/dto/LoginResponse.java`
-
-- [ ] Step 1: 读取现有文件
-
-- [ ] Step 2: 扩展为完整结构
-
-```java
-package com.address.dto;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class LoginResponse {
-    private String token;
-    private String phone;
-    private UserInfo user;
-    private List<RoleInfo> roles = new ArrayList<>();
-    private List<MenuTreeDTO> menus = new ArrayList<>();
-
-    public String getToken() { return token; }
-    public void setToken(String token) { this.token = token; }
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
-    public UserInfo getUser() { return user; }
-    public void setUser(UserInfo user) { this.user = user; }
-    public List<RoleInfo> getRoles() { return roles; }
-    public void setRoles(List<RoleInfo> roles) { this.roles = roles; }
-    public List<MenuTreeDTO> getMenus() { return menus; }
-    public void setMenus(List<MenuTreeDTO> menus) { this.menus = menus; }
-}
-```
-
-- [ ] Step 3: 提交
-
-```bash
-git add src/main/java/com/address/dto/LoginResponse.java
-git commit -m "feat: 扩展 LoginResponse 增加 user/roles/menus 字段"
-```
-
----
-
-### Task 3: 扩展 SysMenuMapper（支持多角色菜单查询）
-
-**Files:**
-- Modify: `src/main/java/com/address/repository/SysMenuMapper.java`
-
-- [ ] Step 1: 在 SysMenuMapper.java 中添加新方法（在 findRootMenus 之后）
-
-```java
-@Select("SELECT menu_id, menu_name, menu_url, icon, sort_order, status, is_leaf, level_depth, component, component_path, parent_id, del_flag, create_time " +
-        "FROM SYS_MENU m WHERE menu_id IN (" +
-        "  SELECT DISTINCT rm.menu_id FROM SYS_ROLE_MENU rm WHERE rm.role_id IN (#{roleIds})" +
-        ") AND del_flag='N' ORDER BY sort_order")
-@Results({
-    @Result(property = "menuId", column = "menu_id"),
-    @Result(property = "menuName", column = "menu_name"),
-    @Result(property = "menuUrl", column = "menu_url"),
-    @Result(property = "icon", column = "icon"),
-    @Result(property = "sortOrder", column = "sort_order"),
-    @Result(property = "status", column = "status"),
-    @Result(property = "isLeaf", column = "is_leaf"),
-    @Result(property = "levelDepth", column = "level_depth"),
-    @Result(property = "component", column = "component"),
-    @Result(property = "componentPath", column = "component_path"),
-    @Result(property = "parentId", column = "parent_id"),
-    @Result(property = "delFlag", column = "del_flag"),
-    @Result(property = "createTime", column = "create_time")
-})
-List<SysMenu> findByRoleIds(@Param("roleIds") List<Long> roleIds);
-```
-
-- [ ] Step 2: 提交
-
-```bash
-git add src/main/java/com/address/repository/SysMenuMapper.java
-git commit -m "feat: SysMenuMapper 新增 findByRoleIds 支持多角色菜单查询"
-```
-
----
-
-### Task 4: 扩展 AuthService.login()
-
-**Files:**
-- Modify: `src/main/java/com/address/service/AuthService.java`
-
-- [ ] Step 1: 读取现有 AuthService.java 完整内容
-
-- [ ] Step 2: 新增依赖注入
-
-```java
-@Autowired
-private SysUserRoleMapper sysUserRoleMapper;
-
-@Autowired
-private SysRoleMapper sysRoleMapper;
-
-@Autowired
-private SysMenuMapper sysMenuMapper;
-```
-
-- [ ] Step 3: 修改 login() 方法返回值
-
-原 login() 返回 `LoginResult.success(token, phone)`，改为返回完整 LoginResponse。
-
-- [ ] Step 4: 在 login() 方法之后新增私有方法
-
-```java
-private List<RoleInfo> getRolesByUserId(Long userId)
-private List<MenuTreeDTO> getMenusByUserId(Long userId)
-private List<MenuTreeDTO> buildMenuTree(List<SysMenu> flatMenus)
-private MenuTreeDTO buildMenuTreeNode(SysMenu menu, Map<Long, List<SysMenu>> childrenMap)
-private UserInfo buildUserInfo(SysUser user)
-```
-
-- [ ] Step 5: 添加必要 import
-
-```java
-import java.util.*;
-import java.util.stream.Collectors.*;
-```
-
-- [ ] Step 6: 提交
-
-```bash
-git add src/main/java/com/address/service/AuthService.java
-git commit -m "feat: AuthService.login() 返回完整用户信息含菜单树"
-```
-
----
-
-### Task 5: 编写测试
-
-**Files:**
-- Create: `src/test/java/com/address/service/AuthServiceLoginTest.java`
-
-- [ ] Step 1: 创建测试文件（参考 plan 文档）
-
-- [ ] Step 2: 运行测试验证
-
-```bash
-mvn test -Dtest=AuthServiceLoginTest
-```
-
-- [ ] Step 3: 提交
-
-```bash
-git add src/test/java/com/address/service/AuthServiceLoginTest.java
-git commit -m "test: AuthServiceLoginTest 登录返回完整信息测试"
-```
-
----
-
-### Task 6: 验证
-
-- [x] 运行完整测试套件
-
-```bash
-mvn test 2>&1 | grep -E "Tests run|BUILD"
-```
-
-- [x] 确保所有测试通过
-
----
-
-### 实施检查清单
-
-- [x] UserInfo.java 创建
-- [x] RoleInfo.java 创建
-- [x] MenuTreeDTO.java 创建
-- [x] LoginResponse.java 扩展
-- [x] SysMenuMapper.findByRoleIds() 新增
-- [x] AuthService.login() 扩展
-- [x] AuthServiceLoginTest 测试通过
-- [x] 所有测试通过
-
----
-
-## ✅ 所有 Phase 已完成
-
-| Phase | 名称 | 状态 |
-|-------|------|------|
-| Phase 1-17 | 地址管理 + 权限系统基础 | ✅ 已完成 |
-| Phase 18 | SysUser 字段扩展 | ✅ 已完成 |
-| Phase 19 | 登录接口返回码归类 | ✅ 已完成 |
-| Phase 20 | 角色菜单关联 | ✅ 已完成 |
-| Phase 21 | 登录接口返回完整信息 | ✅ 已完成 |
-
-**最后更新时间:** 2026-04-28
-
----
-
-## Phase 22: sys_user 省市区合并实现
-
-> **目标:** 将 sys_user 表的 province/city/district 三字段合并为 city（省市区组合字符串），新增 addr_detail 详细地址字段
-> **架构:** 修改 Model、DTO、Mapper、Service 层相关文件，更新 schema.sql 和接口文档
-> **技术栈:** Java8 + Maven + MyBatis + Spring Boot
-
-### Task 1: 修改 SysUser.java
-
-**Files:**
-- Modify: `src/main/java/com/address/model/SysUser.java`
-
-- [x] Step 1: 修改实体类，删除 province/city/district，新增 city/addrDetail
-
-- [x] Step 2: 提交
-
----
-
-### Task 2: 修改 SysUserMapper.java
-
-**Files:**
-- Modify: `src/main/java/com/address/repository/SysUserMapper.java`
-
-- [x] Step 1: 修改 insert/update/select 语句和 @Results 映射
-
-- [x] Step 2: 提交
-
----
-
-### Task 3: 修改 DTO 文件
-
-**Files:**
-- Modify: `src/main/java/com/address/dto/UserInfo.java`
-- Modify: `src/main/java/com/address/dto/UserResponse.java`
-- Modify: `src/main/java/com/address/dto/UserCreateRequest.java`
-- Modify: `src/main/java/com/address/dto/UserUpdateRequest.java`
-
-- [x] Step 1: 修改 UserInfo.java（删除 province/city/district，新增 city/addrDetail）
-
-- [x] Step 2: 修改 UserResponse.java
-
-- [x] Step 3: 修改 UserCreateRequest.java
-
-- [x] Step 4: 修改 UserUpdateRequest.java
-
-- [x] Step 5: 提交
-
----
-
-### Task 4: 修改 AuthService.java
-
-**Files:**
-- Modify: `src/main/java/com/address/service/AuthService.java`
-
-- [x] Step 1: 修改 register() 方法中的字段映射
-
-- [x] Step 2: 修改 buildUserInfo() 方法中的字段映射
-
-- [x] Step 3: 提交
-
----
-
-### Task 5: 修改 UserService.java
-
-**Files:**
-- Modify: `src/main/java/com/address/service/UserService.java`
-
-- [x] Step 1: 修改 create() 方法
-
-- [x] Step 2: 修改 update() 方法
-
-- [x] Step 3: 修改 toResponse() 方法
-
-- [x] Step 4: 提交
-
----
-
-### Task 6: 更新 schema.sql
-
-**Files:**
-- Modify: `src/test/resources/sql/schema.sql`
-
-- [x] Step 1: 更新建表语句（删除 province/city/district，新增 city/addr_detail）
-
-- [x] Step 2: 提交
-
----
-
-### Task 7: 更新接口文档
-
-**Files:**
-- Modify: `docs/http/interface.md`
-
-- [x] Step 1: 更新接口文档中所有涉及 province/city/district 的描述
-
-- [x] Step 2: 提交
-
----
-
-### Task 8: 运行测试验证
-
-**Files:**
-- Test: `src/test/java/com/address/service/AuthServiceTest.java`
-- Test: `src/test/java/com/address/service/UserServiceTest.java`
-
-- [x] Step 1: 编译项目
-
-- [x] Step 2: 运行测试
-
-```bash
-mvn test -Dtest=AuthServiceTest,UserServiceTest
-```
-
-- [ ] Step 3: 提交
-
-```bash
-git add -A
-git commit -m "test: 验证省市区合并修改"
-```
-
----
-
-### 实施检查清单
-
-- [x] SysUser.java 修改完成
-- [x] SysUserMapper.java 修改完成
-- [x] 所有 DTO 修改完成
-- [x] AuthService.java 修改完成
-- [x] UserService.java 修改完成
-- [x] schema.sql 修改完成
-- [x] 接口文档更新完成
-- [x] 测试通过
+## 自检清单
+
+- [ ] PasswordChangeRequest.java 已创建并提交
+- [ ] PasswordResetRequest.java 已创建并提交
+- [ ] ErrorCode.java 已添加 OLD_PASSWORD_ERROR / USER_NOT_EXIST / NO_PERMISSION
+- [ ] UserService.java 已添加 changePassword 和 resetPassword 方法
+- [ ] UserController.java 已添加 /api/users/password/change 和 /api/users/{userId}/password/reset
+- [ ] UserPasswordServiceTest.java 已创建并测试通过
+- [ ] 所有测试通过，BUILD SUCCESS
