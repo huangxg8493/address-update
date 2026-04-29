@@ -1,6 +1,8 @@
 package com.address.controller;
 
 import com.address.common.ApiResponse;
+import com.address.dto.PasswordChangeRequest;
+import com.address.dto.PasswordResetRequest;
 import com.address.dto.UserCreateRequest;
 import com.address.dto.UserQueryRequest;
 import com.address.dto.UserResponse;
@@ -48,6 +50,20 @@ public class UserController {
 
     @PostMapping("/api/users/me/get")
     public ApiResponse<UserResponse> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
+        return ApiResponse.success(null);
+    }
+
+    @PostMapping("/api/users/password/change")
+    public ApiResponse<Void> changePassword(@RequestBody PasswordChangeRequest request, @AuthenticationPrincipal UserDetails userDetails) {
+        String phone = userDetails.getUsername();
+        userService.changePassword(phone, request.getOldPassword(), request.getNewPassword());
+        return ApiResponse.success(null);
+    }
+
+    @PostMapping("/api/users/{userId}/password/reset")
+    public ApiResponse<Void> resetPassword(@PathVariable Long userId, @RequestBody PasswordResetRequest request) {
+        // TODO: 管理员权限校验（当前实现暂不校验，后续 Phase 添加角色权限校验）
+        userService.resetPassword(userId, request.getNewPassword());
         return ApiResponse.success(null);
     }
 }
