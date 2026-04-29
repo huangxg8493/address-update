@@ -5,16 +5,16 @@ import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface SysUserMapper {
-    @Insert("INSERT INTO SYS_USER(user_id, phone, password, status, user_name, email, province, city, district, hobby, create_time, update_time) " +
-            "VALUES(#{userId}, #{phone}, #{password}, #{status}, #{userName}, #{email}, #{province}, #{city}, #{district}, #{hobby}, #{createTime}, #{updateTime})")
+    @Insert("INSERT INTO SYS_USER(user_id, phone, password, status, user_name, email, city, addr_detail, hobby, create_time, update_time) " +
+            "VALUES(#{userId}, #{phone}, #{password}, #{status}, #{userName}, #{email}, #{city}, #{addrDetail}, #{hobby}, #{createTime}, #{updateTime})")
     void insert(SysUser user);
 
     @Update("UPDATE SYS_USER SET phone=#{phone}, password=#{password}, status=#{status}, " +
-            "user_name=#{userName}, email=#{email}, province=#{province}, city=#{city}, district=#{district}, hobby=#{hobby}, " +
+            "user_name=#{userName}, email=#{email}, city=#{city}, addr_detail=#{addrDetail}, hobby=#{hobby}, " +
             "update_time=#{updateTime} WHERE user_id=#{userId}")
     void update(SysUser user);
 
-    @Select("SELECT user_id, phone, password, status, user_name, email, province, city, district, hobby, create_time, update_time FROM SYS_USER WHERE user_id = #{userId}")
+    @Select("SELECT user_id, phone, password, status, user_name, email, city, addr_detail, hobby, create_time, update_time FROM SYS_USER WHERE user_id = #{userId}")
     @Results({
         @Result(property = "userId", column = "user_id"),
         @Result(property = "phone", column = "phone"),
@@ -22,16 +22,15 @@ public interface SysUserMapper {
         @Result(property = "status", column = "status"),
         @Result(property = "userName", column = "user_name"),
         @Result(property = "email", column = "email"),
-        @Result(property = "province", column = "province"),
         @Result(property = "city", column = "city"),
-        @Result(property = "district", column = "district"),
+        @Result(property = "addrDetail", column = "addr_detail"),
         @Result(property = "hobby", column = "hobby"),
         @Result(property = "createTime", column = "create_time"),
         @Result(property = "updateTime", column = "update_time")
     })
     SysUser findById(@Param("userId") Long userId);
 
-    @Select("SELECT user_id, phone, password, status, user_name, email, province, city, district, hobby, create_time, update_time FROM SYS_USER WHERE phone = #{phone}")
+    @Select("SELECT user_id, phone, password, status, user_name, email, city, addr_detail, hobby, create_time, update_time FROM SYS_USER WHERE phone = #{phone}")
     @Results({
         @Result(property = "userId", column = "user_id"),
         @Result(property = "phone", column = "phone"),
@@ -39,16 +38,15 @@ public interface SysUserMapper {
         @Result(property = "status", column = "status"),
         @Result(property = "userName", column = "user_name"),
         @Result(property = "email", column = "email"),
-        @Result(property = "province", column = "province"),
         @Result(property = "city", column = "city"),
-        @Result(property = "district", column = "district"),
+        @Result(property = "addrDetail", column = "addr_detail"),
         @Result(property = "hobby", column = "hobby"),
         @Result(property = "createTime", column = "create_time"),
         @Result(property = "updateTime", column = "update_time")
     })
     SysUser findByPhone(@Param("phone") String phone);
 
-    @Select("SELECT user_id, phone, password, status, user_name, email, province, city, district, hobby, create_time, update_time FROM SYS_USER WHERE phone = #{phone} AND status = 'Y'")
+    @Select("SELECT user_id, phone, password, status, user_name, email, city, addr_detail, hobby, create_time, update_time FROM SYS_USER WHERE phone = #{phone} AND status = 'Y'")
     @Results({
         @Result(property = "userId", column = "user_id"),
         @Result(property = "phone", column = "phone"),
@@ -56,16 +54,15 @@ public interface SysUserMapper {
         @Result(property = "status", column = "status"),
         @Result(property = "userName", column = "user_name"),
         @Result(property = "email", column = "email"),
-        @Result(property = "province", column = "province"),
         @Result(property = "city", column = "city"),
-        @Result(property = "district", column = "district"),
+        @Result(property = "addrDetail", column = "addr_detail"),
         @Result(property = "hobby", column = "hobby"),
         @Result(property = "createTime", column = "create_time"),
         @Result(property = "updateTime", column = "update_time")
     })
     SysUser findActiveByPhone(@Param("phone") String phone);
 
-    @Select("SELECT user_id, phone, password, status, user_name, email, province, city, district, hobby, create_time, update_time FROM SYS_USER")
+    @Select("SELECT user_id, phone, password, status, user_name, email, city, addr_detail, hobby, create_time, update_time FROM SYS_USER")
     @Results({
         @Result(property = "userId", column = "user_id"),
         @Result(property = "phone", column = "phone"),
@@ -73,9 +70,8 @@ public interface SysUserMapper {
         @Result(property = "status", column = "status"),
         @Result(property = "userName", column = "user_name"),
         @Result(property = "email", column = "email"),
-        @Result(property = "province", column = "province"),
         @Result(property = "city", column = "city"),
-        @Result(property = "district", column = "district"),
+        @Result(property = "addrDetail", column = "addr_detail"),
         @Result(property = "hobby", column = "hobby"),
         @Result(property = "createTime", column = "create_time"),
         @Result(property = "updateTime", column = "update_time")
