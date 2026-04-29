@@ -1696,3 +1696,176 @@ mvn test 2>&1 | grep -E "Tests run|BUILD"
 | Phase 21 | 登录接口返回完整信息 | ✅ 已完成 |
 
 **最后更新时间:** 2026-04-28
+
+---
+
+## Phase 22: sys_user 省市区合并实现
+
+> **目标:** 将 sys_user 表的 province/city/district 三字段合并为 city（省市区组合字符串），新增 addr_detail 详细地址字段
+> **架构:** 修改 Model、DTO、Mapper、Service 层相关文件，更新 schema.sql 和接口文档
+> **技术栈:** Java8 + Maven + MyBatis + Spring Boot
+
+### Task 1: 修改 SysUser.java
+
+**Files:**
+- Modify: `src/main/java/com/address/model/SysUser.java`
+
+- [ ] Step 1: 修改实体类，删除 province/city/district，新增 city/addrDetail
+
+- [ ] Step 2: 提交
+
+```bash
+git add src/main/java/com/address/model/SysUser.java
+git commit -m "refactor: SysUser合并省市区字段为city，新增addrDetail"
+```
+
+---
+
+### Task 2: 修改 SysUserMapper.java
+
+**Files:**
+- Modify: `src/main/java/com/address/repository/SysUserMapper.java`
+
+- [ ] Step 1: 修改 insert/update/select 语句和 @Results 映射
+
+- [ ] Step 2: 提交
+
+```bash
+git add src/main/java/com/address/repository/SysUserMapper.java
+git commit -m "refactor: SysUserMapper更新字段映射"
+```
+
+---
+
+### Task 3: 修改 DTO 文件
+
+**Files:**
+- Modify: `src/main/java/com/address/dto/UserInfo.java`
+- Modify: `src/main/java/com/address/dto/UserResponse.java`
+- Modify: `src/main/java/com/address/dto/UserCreateRequest.java`
+- Modify: `src/main/java/com/address/dto/UserUpdateRequest.java`
+
+- [ ] Step 1: 修改 UserInfo.java（删除 province/city/district，新增 city/addrDetail）
+
+- [ ] Step 2: 修改 UserResponse.java
+
+- [ ] Step 3: 修改 UserCreateRequest.java
+
+- [ ] Step 4: 修改 UserUpdateRequest.java
+
+- [ ] Step 5: 提交
+
+```bash
+git add src/main/java/com/address/dto/UserInfo.java src/main/java/com/address/dto/UserResponse.java src/main/java/com/address/dto/UserCreateRequest.java src/main/java/com/address/dto/UserUpdateRequest.java
+git commit -m "refactor: DTO删除省市区字段，新增city和addrDetail"
+```
+
+---
+
+### Task 4: 修改 AuthService.java
+
+**Files:**
+- Modify: `src/main/java/com/address/service/AuthService.java`
+
+- [ ] Step 1: 修改 register() 方法中的字段映射
+
+- [ ] Step 2: 修改 buildUserInfo() 方法中的字段映射
+
+- [ ] Step 3: 提交
+
+```bash
+git add src/main/java/com/address/service/AuthService.java
+git commit -m "refactor: AuthService更新省市区字段映射"
+```
+
+---
+
+### Task 5: 修改 UserService.java
+
+**Files:**
+- Modify: `src/main/java/com/address/service/UserService.java`
+
+- [ ] Step 1: 修改 create() 方法
+
+- [ ] Step 2: 修改 update() 方法
+
+- [ ] Step 3: 修改 toResponse() 方法
+
+- [ ] Step 4: 提交
+
+```bash
+git add src/main/java/com/address/service/UserService.java
+git commit -m "refactor: UserService更新省市区字段映射"
+```
+
+---
+
+### Task 6: 更新 schema.sql
+
+**Files:**
+- Modify: `src/test/resources/sql/schema.sql`
+
+- [ ] Step 1: 更新建表语句（删除 province/city/district，新增 city/addr_detail）
+
+- [ ] Step 2: 提交
+
+```bash
+git add src/test/resources/sql/schema.sql
+git commit -m "refactor: schema.sql更新省市区字段"
+```
+
+---
+
+### Task 7: 更新接口文档
+
+**Files:**
+- Modify: `docs/http/interface.md`
+
+- [ ] Step 1: 更新接口文档中所有涉及 province/city/district 的描述
+
+- [ ] Step 2: 提交
+
+```bash
+git add docs/http/interface.md
+git commit -m "docs: 更新接口文档省市区字段说明"
+```
+
+---
+
+### Task 8: 运行测试验证
+
+**Files:**
+- Test: `src/test/java/com/address/service/AuthServiceTest.java`
+- Test: `src/test/java/com/address/service/UserServiceTest.java`
+
+- [ ] Step 1: 编译项目
+
+```bash
+mvn compile
+```
+
+- [ ] Step 2: 运行测试
+
+```bash
+mvn test -Dtest=AuthServiceTest,UserServiceTest
+```
+
+- [ ] Step 3: 提交
+
+```bash
+git add -A
+git commit -m "test: 验证省市区合并修改"
+```
+
+---
+
+### 实施检查清单
+
+- [ ] SysUser.java 修改完成
+- [ ] SysUserMapper.java 修改完成
+- [ ] 所有 DTO 修改完成
+- [ ] AuthService.java 修改完成
+- [ ] UserService.java 修改完成
+- [ ] schema.sql 修改完成
+- [ ] 接口文档更新完成
+- [ ] 测试通过

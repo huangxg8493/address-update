@@ -933,3 +933,53 @@ public class SysRoleMenu {
 ### 性能考虑
 - 用户角色和菜单信息可缓存（Redis），避免每次登录查询
 - 缓存策略（可选，后续实现）：用户信息缓存 30 分钟，菜单树缓存 1 小时
+
+---
+
+## Phase 22: sys_user 省市区合并设计
+
+### 背景
+将 sys_user 表的 province、city、district 三个独立字段合并为 city（省市区组合字符串），并新增 addr_detail 详细地址字段。
+
+### 设计决策
+- **city 字段**: 存储完整省市区信息，如 "广东省深圳市南山区"（前端传入组合字符串，后端直接存储）
+- **addr_detail 字段**: 存储详细地址，如 "科技园1号路101室"
+- **存量数据迁移**: 通过 SQL 将三个字段值合并到新的 city 字段
+
+### 数据库变更
+
+#### 字段变更
+| 操作 | 字段 | 类型 | 说明 |
+|------|------|------|------|
+| 删除 | province | VARCHAR(50) | 省 |
+| 删除 | city | VARCHAR(50) | 市 |
+| 删除 | district | VARCHAR(50) | 区 |
+| 新增 | city | VARCHAR(200) | 省市区组合 |
+| 新增 | addr_detail | VARCHAR(255) | 详细地址 |
+
+#### 存量数据迁移 SQL
+```sql
+-- 将三字段合并为 city
+UPDATE sys_user SET city = CONCAT(IFNULL(province,''), IFNULL(city,''), IFNULL(district,''));
+
+-- 删除旧字段
+ALTER TABLE sys_user DROP COLUMN province;
+ALTER TABLE sys_user DROP COLUMN city;
+ALTER TABLE sys_user DROP COLUMN district;
+
+-- 添加新字段
+ALTER TABLE sys_user ADD COLUMN city VARCHAR(200) COMMENT '省市区组合';
+ALTER TABLE sys_user ADD COLUMN addr_detail VARCHAR(255) COMMENT '详细地址';
+```
+
+### 涉及文件
+- `src/main/java/com/address/model/SysUser.java` - 删除 province/city/district，新增 city/addrDetail
+- `src/main/java/com/address/repository/SysUserMapper.java` - 更新 SQL 和映射
+- `src/main/java/com/address/dto/UserInfo.java` - 同上
+- `src/main/java/com/address/dto/UserResponse.java` - 同上
+- `src/main/java/com/address/dto/UserCreateRequest.java` - 同上
+- `src/main/java/com/address/dto/UserUpdateRequest.java` - 同上
+- `src/main/java/com/address/service/AuthService.java` - 修改字段映射
+- `src/main/java/com/address/service/UserService.java` - 修改字段映射
+- `src/test/resources/sql/schema.sql` - 更新建表语句
+- `docs/http/interface.md` - 更新接口文档
