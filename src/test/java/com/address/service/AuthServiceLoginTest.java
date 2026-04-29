@@ -36,9 +36,7 @@ public class AuthServiceLoginTest extends BaseServiceTest {
         user.setStatus("Y");
         user.setUserName("测试用户");
         user.setEmail("test@example.com");
-        user.setProvince("广东省");
-        user.setCity("深圳市");
-        user.setDistrict("南山区");
+        user.setCity("广东省深圳市南山区");
         user.setHobby("篮球");
         user.setCreateTime(java.time.LocalDateTime.now());
         user.setUpdateTime(java.time.LocalDateTime.now());
