@@ -20,9 +20,8 @@
     "password": "password123",
     "userName": "张三",
     "email": "zhangsan@example.com",
-    "province": "广东省",
     "city": "深圳市",
-    "district": "南山区",
+    "addr_detail": "南山区xxx街道xxx号",
     "hobby": "篮球"
 }
 ```
@@ -35,9 +34,8 @@
 | password | String | 是 | 密码，最少6位 |
 | userName | String | 否 | 用户名 |
 | email | String | 否 | 邮箱 |
-| province | String | 否 | 省份 |
 | city | String | 否 | 城市 |
-| district | String | 否 | 区县 |
+| addr_detail | String | 否 | 地址详情 |
 | hobby | String | 否 | 爱好 |
 
 **成功响应** (HTTP 200):
@@ -103,9 +101,8 @@
             "userId": 1,
             "userName": "张三",
             "email": "zhangsan@example.com",
-            "province": "广东省",
             "city": "深圳市",
-            "district": "南山区",
+            "addr_detail": "南山区xxx街道xxx号",
             "hobby": "篮球",
             "status": "Y"
         },
@@ -154,9 +151,8 @@
 | user.userId | Long | 用户ID |
 | user.userName | String | 用户名 |
 | user.email | String | 邮箱 |
-| user.province | String | 省份 |
 | user.city | String | 城市 |
-| user.district | String | 区县 |
+| user.addr_detail | String | 地址详情 |
 | user.hobby | String | 爱好 |
 | user.status | String | 状态 (Y=正常, N=禁用) |
 | roles | Array | 用户角色列表 |
@@ -271,9 +267,8 @@
             "status": "Y",
             "userName": "黄小刚",
             "email": "",
-            "province": "",
             "city": "",
-            "district": "",
+            "addr_detail": "",
             "hobby": "",
             "createTime": "2026-04-28T10:37:30",
             "updateTime": null
@@ -291,9 +286,8 @@
 | status | String | 状态 (Y=正常, N=禁用) |
 | userName | String | 用户名 |
 | email | String | 邮箱 |
-| province | String | 省份 |
 | city | String | 城市 |
-| district | String | 区县 |
+| addr_detail | String | 地址详情 |
 | hobby | String | 爱好 |
 | createTime | LocalDateTime | 创建时间 |
 | updateTime | LocalDateTime | 更新时间 |
@@ -335,9 +329,8 @@
         "status": "Y",
         "userName": null,
         "email": null,
-        "province": null,
         "city": null,
-        "district": null,
+        "addr_detail": null,
         "hobby": null,
         "createTime": "2026-04-28T10:37:30",
         "updateTime": null
