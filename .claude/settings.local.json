@@ -34,7 +34,8 @@
       "Bash(javap *)",
       "Bash(xargs grep *)",
       "Bash(git stash *)",
-      "Bash(mysql *)"
+      "Bash(mysql *)",
+      "Bash(git revert *)"
     ],
     "deny": [
       "Bash(git reset --hard:*)",
