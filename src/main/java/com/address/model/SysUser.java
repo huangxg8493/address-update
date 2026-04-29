@@ -12,9 +12,7 @@ public class SysUser {
     private String status;  // Y-启用，N-禁用
     private String userName;    // 用户名称
     private String email;       // 邮箱
-    private String province;   // 省
-    private String city;         // 市
-    private String district;    // 区
+    private String city;         // 省市区组合，如"广东省深圳市南山区"
     private String addrDetail;  // 详细地址，如"科技园1号路101室"
     private String hobby;       // 业余爱好
     private LocalDateTime createTime;
@@ -32,12 +30,8 @@ public class SysUser {
     public void setUserName(String userName) { this.userName = userName; }
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
-    public String getProvince() { return province; }
-    public void setProvince(String province) { this.province = province; }
     public String getCity() { return city; }
     public void setCity(String city) { this.city = city; }
-    public String getDistrict() { return district; }
-    public void setDistrict(String district) { this.district = district; }
     public String getAddrDetail() { return addrDetail; }
     public void setAddrDetail(String addrDetail) { this.addrDetail = addrDetail; }
     public String getHobby() { return hobby; }
