@@ -5,9 +5,8 @@ public class RegisterRequest {
     private String password;
     private String userName;
     private String email;
-    private String province;
     private String city;
-    private String district;
+    private String addrDetail;
     private String hobby;
 
     public String getPhone() { return phone; }
@@ -18,12 +17,10 @@ public class RegisterRequest {
     public void setUserName(String userName) { this.userName = userName; }
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
-    public String getProvince() { return province; }
-    public void setProvince(String province) { this.province = province; }
     public String getCity() { return city; }
     public void setCity(String city) { this.city = city; }
-    public String getDistrict() { return district; }
-    public void setDistrict(String district) { this.district = district; }
+    public String getAddrDetail() { return addrDetail; }
+    public void setAddrDetail(String addrDetail) { this.addrDetail = addrDetail; }
     public String getHobby() { return hobby; }
     public void setHobby(String hobby) { this.hobby = hobby; }
 }

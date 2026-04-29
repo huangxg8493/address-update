@@ -56,9 +56,8 @@ public class UserService {
         user.setStatus(request.getStatus() != null ? request.getStatus() : "Y");
         user.setUserName(request.getUserName());
         user.setEmail(request.getEmail());
-        user.setProvince(request.getProvince());
         user.setCity(request.getCity());
-        user.setDistrict(request.getDistrict());
+        user.setAddrDetail(request.getAddrDetail());
         user.setHobby(request.getHobby());
         user.setCreateTime(LocalDateTime.now());
         user.setUpdateTime(LocalDateTime.now());
@@ -86,14 +85,11 @@ public class UserService {
         if (request.getEmail() != null) {
             user.setEmail(request.getEmail());
         }
-        if (request.getProvince() != null) {
-            user.setProvince(request.getProvince());
-        }
         if (request.getCity() != null) {
             user.setCity(request.getCity());
         }
-        if (request.getDistrict() != null) {
-            user.setDistrict(request.getDistrict());
+        if (request.getAddrDetail() != null) {
+            user.setAddrDetail(request.getAddrDetail());
         }
         if (request.getHobby() != null) {
             user.setHobby(request.getHobby());
@@ -125,9 +121,8 @@ public class UserService {
         response.setStatus(user.getStatus());
         response.setUserName(user.getUserName());
         response.setEmail(user.getEmail());
-        response.setProvince(user.getProvince());
         response.setCity(user.getCity());
-        response.setDistrict(user.getDistrict());
+        response.setAddrDetail(user.getAddrDetail());
         response.setHobby(user.getHobby());
         response.setCreateTime(user.getCreateTime());
         response.setUpdateTime(user.getUpdateTime());

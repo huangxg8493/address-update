@@ -86,9 +86,8 @@ public class AuthService {
         user.setStatus("Y");
         user.setUserName(request.getUserName());
         user.setEmail(request.getEmail());
-        user.setProvince(request.getProvince());
         user.setCity(request.getCity());
-        user.setDistrict(request.getDistrict());
+        user.setAddrDetail(request.getAddrDetail());
         user.setHobby(request.getHobby());
         user.setCreateTime(LocalDateTime.now());
         user.setUpdateTime(LocalDateTime.now());
@@ -190,9 +189,8 @@ public class AuthService {
         info.setUserId(user.getUserId());
         info.setUserName(user.getUserName());
         info.setEmail(user.getEmail());
-        info.setProvince(user.getProvince());
         info.setCity(user.getCity());
-        info.setDistrict(user.getDistrict());
+        info.setAddrDetail(user.getAddrDetail());
         info.setHobby(user.getHobby());
         info.setStatus(user.getStatus());
         return info;
