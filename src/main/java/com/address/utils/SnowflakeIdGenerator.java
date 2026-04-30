@@ -76,7 +76,8 @@ public class SnowflakeIdGenerator {
     }
 
     public synchronized Long generate8DigitId() {
-        long timestamp = System.currentTimeMillis() % 1000000;
+        // 使用2^20=1048576最接近1000000，用&运算取后20位再%1000000限制范围
+        long timestamp = (System.currentTimeMillis() & 0xFFFFF) % 1000000;
         int randomPart = random.nextInt(100);
         return Long.parseLong(String.format("%06d%02d", timestamp, randomPart));
     }

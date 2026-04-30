@@ -50,7 +50,7 @@ public class UserService {
             throw new RuntimeException("手机号已存在");
         }
         SysUser user = new SysUser();
-        user.setUserId(SnowflakeIdGenerator.getInstance().nextId());
+        user.setUserId(SnowflakeIdGenerator.getInstance().generate8DigitId());
         user.setPhone(request.getPhone());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setStatus(request.getStatus() != null ? request.getStatus() : "Y");
