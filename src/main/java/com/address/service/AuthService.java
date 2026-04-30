@@ -80,7 +80,7 @@ public class AuthService {
             return LoginResult.error(ErrorCode.PASSWORD_INVALID, "密码格式错误");
         }
         SysUser user = new SysUser();
-        user.setUserId(SnowflakeIdGenerator.getInstance().nextId());
+        user.setUserId(SnowflakeIdGenerator.getInstance().generate8DigitId());
         user.setPhone(request.getPhone());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setStatus("Y");
