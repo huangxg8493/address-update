@@ -27,4 +27,13 @@ public class SnowflakeIdGeneratorTest {
         assertNotNull(idStr);
         assertTrue(Long.parseLong(idStr) > 0);
     }
+
+    @Test
+    public void testGenerate8DigitId() {
+        SnowflakeIdGenerator generator = SnowflakeIdGenerator.getInstance();
+        String id = generator.generate8DigitId();
+        assertNotNull(id);
+        assertEquals(8, id.length());
+        assertTrue(id.matches("\\d{8}"));
+    }
 }
