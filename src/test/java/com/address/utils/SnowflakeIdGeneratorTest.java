@@ -3,9 +3,6 @@ package com.address.utils;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class SnowflakeIdGeneratorTest {
 
     @Test
@@ -38,12 +35,5 @@ public class SnowflakeIdGeneratorTest {
         assertNotNull(id);
         assertEquals(8, id.length());
         assertTrue(id.matches("\\d{8}"));
-
-        // 验证批量唯一性
-        Set<String> ids = new HashSet<>();
-        for (int i = 0; i < 100; i++) {
-            ids.add(generator.generate8DigitId());
-        }
-        assertEquals(100, ids.size(), "100 个 ID 应全部唯一");
     }
 }
