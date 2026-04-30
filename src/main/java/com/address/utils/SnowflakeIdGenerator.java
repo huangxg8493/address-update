@@ -1,5 +1,7 @@
 package com.address.utils;
 
+import java.security.SecureRandom;
+
 /**
  * 雪花算法 ID 生成器
  * 结构: 1符号位 + 41时间戳 + 5 workerId + 5 datacenterId + 12序列号
@@ -27,6 +29,7 @@ public class SnowflakeIdGenerator {
     private final long datacenterId;
     private long sequence = 0L;
     private long lastTimestamp = -1L;
+    private SecureRandom random = new SecureRandom();
 
     private SnowflakeIdGenerator(long workerId, long datacenterId) {
         if (workerId > MAX_WORKER_ID || workerId < 0) {
@@ -70,6 +73,12 @@ public class SnowflakeIdGenerator {
 
     public String nextIdAsString() {
         return String.valueOf(nextId());
+    }
+
+    public synchronized String generate8DigitId() {
+        long timestamp = System.currentTimeMillis() % 100000000;
+        int randomPart = random.nextInt(100);
+        return String.format("%06d%02d", timestamp, randomPart);
     }
 
     private long timeGen() {
