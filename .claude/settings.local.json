@@ -35,7 +35,10 @@
       "Bash(xargs grep *)",
       "Bash(git stash *)",
       "Bash(mysql *)",
-      "Bash(git revert *)"
+      "Bash(git revert *)",
+      "Bash(where jq *)",
+      "Read(//d/c/**)",
+      "Read(//d/develop/**)"
     ],
     "deny": [
       "Bash(git reset --hard:*)",
