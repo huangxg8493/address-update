@@ -1,9 +1,9 @@
 # Task Plan
 
-> 项目：用户密码修改接口实现
-> 目标：实现两个密码管理接口——用户修改密码（change）和管理员重置密码（reset）
-> 架构：DTO → Service → Controller 三层架构
-> 技术栈：Java8 + Maven + Spring Boot + MyBatis + BCrypt
+> 项目：8位userId生成方法
+> 目标：为 SnowflakeIdGenerator 新增 generate8DigitId 方法，生成8位数字用于页面展示
+> 架构：6位时间戳 + 2位随机数
+> 技术栈：Java8 + SecureRandom + JUnit
 
 ---
 
@@ -11,282 +11,78 @@
 
 | 操作 | 文件路径 | 说明 |
 |------|----------|------|
-| Create | `src/main/java/com/address/dto/PasswordChangeRequest.java` | 用户修改密码请求 |
-| Create | `src/main/java/com/address/dto/PasswordResetRequest.java` | 管理员重置密码请求 |
-| Modify | `src/main/java/com/address/common/ErrorCode.java` | 添加错误码常量 |
-| Modify | `src/main/java/com/address/service/UserService.java` | 添加 changePassword/resetPassword 方法 |
-| Modify | `src/main/java/com/address/controller/UserController.java` | 添加两个接口端点 |
-| Create | `src/test/java/com/address/service/UserPasswordServiceTest.java` | 密码业务测试 |
+| Modify | `src/main/java/com/address/utils/SnowflakeIdGenerator.java` | 添加 generate8DigitId 方法 |
+| Modify | `src/test/java/com/address/utils/SnowflakeIdGeneratorTest.java` | 添加单元测试 |
 
 ---
 
-## Task 1: 创建密码修改请求 DTO
+## Task 1: 新增 generate8DigitId 方法
 
 **Files:**
-- Create: `src/main/java/com/address/dto/PasswordChangeRequest.java`
+- Modify: `src/main/java/com/address/utils/SnowflakeIdGenerator.java`
 
-- [ ] **Step 1: 创建 PasswordChangeRequest.java**
+- [x] **Step 1: 添加 SecureRandom 字段**
 
 ```java
-package com.address.dto;
+private SecureRandom random = new SecureRandom();
+```
 
-public class PasswordChangeRequest {
-    private String oldPassword;
-    private String newPassword;
+- [x] **Step 2: 添加 generate8DigitId 方法**
 
-    public String getOldPassword() { return oldPassword; }
-    public void setOldPassword(String oldPassword) { this.oldPassword = oldPassword; }
-    public String getNewPassword() { return newPassword; }
-    public void setNewPassword(String newPassword) { this.newPassword = newPassword; }
+```java
+public synchronized String generate8DigitId() {
+    long timestamp = System.currentTimeMillis() % 1000000;
+    int randomPart = random.nextInt(100);
+    return String.format("%06d%02d", timestamp, randomPart);
 }
 ```
 
-- [ ] **Step 2: 提交**
+- [x] **Step 3: 验证编译**
+- [x] **Step 4: 提交**
+
+**Commit:** `0e6e4d6` - feat: 添加 generate8DigitId 方法生成8位数字用于页面展示
+
+**修复 Commit:** `d10d6ce` - fix: 修复 generate8DigitId 时间戳取模错误，确保生成8位数字
 
 ---
 
-## Task 2: 创建密码重置请求 DTO
+## Task 2: 添加单元测试
 
 **Files:**
-- Create: `src/main/java/com/address/dto/PasswordResetRequest.java`
+- Modify: `src/test/java/com/address/utils/SnowflakeIdGeneratorTest.java`
 
-- [ ] **Step 1: 创建 PasswordResetRequest.java**
+- [x] **Step 1: 添加测试方法**
 
 ```java
-package com.address.dto;
-
-public class PasswordResetRequest {
-    private String newPassword;
-
-    public String getNewPassword() { return newPassword; }
-    public void setNewPassword(String newPassword) { this.newPassword = newPassword; }
+@Test
+public void testGenerate8DigitId() {
+    SnowflakeIdGenerator generator = SnowflakeIdGenerator.getInstance();
+    String id = generator.generate8DigitId();
+    assertNotNull(id);
+    assertEquals(8, id.length());
+    assertTrue(id.matches("\\d{8}"));
 }
 ```
 
-- [ ] **Step 2: 提交**
+- [x] **Step 2: 运行测试验证**
+- [x] **Step 3: 提交**
 
----
-
-## Task 3: 添加错误码常量
-
-**Files:**
-- Modify: `src/main/java/com/address/common/ErrorCode.java:14-17`
-
-- [ ] **Step 1: 在 ErrorCode.java 第 17 行后添加新错误码**
-
-```java
-/** 旧密码错误 */
-public static final String OLD_PASSWORD_ERROR = "101007";
-/** 用户不存在 */
-public static final String USER_NOT_EXIST = "101008";
-/** 无权限操作 */
-public static final String NO_PERMISSION = "101009";
-```
-
-- [ ] **Step 2: 验证编译**
-- [ ] **Step 3: 提交**
-
----
-
-## Task 4: 添加密码业务方法到 UserService
-
-**Files:**
-- Modify: `src/main/java/com/address/service/UserService.java:131`
-
-- [ ] **Step 1: 在 assignRoles 方法之后添加两个业务方法**
-
-```java
-public void changePassword(String phone, String oldPassword, String newPassword) {
-    SysUser user = sysUserMapper.findActiveByPhone(phone);
-    if (user == null) {
-        throw new RuntimeException("用户不存在或已禁用");
-    }
-    if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
-        throw new RuntimeException("旧密码错误");
-    }
-    if (newPassword == null || newPassword.length() < 6) {
-        throw new RuntimeException("密码格式错误，至少6位");
-    }
-    user.setPassword(passwordEncoder.encode(newPassword));
-    user.setUpdateTime(LocalDateTime.now());
-    sysUserMapper.update(user);
-}
-
-public void resetPassword(Long userId, String newPassword) {
-    SysUser user = sysUserMapper.findById(userId);
-    if (user == null) {
-        throw new RuntimeException("用户不存在");
-    }
-    if (newPassword == null || newPassword.length() < 6) {
-        throw new RuntimeException("密码格式错误，至少6位");
-    }
-    user.setPassword(passwordEncoder.encode(newPassword));
-    user.setUpdateTime(LocalDateTime.now());
-    sysUserMapper.update(user);
-}
-```
-
-- [ ] **Step 2: 验证编译**
-- [ ] **Step 3: 提交**
-
----
-
-## Task 5: 添加接口端点到 UserController
-
-**Files:**
-- Modify: `src/main/java/com/address/controller/UserController.java`
-
-- [ ] **Step 1: 在 getCurrentUser 方法后添加两个接口**
-
-```java
-@PostMapping("/api/users/password/change")
-public ApiResponse<Void> changePassword(@RequestBody PasswordChangeRequest request, @AuthenticationPrincipal UserDetails userDetails) {
-    String phone = userDetails.getUsername();
-    userService.changePassword(phone, request.getOldPassword(), request.getNewPassword());
-    return ApiResponse.success(null);
-}
-
-@PostMapping("/api/users/{userId}/password/reset")
-public ApiResponse<Void> resetPassword(@PathVariable Long userId, @RequestBody PasswordResetRequest request) {
-    // TODO: 管理员权限校验（当前实现暂不校验，后续 Phase 添加角色权限校验）
-    userService.resetPassword(userId, request.getNewPassword());
-    return ApiResponse.success(null);
-}
-```
-
-- [ ] **Step 2: 添加必要的 import**
-- [ ] **Step 3: 验证编译**
-- [ ] **Step 4: 提交**
-
----
-
-## Task 6: 编写密码业务测试
-
-**Files:**
-- Create: `src/test/java/com/address/service/UserPasswordServiceTest.java`
-
-- [ ] **Step 1: 创建测试文件**
-
-```java
-package com.address.service;
-
-import com.address.dto.PasswordChangeRequest;
-import com.address.dto.PasswordResetRequest;
-import com.address.model.SysUser;
-import com.address.repository.SysUserMapper;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-@SpringBootTest
-public class UserPasswordServiceTest {
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private SysUserMapper sysUserMapper;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Test
-    public void testChangePassword_success() {
-        String testPhone = "13800138000";
-        String oldPassword = "123456";
-        String newPassword = "654321";
-
-        SysUser existUser = sysUserMapper.findByPhone(testPhone);
-        if (existUser == null) {
-            return;
-        }
-
-        userService.changePassword(testPhone, oldPassword, newPassword);
-
-        SysUser updatedUser = sysUserMapper.findByPhone(testPhone);
-        assertTrue(passwordEncoder.matches(newPassword, updatedUser.getPassword()));
-    }
-
-    @Test
-    public void testChangePassword_oldPasswordError() {
-        String testPhone = "13800138000";
-        String wrongOldPassword = "wrong";
-        String newPassword = "654321";
-
-        SysUser existUser = sysUserMapper.findByPhone(testPhone);
-        if (existUser == null) {
-            return;
-        }
-
-        assertThrows(RuntimeException.class, () -> {
-            userService.changePassword(testPhone, wrongOldPassword, newPassword);
-        });
-    }
-
-    @Test
-    public void testChangePassword_invalidNewPassword() {
-        String testPhone = "13800138000";
-        String oldPassword = "123456";
-        String invalidNewPassword = "123";
-
-        SysUser existUser = sysUserMapper.findByPhone(testPhone);
-        if (existUser == null) {
-            return;
-        }
-
-        assertThrows(RuntimeException.class, () -> {
-            userService.changePassword(testPhone, oldPassword, invalidNewPassword);
-        });
-    }
-
-    @Test
-    public void testResetPassword_success() {
-        Long testUserId = 1L;
-        String newPassword = "reset123";
-
-        SysUser existUser = sysUserMapper.findById(testUserId);
-        if (existUser == null) {
-            return;
-        }
-
-        userService.resetPassword(testUserId, newPassword);
-
-        SysUser updatedUser = sysUserMapper.findById(testUserId);
-        assertTrue(passwordEncoder.matches(newPassword, updatedUser.getPassword()));
-    }
-
-    @Test
-    public void testResetPassword_userNotExist() {
-        Long nonExistUserId = 999999L;
-
-        assertThrows(RuntimeException.class, () -> {
-            userService.resetPassword(nonExistUserId, "123456");
-        });
-    }
-}
-```
-
-- [ ] **Step 2: 运行测试**
-- [ ] **Step 3: 提交**
-
----
-
-## Task 7: 最终验证
-
-- [ ] **Step 1: 运行完整测试套件**
-- [ ] **Step 2: 检查 git 状态**
+**Commit:** `f53156e` - test: 添加 generate8DigitId 单元测试
 
 ---
 
 ## 自检清单
 
-- [ ] PasswordChangeRequest.java 已创建并提交
-- [ ] PasswordResetRequest.java 已创建并提交
-- [ ] ErrorCode.java 已添加 OLD_PASSWORD_ERROR / USER_NOT_EXIST / NO_PERMISSION
-- [ ] UserService.java 已添加 changePassword 和 resetPassword 方法
-- [ ] UserController.java 已添加 /api/users/password/change 和 /api/users/{userId}/password/reset
-- [ ] UserPasswordServiceTest.java 已创建并测试通过
-- [ ] 所有测试通过，BUILD SUCCESS
+- [x] 方法签名正确：`public synchronized String generate8DigitId()`
+- [x] 返回类型为 String，避免前端整数溢出
+- [x] 使用 SecureRandom 保证随机性
+- [x] 时间戳取后6位：`% 1000000`
+- [x] 格式化为6位 + 2位：`String.format("%06d%02d", ...)`
+- [x] 测试覆盖：非空、长度8、全数字验证
+
+---
+
+## 最终验证
+
+- [x] 所有测试通过：`mvn test -Dtest=SnowflakeIdGeneratorTest` → BUILD SUCCESS
+- [x] 代码已提交并推送

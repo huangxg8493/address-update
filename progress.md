@@ -4,6 +4,32 @@
 
 ---
 
+## 2026-04-30 8位userId生成
+
+### 当前阶段
+- Phase: 23 - 8位userId生成
+- 状态: ✅ 已完成
+
+### 进度概览
+
+| Task | 内容 | 状态 |
+|------|------|------|
+| Task 1 | 新增 generate8DigitId 方法 | ✅ 已完成 |
+| Task 2 | 添加单元测试 | ✅ 已完成 |
+
+### 最近提交
+- `0e6e4d6` - feat: 添加 generate8DigitId 方法生成8位数字用于页面展示
+- `d10d6ce` - fix: 修复 generate8DigitId 时间戳取模错误，确保生成8位数字
+- `81b70aa` - test: 移除唯一性验证测试（展示用途不要求严格唯一）
+- `src/main/java/com/address/utils/SnowflakeIdGenerator.java`
+- `src/test/java/com/address/utils/SnowflakeIdGeneratorTest.java`
+
+### 设计文档
+- `docs/superpowers/specs/2026-04-30-snowflake-8digit-design.md`
+- `docs/superpowers/plans/2026-04-30-snowflake-8digit-plan.md`
+
+---
+
 ## 2026-04-30 密码管理接口实现
 
 ### 当前阶段

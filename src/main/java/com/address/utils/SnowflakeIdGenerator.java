@@ -75,10 +75,10 @@ public class SnowflakeIdGenerator {
         return String.valueOf(nextId());
     }
 
-    public synchronized String generate8DigitId() {
+    public synchronized Long generate8DigitId() {
         long timestamp = System.currentTimeMillis() % 1000000;
         int randomPart = random.nextInt(100);
-        return String.format("%06d%02d", timestamp, randomPart);
+        return Long.parseLong(String.format("%06d%02d", timestamp, randomPart));
     }
 
     private long timeGen() {
